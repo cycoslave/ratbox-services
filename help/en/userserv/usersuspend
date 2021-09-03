@@ -1,0 +1,5 @@
+USERSUSPEND [duration] <username> <reason>
+[ADMIN] Suspends the given usernames registration
+  [duration]: Duration suspend lasts
+  <username>: Username to suspend
+  <reason>  : Reason for suspension

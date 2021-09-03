@@ -1,0 +1,3 @@
+OBPART <channel>
+[ADMIN] Makes operbot part the given channel
+  <channel>: Channel to part

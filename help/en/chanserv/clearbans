@@ -1,0 +1,3 @@
+CLEARBANS <channel>
+{140} Clears bans not in the database
+  <channel>: Channel to clear bans on

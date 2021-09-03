@@ -1,0 +1,3 @@
+CLEARMODES <channel>
+{140} Clears simple modes (+ilk)
+  <channel>: Channel to clear modes on

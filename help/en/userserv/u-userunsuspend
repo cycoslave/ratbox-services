@@ -1,0 +1,4 @@
+userunsuspend <username>
+[ADMIN] Unsuspends the given usernames registration
+  <username>: Username to unsuspend
+  Note: this will reset the users last used time.

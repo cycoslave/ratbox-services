@@ -1,0 +1,3 @@
+chandrop <channel>
+Drops registration of the given channel
+  <channel>: Channel to drop

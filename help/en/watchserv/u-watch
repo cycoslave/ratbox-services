@@ -1,0 +1,24 @@
+watch [[-]<flags>[ [-]<flags>]*]
+Modifies the commands to be watched
+  flags: Space seperated list of flags to watch.
+         Flags may be prefixed with a '-' to stop watching them.
+	 With no parameters will list flags being watched
+
+Available flags:
+  auth      : Watch services opers logging in/out
+  banserv   : Watch commands issued to banserv
+  csregister: Watch chanserv::register
+  csadmin   : Watch chanserv admin commands
+              (CHANREGISTER, CHANDROP, CHANSUSPEND, CHANUNSUSPEND)
+  csoper    : Watch chanserv oper commands (CHANLIST, CHANINFO)
+  global    : Watch commands issued to global service
+  jupeserv  : Watch commands issued to jupeserv
+  nsadmin   : Watch nickserv admin commands (NICKDROP)
+  nsregister: Watch nickserv::register
+  operbot   : Watch operbot admin commands (OBJOIN, OBPART)
+  operserv  : Watch commands issued to operserv
+  usadmin   : Watch userserv admin commands
+              (USERREGISTER, USERDROP, USERSUSPEND, USERUNSUSPEND, 
+               USERSETPASS)
+  usoper    : Watch userserv oper commands (USERLIST, USERINFO)
+  usregister: Watch userserv::register

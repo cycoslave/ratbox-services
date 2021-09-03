@@ -1,0 +1,89 @@
+-       ratbox-services database abstraction         -
+- Copyright (C) 2006 Lee Hardy <lee -at- leeh.co.uk> -
+- Copyright (C) 2006 ircd-ratbox development team    -
+------------------------------------------------------
+
+This document describes the database abstraction layer contained in
+ratbox-services, allowing the code to be database agnostic and tie in to
+different database software.
+
+- void rsdb_init(void) -
+------------------------
+
+This function is called to initialise the database so it is ready for use.
+
+- void rsdb_shutdown(void) -
+----------------------------
+
+This function is called on termination to close the database safely.
+
+- const char *rsdb_quote(const char *src) -
+-------------------------------------------
+
+This function is called when a string taken from user input needs to be
+safely quoted to avoid SQL injection.  rsdb_quote() will not be called more
+than once in a single function call, as such it is assumed it will return a
+static string that does not need any memory cleaned up.
+
+rsdb_quote() is generally called only from the custom rs_snprintf()
+function, where the "%Q" modifier has been added to quote strings inline.
+
+- void rsdb_exec(rsdb_callback cb, const char *format, ...) -
+-------------------------------------------------------------
+
+This function is called to execute an SQL statement with an optional
+callback.  The format accepts the string modifier "%Q" to pass input through
+rsdb_quote() so it is safe.
+
+When passed a callback function, this should be called by rsdb_exec() for
+each row returned by the query.  This callback function takes three
+arguments, an int containing the number of fields, a char ** array
+containing each of the field values, and a char ** array containing the
+field names.
+
+- void rsdb_exec_insert(unsigned int *insert_id, const char *table_name  -
+-                       const char *field_name, const char *format, ...) -
+--------------------------------------------------------------------------
+
+This function is called to execute an INSERT SQL statement into a table
+with an autoincrementing 'id' column, where the value the database assigns
+the id column needs to be known by the parent function.
+
+It should pass appropriate storage to store the insert_id in, together
+with the table name and field name that define where the index is.
+
+- struct rsdb_table -
+---------------------
+
+This struct is used when returning an entire table worth of data.  It
+comprises the following members:
+	char ***row	- An array of the rows and columns in the result
+			  set, row[row_position][column_position]
+	int row_count	- Number of rows in the result set
+	int col_count	- Number of columns in the result set
+	void *arg	- Generic storage for rsdb_exec_fetch_end()
+
+- void rsdb_exec_fetch(struct rsdb_table *data, const char *format, ...) -
+--------------------------------------------------------------------------
+
+This function is called to execute an SQL statement without using a
+callback, it will return the entire result set.  The format accepts the
+string modifier "%Q" to pass input through rsdb_quote().
+
+The rsdb_table struct passed to this function does not need to be memset
+before use, as rsdb_exec_fetch() will reset the struct itself.  Anything
+calling rsdb_exec_fetch() must also call rsdb_exec_fetch_end() to cleanup.
+
+- void rsdb_exec_fetch_end(struct rsdb_table *data) -
+-----------------------------------------------------
+
+This function is called to cleanup the memory allocated by the database and
+ratbox-services for the query.
+
+- void rsdb_transaction(rsdb_transtype type) -
+----------------------------------------------
+
+This function is used primarily for sqlite, to group a large number of
+queries together for efficiency.  It is passed either RSDB_TRANS_START or
+RSDB_TRANS_END.
+

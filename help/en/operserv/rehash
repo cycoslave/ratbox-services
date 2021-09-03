@@ -1,0 +1,4 @@
+REHASH [option]
+[ADMIN] Forces services to rehash
+  [option]: Specified to rehash something other than the config:
+     HELP: Rehashes help files and translations

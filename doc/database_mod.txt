@@ -1,0 +1,22 @@
+-     ratbox-services 'live' databases    -
+-------------------------------------------
+
+ratbox-services maintains a large amount of database state in RAM, instead
+of performing lookups in the database.  This means that most of the database
+cannot be modified whilst ratbox-services is running, as ratbox-services
+will not recognise the changes.
+
+The following tables in the database are 'live', and can be modified
+externally without issues:
+	operbans
+	users_resetpass
+	users_resetemail
+	channels_dropowner
+	email_banned_domain
+
+All other tables must not be modified whilst ratbox-services is running.  If
+you need to do this (ie, for a web interface), then you should look at the
+database hook API, documented in dbhook.txt.  This allows the usage of
+'syncer' tables, to notify ratbox-services it needs to modify the database.
+
+Current database hooks are listed in dbhook_current.txt

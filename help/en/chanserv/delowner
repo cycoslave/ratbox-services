@@ -1,0 +1,6 @@
+DELOWNER <channel> [token]
+{200} Removes yourself as the owner from a channel's access list
+  <channel>: Channel to remove yourself from.
+  [token]  : Confirmation token that may have been issued over email
+Removing the last user drops the channel registration.  Removing the owner
+promotes one of the highest remaining users to owner.

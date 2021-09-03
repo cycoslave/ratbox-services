@@ -1,0 +1,3 @@
+Usage: .rehash [help]
+       With no parameters, rehashes the config file, or can be
+       used to reload helpfiles and translations.

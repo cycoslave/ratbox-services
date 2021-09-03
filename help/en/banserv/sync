@@ -1,0 +1,4 @@
+SYNC <server>
+[ADMIN] Syncs the current bans with the given server
+  <server>: Server to sync to.  An oper may always sync to their 
+            own server.

@@ -1,0 +1,4 @@
+DELREGEXPNEG <regexp_id> <nregexp>
+[ADMIN] Removes a regular expression match
+  <regexp_id>: ID of the existing regular expression to remove negation from
+  <nregexp>  : Regular expression negation to remove

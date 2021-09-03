@@ -1,0 +1,3 @@
+OSPART <channel>
+[ADMIN] Parts operserv from the given channel
+  <channel>: Channel to part

@@ -1,0 +1,5 @@
+REGISTER <username> <password> [email]
+Registers given username.
+  <username>: Username to register
+  <password>: Password for username
+  [email]   : Your email address, may be required rather than optional.

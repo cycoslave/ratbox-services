@@ -1,0 +1,107 @@
+$Id: INSTALL 27005 2010-03-21 13:10:03Z leeh $
+
+ratbox-services installation guide
+----------------------------------
+
+IMPORTANT: ratbox-services maintains a large amount of state in RAM.  See
+doc/database_mod.txt for more information.
+
+
+*********************************************************
+* MOST TABLES MUST NOT BE MODIFIED WHILST IT IS RUNNING *
+*********************************************************
+
+
+1. Decide which services you dont want compiled in.  By default all 
+   will be compiled in, as they can be disabled in the config file.
+   These can be listed via ./configure --help
+
+2. Ensure you have a grammar/lexical parser installed.  Bison and flex are
+   recommended, though yacc and lex should do.
+
+3. ratbox-services can use different database engines for storing the data.
+   It presently supports MySQL, PostgreSQL and SQLite.  SQLite is the default, 
+   it is a database interface to a normal file, meaning it does not require a
+   seperate service to be running.  Only version 3 of SQLite is supported.
+
+   A copy of SQLite is included with ratbox-services, you may force
+   ratbox-services to use this version by passing '--with-sqlitebuild' to
+   configure.
+
+   To choose MySQL you should pass '--enable-mysql' to configure.
+
+   To choose PostgreSQL you should pass '--enable-pgsql' to configure.
+
+   If configure cannot find your database engine, you can tell it to look
+   in a specific place.  This varies for each database:
+
+     For SQLite:     '--enable-sqlite=PATH'.
+       Configure will then look in PATH/include/ and PATH/lib/
+     For MySQL:      '--enable-mysql=/path/to/mysql_config'
+       Configure will use the given mysql_config binary to determine paths.
+     For PostgreSQL: '--enable-pgsql=/path/to/pg_config'
+       Configure will use the given pg_config binary to determine paths.
+
+   The sqlite included here is NOT suitable for installation system wide, 
+   only for building ratbox-services.
+
+4. Run the configure script.  By default it will attempt to install to
+   /usr/local/ratbox-services.  If you want it in this directory, then
+   as root you must first:
+   	mkdir /usr/local/ratbox-services
+	chown youruser:yourgroup /usr/local/ratbox-services
+   Then install as normal from your username.  Services will not run as
+   root, nor should you run make install as root.
+
+
+   If you wish to install it to a different directory include the 
+   --prefix option:
+        '--prefix=/home/user/services'
+
+   If there are services you dont want compiled in, like the operbot,
+   include the relevant option:
+        '--disable-operbot'
+
+   If your nick or topic length set in ircd are different to 9 and 160
+   respectively, then:
+   	./configure --with-nicklen=LENGTH
+	./configure --with-topiclen=LENGTH
+   where LENGTH is a number.
+
+   See ./configure --help for more information.  Naturally, options should
+   be combined so ./configure is only run once.
+
+5. Run make
+
+6. Run make install
+
+7. Change to the directory it installed to.
+
+8. Edit etc/example.conf and save it as etc/ratbox-services.conf.
+
+9. Initialise your database, this must be done even if you are converting
+   from hybserv.
+
+   Instructions for this are contained in INSTALL.<database_backend>
+
+   If you are converting from hybserv, see the website for further
+   instructions: http://services.ircd-ratbox.org/
+
+9. On the ircd ratbox-services will connect to, add a connect{} block (or
+   C:/N:/H: lines for older ircds). This should have services's server
+   name (name in serverinfo{} in ratbox-services.conf) and no autoconnect.
+   send_password and accept_password should be equal and flags=encrypted
+   should not be used.
+
+10. On all ircds on the network, some configuration may be necessary.
+    If you use the ratbox-services compatibility code in ircd-ratbox,
+    all servers need service { name = "<ratbox-services's server name>"; };
+    If you want to use BanServ, all servers need a shared{} block.
+
+11. Run sbin/ratbox-services
+
+12. Investigate PREFIX/bin/ircd-shortcut.pl if you wish to install command
+    shortcuts for your services in your ircd, eg /chanserv etc.
+
+
+

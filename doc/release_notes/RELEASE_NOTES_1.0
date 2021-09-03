@@ -1,0 +1,109 @@
+
+This is the current version of ratbox-services.
+
+-- ratbox-services-1.0.3
+- fix banserv losing permanent bans when it cleans up temporary ones
+- fix a core when we get a NICK on an unknown server
+- fix the IO code to handle short reads, which was causing rserv to mangle
+  lines from servers under heavy loads
+- fix broken seeding of the PRNG
+- fix banserv::findkline etc ignoring permanent bans
+
+-- ratbox-services-1.0.2
+- fix permissions for allowing and removing permanent bans in banserv
+- fix username suspensions not disallowing LOGIN
+- dont initialise the PRNG multiple times, and stop attempting to do a
+  blocking read from /dev/random
+
+-- ratbox-services-1.0.1
+- fix sql statement on operserv::osjoin which caused a core
+
+-- ratbox-services-1.0
+- fix build when nickserv is disabled
+
+-- ratbox-services-1.0rc1
+- added new ban service
+
+  IMPORTANT: if banserv is not disabled in configure via --disable-banserv
+  you MUST update your services database with the new banserv table.
+
+  Once it has been installed, edit the schema.txt file, removing the other
+  CREATE TABLE commands, apart from the CREATE TABLE operbans command.  Then
+  run: sqlite services.sb < schema.txt
+
+- fix server/host ordering on jupe notices
+- fix missing parameter in chanserv::set
+- fix various compile warnings
+- fix refcounting of oper blocks for /ctcp chat
+- make chanserv::clearmodes update internal state
+- tidy up some sql statements
+
+
+-- ratbox-services-1.0beta3
+- reorganised the directory structure
+
+  IMPORTANT: You must move your configuration files for them to work
+  with the new directory structure.  After installing this version,
+  you should move your config file and db file to:
+  	PREFIX/etc/ratbox-services.conf
+	PREFIX/etc/ratbox-services.db
+
+- services privs are now far more fine grained
+
+  IMPORTANT: If you expect to have any admin access to your services,
+  you must redo your privs per operator {};.  See example.conf for
+  details.
+
+- added CHANSERV::SET::NOVOICECMD, disables use of VOICE command in channel
+- fix a core when exiting dcc clients due to read/write error
+- added NICKSERV::SET::WARN, controls whether warnings are issued when
+  another client uses a registered nickname, can be disabled in the config
+  via allow_set_warn = yes|no;
+- make USERSERV::USERINFO return email address
+- fix checks for socket() and gethostbyname()
+- NICKSERV::REGAIN renamed to NICKSERV::RELEASE, added NICKSERV::REGAIN
+  which when used by clients on servers supporting it, forcibly changes
+  their nickname to the one they wish to regain
+- allow autoop/autovoice setting in CHANSERV::ADDUSER
+- tidy up tsinfo updates
+- add CHANSERV::CHANLIST and USERSERV::USERLIST, to list registered
+  channels/usernames
+- added a shortcut generator for use with ircd, this creates an ircd
+  module containing commands such as /chanserv to interface with services
+- can now forcibly build the bundled sqlite with --with-sqlitebuild to
+  configure
+- add short introductions to the help indexes
+- .rehash help/kill -USR1 now reloads helpfiles
+
+
+-- ratbox-services-1.0beta2
+- added nickname services which work via username registrations.
+
+  IMPORTANT: if nickserv is not disabled in configure via --disable-nickserv
+  you MUST update your services database with the new nickserv table.
+
+  Once it has been installed, edit the schema.txt file, removing the other
+  CREATE TABLE commands, apart from the CREATE TABLE nicks command.  Then
+  run: sqlite services.sb < schema.txt
+
+- update some helpfiles
+- make sure chanserv parts when a channel registration is dropped
+- fix a core in OPERBOT::OBJOIN
+- add support for sending wallops when admin commands are used
+- make USERSERV::USERINFO work on =nick
+- update a clients n!u@h mask when they change nicks
+- compiler warning flags are set by --enable-warnings, CPPFLAGS/CFLAGS
+  are honoured
+- added CHANSERV::SET::NOVOICES
+- handle redundant ops/voices better
+- fix a bug where we didnt reset a users op status when we deopped them
+- fixed missing host_register stuff in the conf parser
+- imported a cut down version of sqlite into the tree, automatically 
+  built when we cant find it installed in the system
+- fix a couple of problems with ALIS::LIST
+
+
+-- ratbox-services-1.0beta1
+No release notes.
+
+$Id: RELEASE_NOTES 22123 2006-03-13 19:53:54Z leeh $

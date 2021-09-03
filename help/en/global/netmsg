@@ -1,0 +1,3 @@
+NETMSG <message>
+[ADMIN] Sends a message to all users on the network
+  <message>: Message to send

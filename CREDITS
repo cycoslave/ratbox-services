@@ -1,0 +1,14 @@
+$Id: CREDITS 23951 2007-05-13 20:54:57Z leeh $
+
+ratbox-services is an advanced services daemon for use with ircd-ratbox.  It
+has been (mainly) coded from scratch by:
+	anfl, Lee Hardy, <lee -at- leeh.co.uk>
+
+Thanks also go to
+	AndroSyn, Aaron Sethman <androsyn -at- ratbox.org>
+	Hwy, W. Campbell <wcampbel -at- botbay.net>
+	jilles, Jilles Tjoelker <jilles -at- stack.nl>
+	larne, Edward Brocklesby <ejf -at- lythe.org.uk>
+	ongeboren, Evlogi Petrov <xxx.coder -at- gmail.com>
+
+As well as the developers whose code in ircd-ratbox has been used here.

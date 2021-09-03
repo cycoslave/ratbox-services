@@ -1,0 +1,2 @@
+Usage: .connect <server> [port]
+       Connects to the given server, using optional port

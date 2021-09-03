@@ -1,0 +1,24 @@
+watch [[-]<флагове>[ [-]<флагове>]*]
+Задава кои команди да бъдат наблюдавани
+  флагове: лист от разделени с празно пространство флагове за наблюдение.
+           флаговете с префикс '-' спрират наблюдението.
+           ако командата няма параметри, ще покаже наблюдаваните флагове.
+
+Достъпни флагове:
+  auth      : Наблюдава кои оператори се идентифицират
+  banserv   : Наблюдава командите изпратени към banserv
+  csregister: Наблюдава chanserv::register
+  csadmin   : Набюдава администраторските команди към chanserv
+              (CHANREGISTER, CHANDROP, CHANSUSPEND, CHANUNSUSPEND)
+  csoper    : Наблюдава операториските команди към chanserv (CHANLIST, CHANINFO)
+  global    : Наблюдава командите изпратени към global
+  jupeserv  : Наблюдава командите изпратени към jupeserv
+  nsadmin   : Наблюдава администраторските команди към nickserv (NICKDROP)
+  nsregister: Наблюдава nickserv::register
+  operbot   : Наблюдава администраторските команди към operbot (OBJOIN, OBPART)
+  operserv  : Наблюдава командите изпратени към operserv
+  usadmin   : Наблюдава администраторските команди изпратени към userserv
+              (USERREGISTER, USERDROP, USERSUSPEND, USERUNSUSPEND,
+               USERSETPASS)
+  usoper    : Наблюдава операторските команди към userserv (USERLIST, USERINFO)
+  usregister: Наблюдава userserv::register

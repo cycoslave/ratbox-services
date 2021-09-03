@@ -1,0 +1,4 @@
+jupe <server> <reason>
+Places a jupe on the given server.
+  <server>: Server to jupe
+  <reason>: Reason for jupe

@@ -1,0 +1,3 @@
+INVITE <#channel>
+Invites you to a channel monitored by the operbot
+  <#channel>: Channel to request an invitation to.

@@ -1,0 +1,4 @@
+DBSYNC
+[ADMIN] Forces the database to be synced with reality
+  This is primarily for syncing the last time a channel/username
+  was used, most other things are updated in the db immediately.

@@ -1,0 +1,3 @@
+DELREGEXP <regexp>
+[ADMIN] Удаляет regexp
+  <regexp>: Regexp для удаления

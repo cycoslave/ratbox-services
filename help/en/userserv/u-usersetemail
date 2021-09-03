@@ -1,0 +1,4 @@
+usersetemail <username> <email>
+Changes the given usernames email address
+  <username>: Username to change email for
+  <email>   : Email address to change to

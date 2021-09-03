@@ -1,0 +1,6 @@
+ CHANDROP      - Drops registration of the given channel
+ CHANINFO      - Gives extended info about channel
+ CHANLIST      - Lists registered channels
+ CHANREGISTER  - Registers the given channel to the given username
+ CHANSUSPEND   - Suspends the given channels registration
+ CHANUNSUSPEND - Unsuspends the given channels registration

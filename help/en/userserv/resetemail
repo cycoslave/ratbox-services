@@ -1,0 +1,11 @@
+RESETEMAIL [<CONFIRM|AUTH> <token> [address]]
+Resets a usernames email address through email verification.
+ 
+The initial request should contain no parameters.
+The second request should include:
+  CONFIRM   : The CONFIRM keyword
+  <token>   : The token you were emailed
+  [address] : Your new email address
+ 
+The final request should include:
+  <token>   : The token you were emailed to your new address.

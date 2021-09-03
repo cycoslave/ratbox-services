@@ -1,0 +1,7 @@
+Usage: .stats <type>
+       Gives information on the specified type:
+
+       opers    - Opers who have access to services
+       servers  - Servers to connect to
+       uplink   - Information about our uplink
+       uptime   - Services uptime

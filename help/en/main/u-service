@@ -1,0 +1,3 @@
+Usage: .service [service]
+       Gives general service information, or information on a
+       specific service if specified

@@ -1,0 +1,27 @@
+WATCH [[-]<флаги>[ [-]<флаги>]*]
+[ADMIN] Редактирует список команд для наблюдения
+  флаги: Разделенный пробелами список флагов для наблюдения.
+         Флаги могут быть предварены '-' для остановки
+		 наблюдения за ними.
+	 Вызов без параметров выводит список наблюдаемых флагов.
+
+Доступные флаги:
+  auth      : Отображает вход/выход операторов сервисов
+  banserv   : Отображает использвание banserv
+  csregister: Отображает chanserv::register
+  csadmin   : Отображает админ-команды chanserv
+              (CHANREGISTER, CHANDROP, CHANSUSPEND, CHANUNSUSPEND)
+  csoper    : Отображает оператор-команды chanserv 
+              (CHANLIST, CHANINFO)
+  global    : Отображает использование global
+  jupeserv  : Отображает использование jupeserv
+  nsadmin   : Отображает админ-команды nickserv (NICKDROP)
+  nsregister: Отображает nickserv::register
+  operbot   : Отображает админ-команды operbot (OBJOIN, OBPART)
+  operserv  : Отображает использование operserv
+  usadmin   : Отображает админ-команды userserv
+              (USERREGISTER, USERDROP, USERSUSPEND, USERUNSUSPEND, 
+               USERSETPASS)
+  usoper    : Отображает оператор-команды userserv 
+              (USERLIST, USERINFO)
+  usregister: Отображает userserv::register

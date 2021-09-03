@@ -1,0 +1,165 @@
+/* $Id: schema-sqlite.txt 23894 2007-05-01 17:24:07Z leeh $ */
+
+CREATE TABLE nicks (
+	nickname TEXT,
+	username TEXT,
+	reg_time INTEGER,
+	last_time INTEGER,
+	flags INTEGER,
+	PRIMARY KEY(nickname)
+);
+
+CREATE TABLE users (
+	id INTEGER PRIMARY KEY,
+	username TEXT,
+	password TEXT,
+	email TEXT,
+	suspender TEXT,
+	suspend_reason TEXT,
+	suspend_time INTEGER DEFAULT '0',
+	reg_time INTEGER,
+	last_time INTEGER,
+	flags INTEGER,
+	verify_token TEXT,
+	language TEXT DEFAULT ''
+);
+CREATE UNIQUE INDEX users_username_unique ON users (username);
+
+CREATE TABLE users_resetpass (
+	username TEXT,
+	token TEXT,
+	time INTEGER,
+	PRIMARY KEY(username)
+);
+
+CREATE TABLE users_resetemail (
+	username TEXT,
+	token TEXT,
+	email TEXT DEFAULT NULL,
+	time INTEGER,
+	PRIMARY KEY(username)
+);
+
+CREATE TABLE users_sync (
+	id INTEGER PRIMARY KEY,
+	hook TEXT,
+	data TEXT
+);
+
+CREATE TABLE channels (
+	chname TEXT,
+	topic TEXT,
+	url TEXT,
+	createmodes TEXT,
+	enforcemodes TEXT,
+	tsinfo INTEGER,
+	reg_time INTEGER,
+	last_time INTEGER,
+	flags INTEGER,
+	suspender TEXT,
+	suspend_reason TEXT,
+	suspend_time INTEGER DEFAULT '0',
+	PRIMARY KEY(chname)
+);
+
+CREATE TABLE channels_dropowner (
+	chname TEXT,
+	token TEXT,
+	time INTEGER,
+	PRIMARY KEY(chname)
+);
+
+CREATE TABLE members (
+	chname TEXT,
+	username TEXT,
+	lastmod TEXT,
+	level INTEGER,
+	flags INTEGER,
+	suspend INTEGER,
+	FOREIGN KEY(chname) REFERENCES channels (chname) MATCH FULL,
+	FOREIGN KEY(username) REFERENCES users (username) MATCH FULL	
+);
+
+CREATE TABLE bans (
+	chname TEXT,
+	mask TEXT,
+	reason TEXT,
+	username TEXT,
+	level INTEGER,
+	hold INTEGER,
+	FOREIGN KEY(chname) REFERENCES channels (chname) MATCH FULL
+);
+
+CREATE TABLE operbot (
+	chname TEXT,
+	tsinfo INTEGER,
+	oper TEXT
+);
+
+CREATE TABLE operserv (
+	chname TEXT,
+	tsinfo INTEGER,
+	oper TEXT
+);
+
+CREATE TABLE jupes (
+	servername TEXT,
+	reason TEXT
+);
+
+CREATE TABLE operbans (
+	type TEXT,
+	mask TEXT,
+	reason TEXT,
+	operreason TEXT,
+	hold INTEGER,
+	create_time INTEGER,
+	oper TEXT,
+	remove INTEGER,
+	flags INTEGER
+);
+
+CREATE TABLE operbans_regexp (
+	id INTEGER PRIMARY KEY,
+	regex VARCHAR(255) NOT NULL,
+	reason TEXT NOT NULL,
+	hold INTEGER,
+	create_time INTEGER,
+	oper TEXT
+);
+
+CREATE TABLE operbans_regexp_neg (
+	id INTEGER PRIMARY KEY,
+	parent_id INTEGER NOT NULL,
+	regex TEXT NOT NULL,
+	oper TEXT NOT NULL
+);
+
+CREATE TABLE global_welcome (
+	id INTEGER,
+	text TEXT,
+	PRIMARY KEY(id)
+);
+
+CREATE TABLE email_banned_domain (
+	domain TEXT,
+	PRIMARY KEY(domain)
+);
+
+CREATE TABLE ignore_hosts (
+	hostname TEXT NOT NULL,
+	oper TEXT NOT NULL,
+	reason TEXT NOT NULL,
+	PRIMARY KEY(hostname)
+);
+
+CREATE TABLE memos (
+	id INTEGER PRIMARY KEY,
+	user_id INTEGER NOT NULL,
+	source_id INTEGER NOT NULL,
+	source TEXT NOT NULL,
+	timestamp INTEGER DEFAULT '0',
+	flags INTEGER,
+	text TEXT
+);
+

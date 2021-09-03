@@ -1,0 +1,3 @@
+GETKEY <channel>
+{  1} Requests key (+k) of channel
+  <channel>: Channel to request key of

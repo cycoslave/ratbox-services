@@ -1,0 +1,3 @@
+DELREGEXP <regexp>
+[ADMIN] Removes a regular expression match
+  <regexp>: Regular expression to remove

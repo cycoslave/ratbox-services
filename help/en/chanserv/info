@@ -1,0 +1,4 @@
+INFO <channel>
+{  -} Shows basic information about channel
+  <channel>: Channel to show information about
+More information is shown if you have access to the channel.

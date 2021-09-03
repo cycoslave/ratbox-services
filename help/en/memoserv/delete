@@ -1,0 +1,3 @@
+DELETE <memoid>
+Deletes a given memo.
+  <memoid>: ID of memo to delete, or "ALL" to delete all memos

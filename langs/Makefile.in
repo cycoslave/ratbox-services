@@ -1,0 +1,38 @@
+# Generated automatically from Makefile.in by configure.
+# $Id: Makefile.in 23630 2007-02-15 19:29:42Z leeh $
+
+MV=@MV@
+RM=@RM@
+INSTALL=@INSTALL@
+INSTALL_DATA=@INSTALL_DATA@
+prefix=@prefix@
+langdir=@langdir@
+datarootdir=@datarootdir@
+
+LANGS=bg.lang ru.lang
+
+install: 
+	@if [ -d $(DESTDIR)$(langdir)-old ]; then \
+		echo "Removing old translations"; \
+		$(RM) -rf $(DESTDIR)$(langdir)-old; \
+	fi
+	@if [ -d $(DESTDIR)$(langdir) ]; then \
+		echo "Backing up current translations"; \
+		$(MV) $(DESTDIR)$(langdir) $(DESTDIR)$(langdir)-old; \
+	fi
+
+	@echo "Installing new translations"
+	@$(INSTALL) -m 750 -d $(DESTDIR)$(langdir)
+
+	@for k in $(LANGS); do \
+		$(INSTALL_DATA) $$k $(DESTDIR)$(langdir)/$$k; \
+	done
+
+build:
+clean:
+depend:
+all:
+
+distclean:
+	$(RM) -f Makefile
+

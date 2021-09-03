@@ -1,0 +1,119 @@
+
+This is the current stable version of ratbox-services.
+
+-- ratbox-services-1.1.1
+- fix some autoconf tests to be POSIX compliant
+- fix compile with --disable-chanserv
+- handle conf errors with service {}; without coring
+- fix dcc helpfiles not loading on boot
+- fix a couple of minor errors in notices sent out
+- jupeserv::callunjupe now only allows a server one vote
+- ratbox-services as a whole is now licensed under GPL
+
+-- ratbox-services-1.1.0
+- new chanserv config option, autojoin_empty = yes|no;, controls whether
+  chanserv will autojoin empty channels or not
+- fix watchserv -flag to skip past the '-'
+- add watch all to watch all flags
+
+-- ratbox-services-1.1.0rc4
+- fix chanserv::addban making duration 60 times too long
+- make userserv::userinfo list channels as "#foo 200, #x 150" etc, as people
+  are right clicking on the channel name to join it..
+- chanserv::listbans now shows bans in a 'short' form
+- handle an SJOIN containing modes of '0'
+- ignore server logins to suspended nicknames
+- disable the per-service flood protection by default
+- make operserv::ospart work through dcc
+- fix build with chanserv/userserv disabled
+- fix case issue with chanserv::delban
+- fix parameter handling in userserv::resetemail
+- handle signedness overflows on temporary times
+
+-- ratbox-services-1.1.0rc3
+- fix various missing variables from the config parser
+- remove the error checking on sending emails, in order to stop us blocking
+  whilst trying to actually send it
+- channel bans now max out at a year
+- make chanserv::addban accept "1w" etc for ban duration
+- stop trying to enforce modes +lk when we don't have either to enforce
+- fix some schema issues
+
+-- ratbox-services-1.1.0rc2
+- *** THIS RELEASE REQUIRES A DATABASE UPGRADE ** SEE UPGRADING ***
+
+- stop checking for sjoin-deopped users through TS6 mode, as its pointless
+- make chanserv::delowner confirm success when it doesnt need emails
+- fix memory leak when using pgsql
+- fix some minor memory leaks
+- fix check for valid bans to work properly
+- various memory stats are now in stats Z
+- fix initial server connect when database has took an extended time loading
+- fix a table name mismatch for delowner
+- move service introductions to after SERVER so chanserv can deop people
+- dont enable AUTOJOIN for channels we join to enforce restrictops/bans etc,
+  instead set a non-stored INHABIT flag, and part after a period
+- fix some length issues when storing urls/topics
+- url length is now 100 characters
+- add in some database indices
+- fix removing a key from createmodes/enforcemodes
+
+-- ratbox-services-1.1.0rc1
+- *** THIS RELEASE REQUIRES A DATABASE UPGRADE ** SEE UPGRADING ***
+
+- add a new database table, email_banned_domain, a simple list of banned
+  email domains.  This table cannot be modified through services.
+- fix a few minor signedness issues
+- ensure we schedule a reconnect when we get a socket error (eg, failed dns)
+- fix password length checking in userserv::resetpass
+
+-- ratbox-services-1.1.0beta4
+- *** THIS RELEASE REQUIRES A DATABASE UPGRADE ** SEE UPGRADING ***
+
+- fix build when using local sqlite
+- fix RSFNC
+- log entries were missing the wallops they need
+- disallow nickname registration of uids
+- chanserv::deluser can no longer be used to remove a channel owner
+- add chanserv::delowner, command to be used when a channel owner removes
+  themselves, with optional email verification
+- added database hook to userserv for SETEMAIL
+- fix userserv::resetpass potentially trying to insert a duplicate username
+- add userserv::resetemail, to allow users to change their email address
+  through email verification -- both old and new addresses are verified
+- handle the sqlite database being locked
+- add deltas to the event handler to space them out a bit
+- added expiry bonuses for usernames, to reward usernames registered for a
+  long time with extra time before expiry.  See example.conf
+- reset_regtime = <duration>; to userserv {};, controls minimum length of a
+  time a username must be registered before resetpass/resetemail can be used
+- fix handling of booleans with pgsql
+- operserv::takeover now always removes +beI
+- allow operserv::ospart to remove operserv after operserv::takeover
+- fix a few bugs in the pgsql implementation
+- fix case sensitivity handling on a few db tables
+- fix handling of TS5 MODE
+
+-- ratbox-services-1.1.0beta3
+- deal with removing bans under TS6 properly
+- dont log protocol errors for JOIN 0
+- fix operserv::otakeover to be TS6 compatible
+- dont apply our uplinks SID to TS5 servers
+- support for PostgreSQL
+- strip the sqlite3 source somewhat
+- fix a core when SELECT COUNT() returns 0 rows
+
+-- ratbox-services-1.1.0beta2
+- fix core in watchserv
+- make operserv::die send wallops if operserv is configured to
+- move operserv::die, operserv::dbsync and operserv::rehash over to new
+  operserv "maintain" priv, fixing a bug which tested the wrong flags for
+  them
+- made the log files more consistent, we now log nick!user@host masks for
+  oper commands, and prefix their username with a '*'
+- add in DBMOVE documentation on how to move to different database software.
+
+-- ratbox-services-1.1.0beta1
+- initial release, read doc/whats-new-1.1.txt
+
+$Id: RELEASE_NOTES 23660 2007-02-26 18:41:30Z leeh $

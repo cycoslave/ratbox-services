@@ -1,0 +1,6 @@
+MODAUTO <channel> <username> <OP|VOICE|NONE>
+{150} Modifies a user's autolevel on the access list
+  <channel>: Channel to modify user in
+  <username>: Username to modify
+  <OP|VOICE|NONE>: Mode to issue on join
+Automatic OP requires access level of 50 to work.

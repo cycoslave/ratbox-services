@@ -1,0 +1,473 @@
+dnl $Id: configure.in 26720 2010-01-03 18:58:07Z leeh $
+
+dnl Sneaky way to get an Id tag into the configure script
+AC_COPYRIGHT([$Id: configure.in 26720 2010-01-03 18:58:07Z leeh $])
+
+AC_INIT([ratbox-services],[stable])
+
+AC_CONFIG_AUX_DIR(autoconf)
+AC_CONFIG_HEADER(include/setup.h)
+AC_PREFIX_DEFAULT(/usr/local/ratbox-services)
+
+AC_PROG_MAKE_SET
+AC_PROG_CC
+AC_PROG_INSTALL
+AC_PROG_YACC
+AC_PROG_LEX
+AC_PROG_RANLIB
+AC_EXEEXT
+
+AC_PATH_PROG(RM, rm)
+AC_PATH_PROG(CP, cp)
+AC_PATH_PROG(MV, mv)
+AC_PATH_PROG(AR, ar)
+
+AC_CHECK_FUNC(crypt,, AC_CHECK_LIB(crypt, crypt,,))
+
+AC_HEADER_STDC
+AC_CHECK_HEADERS(sys/time.h stdlib.h stdarg.h string.h strings.h unistd.h errno.h getopt.h crypt.h dirent.h)
+
+AC_TYPE_SIGNAL
+AC_FUNC_STRFTIME
+AC_CHECK_FUNC(socket,, AC_CHECK_LIB(socket, socket))
+AC_CHECK_FUNC(gethostbyname,, AC_CHECK_LIB(nsl, gethostbyname))
+AC_CHECK_FUNCS(select strlcpy strlcat gethostbyname mmap getaddrinfo)
+
+AC_SEARCH_LIBS(nanosleep, rt posix4, AC_DEFINE(HAVE_NANOSLEEP, 1, [Define if you have nanosleep]))
+
+AC_ARG_WITH(logdir,
+[ --with-logdir=DIR         logfiles in DIR [localstatedir/log] ],
+[ logdir=$with_logdir ],[ logdir=$localstatedir'/log' ])
+
+AC_ARG_WITH(rundir,
+[ --with-rundir=DIR         pidfile in DIR [localstatedir/run] ],
+[ rundir=$with_rundir ],[ rundir=$localstatedir'/run' ])
+
+AC_ARG_WITH(helpdir,
+[ --with-helpdir=DIR        helpfiles in DIR [datadir/ratbox-services/help] ],
+[ helpdir=$with_helpdir ],[ helpdir=$datadir'/ratbox-services/help' ])
+
+AC_ARG_WITH(langdir,
+[ --with-langdir=DIR        language translations in DIR [datadir/ratbox-services/langs] ],
+[ langdir=$with_langdir ],[ langdir=$datadir'/ratbox-services/langs' ])
+
+AC_SUBST(logdir)
+AC_SUBST(rundir)
+AC_SUBST(helpdir)
+AC_SUBST(langdir)
+
+AC_MSG_CHECKING(Compile with warning flags)
+AC_ARG_ENABLE(warnings,
+[ --enable-warnings         Enable warning flags to compiler],
+[ cf_enable_warnings=$enableval ],[ cf_enable_warnings=no ])
+
+if test "X$cf_enable_warnings" = "Xyes"; then
+	CFLAGS="$CFLAGS -O0 -Wall -Werror -Wunused -Wshadow -Wmissing-declarations -Wwrite-strings"
+	AC_MSG_RESULT(yes)
+else
+	AC_MSG_RESULT(no)
+fi
+
+AC_MSG_CHECKING(Nickname Service)
+AC_ARG_ENABLE(nickserv,
+[ --disable-nickserv        Disable Nickname Service],
+[ cf_enable_nickserv=$enableval ],[ cf_enable_nickserv=yes ])
+
+if test "X$cf_enable_nickserv" = "Xyes"; then
+	S_NICKSERV="s_nickserv.c"
+	AC_DEFINE(ENABLE_NICKSERV, 1, Nickname Service)
+	AC_MSG_RESULT(yes)
+else
+	S_NICKSERV=""
+	AC_MSG_RESULT(no)
+fi
+
+AC_MSG_CHECKING(Channel Service)
+AC_ARG_ENABLE(chanserv,
+[ --disable-chanserv        Disable Channel Service],
+[ cf_enable_chanserv=$enableval ],[ cf_enable_chanserv=yes ])
+
+if test "X$cf_enable_chanserv" = "Xyes"; then
+	S_CHANSERV="s_chanserv.c"
+	AC_DEFINE(ENABLE_CHANSERV, 1, Channel Service)
+	AC_MSG_RESULT(yes)
+else
+	S_CHANSERV=""
+	AC_MSG_RESULT(no)
+fi
+
+AC_MSG_CHECKING(User Service)
+AC_ARG_ENABLE(userserv,
+[ --disable-userserv        Disable User Service],
+[ cf_enable_userserv=$enableval ],[ cf_enable_userserv=yes ])
+
+if test "X$cf_enable_chanserv" = "Xyes"; then
+	cf_enable_userserv=yes
+fi
+
+if test "X$cf_enable_nickserv" = "Xyes"; then
+	cf_enable_userserv=yes
+fi
+
+if test "X$cf_enable_userserv" = "Xyes"; then
+	S_USERSERV="s_userserv.c"
+	AC_DEFINE(ENABLE_USERSERV, 1, User Service)
+	AC_MSG_RESULT(yes)
+else
+	S_USERSERV=""
+	AC_MSG_RESULT(no)
+fi
+
+AC_MSG_CHECKING(Memo Service)
+AC_ARG_ENABLE(memoserv,
+[ --disable-memoserv        Disable Memo Service],
+[ cf_enable_memoserv=$enableval ],[ cf_enable_memoserv=yes ])
+
+if test "X$cf_enable_memoserv" = "Xyes"; then
+	S_MEMOSERV="s_memoserv.c"
+	AC_DEFINE(ENABLE_MEMOSERV, 1, Memo Service)
+	AC_MSG_RESULT(yes)
+else
+	S_MEMOSERV=""
+	AC_MSG_RESULT(no)
+fi
+
+AC_MSG_CHECKING(Oper Service)
+AC_ARG_ENABLE(operserv,
+[ --disable-operserv        Disable Oper Service],
+[ cf_enable_operserv=$enableval ],[  cf_enable_operserv=yes ])
+
+if test "X$cf_enable_operserv" = "Xyes"; then
+ 	S_OPERSERV="s_operserv.c"
+	AC_DEFINE(ENABLE_OPERSERV, 1, Oper Service)
+	AC_MSG_RESULT(yes)
+else
+	S_OPERSERV=""
+	AC_MSG_RESULT(no)
+fi
+
+AC_MSG_CHECKING(List Service)
+AC_ARG_ENABLE(alis,
+[ --disable-alis            Disable (List Service)],
+[ cf_enable_alis=$enableval ],[ cf_enable_alis=yes ])
+
+if test "X$cf_enable_alis" = "Xyes"; then
+	S_ALIS="s_alis.c"
+	AC_DEFINE(ENABLE_ALIS, 1, List Service)
+	AC_MSG_RESULT(yes)
+else
+	S_ALIS=""
+	AC_MSG_RESULT(no)
+fi
+
+AC_MSG_CHECKING(Jupe Service)
+AC_ARG_ENABLE(jupeserv,
+[ --disable-jupeserv        Disable Jupe Service],
+[ cf_enable_jupe=$enableval ],[ cf_enable_jupe=yes ])
+
+if test "X$cf_enable_jupe" = "Xyes"; then
+	S_JUPESERV="s_jupeserv.c"
+	AC_DEFINE(ENABLE_JUPESERV, 1, Jupe Service)
+	AC_MSG_RESULT(yes)
+else
+	S_JUPESERV=""
+	AC_MSG_RESULT(no)
+fi
+
+AC_MSG_CHECKING(Operbot Service)
+AC_ARG_ENABLE(operbot,
+[ --disable-operbot         Disable Operbot Service],
+ [ cf_enable_operbot=$enableval ],[ cf_enable_operbot=yes ])
+
+if test "X$cf_enable_operbot" = "Xyes"; then
+	S_OPERBOT="s_operbot.c"
+	AC_DEFINE(ENABLE_OPERBOT, 1, Operbot Service)
+	AC_MSG_RESULT(yes)
+else
+	S_OPERBOT=""
+	AC_MSG_RESULT(no)
+fi
+
+AC_MSG_CHECKING(Global Service)
+AC_ARG_ENABLE(global,
+[ --disable-global          Disable global messaging service],
+ [ cf_enable_global=$enableval ],[ cf_enable_global=yes ])
+
+if test  "X$cf_enable_global" =  "Xyes"; then
+	S_GLOBAL="s_global.c"
+	AC_DEFINE(ENABLE_GLOBAL, 1, Global Messaging Service)
+	AC_MSG_RESULT(yes)
+else
+	S_GLOBAL=""
+	AC_MSG_RESULT(no)
+fi
+
+AC_MSG_CHECKING(Ban Service)
+AC_ARG_ENABLE(banserv,
+[ --disable-banserv         Disable ban service],
+ [ cf_enable_banserv=$enableval ],[ cf_enable_banserv=yes ])
+
+if test "X$cf_enable_banserv" = "Xyes"; then
+	S_BANSERV="s_banserv.c"
+	AC_DEFINE(ENABLE_BANSERV, 1, Ban Service)
+	AC_MSG_RESULT(yes)
+else
+	S_BANSERV=""
+	AC_MSG_RESULT(no)
+fi
+
+AC_MSG_CHECKING(Watch Service)
+AC_ARG_ENABLE(watchserv,
+[ --disable-watchserv       Disable command watching service],
+ [ cf_enable_watchserv=$enableval ],[ cf_enable_watchserv=yes ])
+
+if test "X$cf_enable_watchserv" = "Xyes"; then
+	S_WATCHSERV="s_watchserv.c"
+	AC_DEFINE(ENABLE_WATCHSERV, 1, Command Watching Service)
+	AC_MSG_RESULT(yes)
+else
+	S_WATCHSERV=""
+	AC_MSG_RESULT(no)
+fi
+
+ac_cv_sqlite3_val=""
+ac_cv_mysql_val=""
+ac_cv_postgresql_val=""
+ac_cv_sqlite3_path=""
+ac_cv_found_sqlite3_inc="no"
+ac_cv_found_sqlite3_lib="no"
+ac_cv_database=""
+
+
+
+DB_INCLUDES=""
+
+
+
+dnl Try to find SQLite.
+AC_ARG_WITH([sqlitebuild],
+[ --with-sqlitebuild        Forces packaged sqlite3 to be used for build],
+[ac_cv_sqlitebuild=$withval], [ac_cv_sqlitebuild=no])
+
+dnl Check for sqlite3
+
+AC_ARG_ENABLE(sqlite3,
+[ --enable-sqlite3[=DIR]    Default: Enable sqlite3 backend, optionally search
+                           DIR/include/ for headers and DIR/lib/ for libs],
+[ac_cv_sqlite3_val=$enableval], [])
+
+AC_CHECK_HEADER(sqlite3.h,
+[
+	ac_cv_found_sqlite3_inc="yes"
+], [
+	AC_MSG_CHECKING(for sqlite3.h in given path)
+	if test -f "$ac_cv_sqlite3_val/include/sqlite3.h"; then
+		AC_MSG_RESULT(yes)
+		ac_cv_found_sqlite3_inc="yes"
+		ac_cv_sqlite3_path="$ac_cv_sqlite3_val"
+	else
+		AC_MSG_RESULT(no)
+	fi
+], [])
+
+AC_CHECK_LIB([sqlite3], [main],
+[
+	ac_cv_found_sqlite3_lib="yes"
+], [
+	AC_MSG_CHECKING(for -lsqlite3 in given path)
+	if test -e "$ac_cv_sqlite3_path/lib/libsqlite3.so"; then
+		AC_MSG_RESULT(yes)
+		ac_cv_found_sqlite3_lib="yes"
+	else
+		AC_MSG_RESULT(no)
+	fi
+])
+
+dnl Check for mysql
+AX_LIB_MYSQL([])
+
+dnl Check for pgsql
+AX_LIB_POSTGRESQL([])
+
+AC_MSG_CHECKING(which database to use)
+
+if test "X$ac_cv_mysql_val" != "X" &&
+   test "X$ac_cv_mysql_val" != "Xno" &&
+   test "X$found_mysql" = "Xyes" &&
+   test "X$ac_cv_sqlitebuild" != "Xyes"; then
+	AC_MSG_RESULT(mysql)
+	DB_BACKEND="mysql"
+
+	DB_LIBS="$DB_LIBS $MYSQL_LDFLAGS"
+	DB_INCLUDES="$DB_INCLUDES $MYSQL_CFLAGS"
+else
+if test "X$ac_cv_postgresql_val" != "X" &&
+   test "X$ac_cv_postgresql_val" != "Xno" &&
+   test "X$found_postgresql" = "Xyes" &&
+   test "X$ac_cv_sqlitebuild" != "Xyes"; then
+	AC_MSG_RESULT(pgsql)
+	DB_BACKEND="pgsql"
+
+	DB_LIBS="$DB_LIBS $POSTGRESQL_LDFLAGS"
+	DB_INCLUDES="$DB_INCLUDES $POSTGRESQL_CFLAGS"
+else
+	if test "X$ac_cv_found_sqlite3_inc" = "Xyes" &&
+	   test "X$ac_cv_found_sqlite3_lib" = "Xyes" &&
+	   test "X$ac_cv_sqlitebuild" != "Xyes"; then
+		AC_MSG_RESULT(sqlite3)
+		DB_BACKEND="sqlite3"
+
+		DB_LIBS="$DB_LIBS -lsqlite3"
+
+		if test "X$ac_cv_sqlite3_path" != "X"; then
+			DB_INCLUDES="$DB_INCLUDES -I $ac_cv_sqlite3_path/include/"
+			LDFLAGS="$LDFLAGS -L $ac_cv_sqlite3_path/lib/"
+		fi
+	else
+		AC_MSG_RESULT(internal packaged sqlite3)
+		DB_BACKEND="sqlite3"
+
+		AC_CONFIG_SUBDIRS(sqlite3)
+		AC_DEFINE(SQLITE_BUILD, 1, Build packaged sqlite3)
+		SQLITE_SUBDIR="sqlite3"
+		DB_INCLUDES="$DB_INCLUDES -I ../sqlite3/"
+		DB_LIBS="$DB_LIBS ../sqlite3/.libs/libsqlite3.a"
+	fi
+fi
+fi
+
+dnl Check for forced pcre build
+AC_ARG_WITH([pcrebuild],
+[ --with-pcrebuild        Forces packaged PCRE to be used for build],
+[ac_cv_pcrebuild=$withval], [ac_cv_pcrebuild=no])
+
+AC_ARG_ENABLE(pcre,
+[ --enable-pcre[=DIR]    Default: Enable PCRE engine, optionally search
+                           DIR/include/ for headers and DIR/lib/ for libs],
+[ac_cv_pcre_val=$enableval], [])
+
+AC_CHECK_HEADER(pcre.h,
+[
+	ac_cv_found_pcre_inc="yes"
+], [
+	AC_MSG_CHECKING(for pcre.h in given path)
+	if test -f "$ac_cv_pcre_val/include/pcre.h"; then
+		AC_MSG_RESULT(yes)
+		ac_cv_found_pcre_inc="yes"
+		ac_cv_pcre_path="$ac_cv_pcre_val"
+	else
+		AC_MSG_RESULT(no)
+	fi
+], [])
+
+AC_CHECK_LIB([pcre], [pcre_compile],
+[
+	ac_cv_found_pcre_lib="yes"
+], [
+	AC_MSG_CHECKING(for -lpcre in given path)
+	if test -e "$ac_cv_pcre_path/lib/libpcre.so"; then
+		AC_MSG_RESULT(yes)
+		ac_cv_found_pcre_lib="yes"
+	else
+		AC_MSG_RESULT(no)
+	fi
+], [])
+
+AC_MSG_CHECKING([which version of PCRE to use])
+
+if test "X$ac_cv_found_pcre_inc" = "Xyes" &&
+   test "X$ac_cv_found_pcre_lib" = "Xyes" &&
+   test "X$ac_cv_pcrebuild" != "Xyes"; then
+	AC_MSG_RESULT(system)
+	LIBS="$LIBS -lpcre"
+
+	if test "X$ac_cv_pcre_path" != "X"; then
+		PCRE_INCLUDES="$PCRE_INCLUDES -I $ac_cv_pcre_path/include/"
+		LDFLAGS="$LDFLAGS -L $ac_cv_pcre_path/lib/"
+	fi
+else
+	AC_MSG_RESULT([internal packaged PCRE])
+
+	AC_CONFIG_SUBDIRS(pcre)
+	AC_DEFINE(PCRE_BUILD, 1, Build packaged PCRE)
+	PCRE_SUBDIR="pcre"
+	PCRE_INCLUDES="$PCRE_INCLUDES -I ../pcre/"
+	LIBS="$LIBS ../pcre/.libs/libpcre.a"
+fi
+
+
+AC_ARG_WITH([nicklen],
+[ --with-nicklen=LENGTH     Sets nick length to LENGTH],
+[ac_cv_nicklen=$withval], [ac_cv_nicklen="9"])
+
+AC_MSG_RESULT([checking nick length... $ac_cv_nicklen])
+AC_DEFINE_UNQUOTED(NICKLEN, (${ac_cv_nicklen}+1), Nick Length)
+
+AC_ARG_WITH([topiclen],
+[ --with-topiclen=LENGTH    Sets topic length to LENGTH],
+[ac_cv_topiclen=$withval], [ac_cv_topiclen="160"])
+
+if test "$ac_cv_topiclen" -gt "255" && test "$DB_BACKEND" = "mysql"; then
+	ac_cv_topiclen="255"
+	AC_MSG_ERROR([topic length cannot exceed 255 when using mysql])
+fi
+
+AC_MSG_RESULT([checking topic length... $ac_cv_topiclen])
+AC_DEFINE_UNQUOTED(TOPICLEN, (${ac_cv_topiclen}+1), Topic Length)
+
+AC_ARG_WITH([userreglen],
+[ --with-userreglen=LENGTH  Sets registered username length to LENGTH],
+[ac_cv_userreglen=$withval], [ac_cv_userreglen="10"])
+
+AC_MSG_RESULT([checking registered username length... $ac_cv_userreglen])
+AC_DEFINE_UNQUOTED(USERREGNAME_LEN, (${ac_cv_userreglen}), Registered Username Length)
+
+AC_SUBST(DB_INCLUDES)
+AC_SUBST(DB_LIBS)
+AC_SUBST(PCRE_INCLUDES)
+AC_SUBST(SQLITE_SUBDIR)
+AC_SUBST(PCRE_SUBDIR)
+
+AC_SUBST(DB_BACKEND)
+
+AC_SUBST(S_NICKSERV)
+AC_SUBST(S_CHANSERV)
+AC_SUBST(S_USERSERV)
+AC_SUBST(S_MEMOSERV)
+AC_SUBST(S_OPERSERV)
+AC_SUBST(S_ALIS)
+AC_SUBST(S_JUPESERV)
+AC_SUBST(S_OPERBOT)
+AC_SUBST(S_GLOBAL)
+AC_SUBST(S_BANSERV)
+AC_SUBST(S_WATCHSERV)
+
+AC_OUTPUT(			\
+	Makefile		\
+        help/Makefile   	\
+	langs/Makefile		\
+	src/Makefile		\
+)
+
+echo
+echo Compiling ratbox-services
+echo Installing into: $prefix
+echo
+echo Database backend ........... $DB_BACKEND
+echo
+echo Nickname Services .......... $cf_enable_nickserv
+echo User Services .............. $cf_enable_userserv
+echo Memo Services .............. $cf_enable_memoserv
+echo Channel Services ........... $cf_enable_chanserv
+echo Oper Services .............. $cf_enable_operserv
+echo Jupe Services .............. $cf_enable_jupe
+echo Oper invite/op bot ......... $cf_enable_operbot
+echo Global Message Service ..... $cf_enable_global
+echo List Service ............... $cf_enable_alis
+echo Ban Service ................ $cf_enable_banserv
+echo Command Watching Service ... $cf_enable_watchserv
+echo
+echo Nick Length ................ $ac_cv_nicklen
+echo Topic Length ............... $ac_cv_topiclen
+echo Registered Username Length . $ac_cv_userreglen
+echo

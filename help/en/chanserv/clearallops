@@ -1,0 +1,3 @@
+CLEARALLOPS <channel>
+{140} Clears all ops with level less than your own
+  <channel>: Channel to clear ops on

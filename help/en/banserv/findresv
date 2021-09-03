@@ -1,0 +1,3 @@
+FINDRESV <mask>
+[ADMIN] Finds all matching resvs
+  <mask>: mask to search for, wildcards are accepted

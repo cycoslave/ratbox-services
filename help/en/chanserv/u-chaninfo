@@ -1,0 +1,4 @@
+chaninfo <channel> [-listusers]
+Gives extended info about channel
+  <channel>   : Channel to show information about
+  [-listusers]: When specified, also outputs channel access list.

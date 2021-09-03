@@ -1,0 +1,3 @@
+FINDKLINE <mask>
+[ADMIN] Finds all matching klines
+  <mask>: user@host to search klines for, wildcards are accepted.

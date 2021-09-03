@@ -1,0 +1,7 @@
+TAKEOVER <channel> [-full|-clear|-clearall]
+[ADMIN] Joins channel with TS-1, removing ops, modes and +beI lists
+Use OSPART to remove operserv from the channel afterwards
+  <channel>   : Channel to takeover
+  [-clear]    : When specified, implies -full, sets +i and removes non-ircops 
+                and non-services admins.
+  [-clearall] : When specified, implies -clear but removes ircops as well.

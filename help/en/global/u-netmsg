@@ -1,0 +1,3 @@
+netmsg <message>
+Sends a message to all users on the network
+  <message>: Message to send

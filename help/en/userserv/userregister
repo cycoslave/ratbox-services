@@ -1,0 +1,5 @@
+USERREGISTER <username> <password> [email]
+[ADMIN] Registers the given username
+  <username>: Username to register
+  <password>: Password to set for username
+  [email]   : Email address to set

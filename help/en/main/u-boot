@@ -1,0 +1,2 @@
+Usage: .boot <username>
+       Logs out all opers with the matching username.

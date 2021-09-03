@@ -1,0 +1,4 @@
+usersetpass <username> <password>
+Changes the given usernames password
+  <username>: Username to change password for
+  <password>: Password to change to

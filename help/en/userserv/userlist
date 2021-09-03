@@ -1,0 +1,6 @@
+USERLIST [-long] [-suspended] [mask [limit]]
+[ADMIN] Lists registered usernames
+  [-long]     : More verbose output
+  [-suspended]: Show suspended usernames instead
+  [mask]      : Limit results to given mask (eg, *leeh*)
+  [limit]     : Show maximum of n results, 0 is unlimited

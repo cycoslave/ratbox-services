@@ -1,0 +1,15 @@
+ ADDREGEXP     - Adds regular expression match for connecting clients
+ ADDREGEXPNEG  - Adds regular expression negation to existing regular expression
+ DELREGEXP     - Removes a regular expression match
+ DELREGEXPNEG  - Removes a regular expression match
+ FINDKLINE     - Finds all matching klines
+ FINDRESV      - Finds all matching resvs
+ FINDXLINE     - Finds all matching xlines
+ KLINE         - Issues a kline on the given mask.
+ LISTREGEXPS   - Lists all regular expression matches
+ RESV          - Sets a resv on the given mask
+ SYNC          - Syncs the current bans with the given server
+ UNKLINE       - Removes a kline on the given mask
+ UNRESV        - Removes a resv on the given mask
+ UNXLINE       - Removes the xline on the given mask
+ XLINE         - Sets an xline on the given mask

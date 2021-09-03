@@ -1,0 +1,221 @@
+# bg.lang
+#   Bulgarian translation
+#
+# Copyright (C) 2007 Lee Hardy <leeh@leeh.co.uk>
+# Copyright (C) 2007 ircd-ratbox development team
+# Copyright (C) 2007 Christian Stoyanov <raptorat@gmail.com>
+# Copyright (C) 2007 Alexander Kotzev <noex.mc@gmail.com>
+
+# The "code" of the language
+set LANG_CODE		"bg"
+
+# The description of the language, which appears in the help
+set LANG_DESCRIPTION	"Bulgarian (Cyrillic windows-1251)"
+
+# general service
+SVC_UNKNOWNCOMMAND,		"Невалидна команда %s::%s"
+SVC_SUCCESSFUL,			"Успешен %s::%s"
+SVC_SUCCESSFULON,		"%s::%s успешно на %s"
+SVC_ISSUED,			"%s::%s изпълнен"		
+SVC_NEEDMOREPARAMS,		"Недостатъчни параметри за %s::%s"
+SVC_ISDISABLED,			"%s::%s е неактивен"
+SVC_ISDISABLEDEMAIL,		"%s::%s е неактивен, защото не може да се изпрати имейл"
+SVC_NOTSUPPORTED,		"%s::%s не се поддържа от сървъра"
+SVC_NOACCESS,			"Нямате достъп за %s::%s"
+SVC_OPTIONINVALID,		"%s::%s невалидна опция"
+SVC_RATELIMITEDGENERIC,		"Временно не може да се отговори. Моля, опитайте по-късно."
+SVC_RATELIMITED,		"%s::%s ограничено, моля опитайте по-късно"
+SVC_RATELIMITEDHOST,		"%s::%s ограничено за Вашия хост, моля опитайте по-късно"
+SVC_NOTLOGGEDIN,		"%s::%s изисква да сте идентифициран"
+SVC_ENDOFLIST,			"Край на листа"	
+SVC_ENDOFLISTLIMIT,		"Край на листа, достигнат лимит"
+SVC_USECOMMANDSHORTCUT,		"Командите към тази услуга трябва да за издадени с /%s вместо с име."
+
+# general irc related
+SVC_IRC_NOSUCHCHANNEL,		"Канал %s не съществува"
+SVC_IRC_CHANNELINVALID,		"Невалиден канал %s"	
+SVC_IRC_CHANNELNOUSERS,		"В канал %s няма потребители"
+SVC_IRC_NOSUCHSERVER,		"Сървър %s не съществува"
+SVC_IRC_SERVERNAMEINVALID,	"Невалиден сървър %s"	
+SVC_IRC_ALREADYONCHANNEL,	"%s вече е в канал %s"
+SVC_IRC_YOUALREADYONCHANNEL,	"Вече сте в канал %s"
+SVC_IRC_NOTINCHANNEL,		"%s не е в канал %s"
+SVC_IRC_YOUNOTINCHANNEL,	"Вие не сте в канал %s"
+SVC_IRC_NOTOPPEDONCHANNEL,	"Вие не притежавате операторски стаут в канал %s"
+
+# email
+SVC_EMAIL_INVALID,		"Невалиден имейл %s"
+SVC_EMAIL_INVALIDIGNORED,	"Невалиден имейл %s, игнориране"
+SVC_EMAIL_BANNEDDOMAIN,		"Имейл провайдъра е забранен"
+SVC_EMAIL_TEMPUNAVAILABLE,	"Временно е невъзможно изпращането на имейл, моля опитайте по-късно"
+SVC_EMAIL_SENDFAILED,		"Не е възможно да се изпълни %s::%s поради проблеми по изпращането на имейл"
+
+# service help
+SVC_HELP_INDEXINFO,		"%s Помощ. Използвайте HELP <команда> за повече информация"
+SVC_HELP_TOPICS,		"Теми: %s"
+SVC_HELP_UNAVAILABLE,		"Няма налична информация за тази услуга"
+SVC_HELP_UNAVAILABLETOPIC,	"Няма налична информация за %s"
+SVC_HELP_INDEXADMIN,		"Администраторски команди:"
+
+# userserv
+SVC_USER_USERLOGGEDIN,		"%s беше идентифициран като Вас (%s)"
+SVC_USER_REGISTERDISABLED,	"%s::%s е изключен, вижте %s"
+SVC_USER_ALREADYREG,		"Потребителско име %s вече е регистрирано"
+SVC_USER_NOTREG,		"Потребителско име %s е свободно за регистрация"
+SVC_USER_NOWREG,		"Потребителско име %s регистрирано"
+SVC_USER_NOWREGLOGGEDIN,	"Потребителско име %s регистрирано, Вие сте идентифициран"
+SVC_USER_NOWREGEMAILED,		"Потребителско име %s регистрирано, кодът за активиране Ви е изпратен по имейл."
+SVC_USER_REGDROPPED,		"Регистрацията на %s е прекъсната"
+SVC_USER_INVALIDUSERNAME,	"Невалидно потребителско име %s"	
+SVC_USER_INVALIDPASSWORD,	"Въведената парола е грешна"	
+SVC_USER_INVALIDLANGUAGE,	"Невалиден език %s"	
+SVC_USER_LONGPASSWORD,		"Въведената парола е прекалено дълга"	
+SVC_USER_LOGINSUSPENDED,	"Идентифицирането невъзможно, потребителското име е забранено"
+SVC_USER_LOGINUNACTIVATED,	"Идентифицирането невъзможно, потребителското име не е активирано.  Използвайте първо %s::ACTIVATE"
+SVC_USER_LOGINMAX,		"Идентифицирането невъзможно, потребителското име е с %d идентифицирани потребители"
+SVC_USER_ALREADYLOGGEDIN,	"Вече сте идентифициран"
+SVC_USER_NICKNOTLOGGEDIN,	"Псевдоним %s не е идентифициран"
+SVC_USER_SUSPENDED,		"Потребителско име %s е забранено за ползване"
+SVC_USER_NOEMAIL,		"Няма записан имейл за %s"
+SVC_USER_CHANGEDPASSWORD,	"Паролата на %s е сменена успешно"
+SVC_USER_CHANGEDOPTION,		"Потребител %s %s сменено на %s"
+SVC_USER_QUERYOPTION,		"Потребител %s %s е %s"
+SVC_USER_QUERYOPTIONALREADY,	"%s %s вече е %s за Вашето потребителско име",
+SVC_USER_REQUESTISSUED,		"За потребителско име %s беше изпратен имейл за потвърждаване на %s заявка"
+SVC_USER_REQUESTPENDING,	"Потребителско име %s вече има чакаща %s заявка"
+SVC_USER_REQUESTNONE,		"Потребителско име %s няма текущи %s заявки"
+SVC_USER_TOKENBAD,		"Потребителско име %s %s грешен код"
+SVC_USER_TOKENMISMATCH,		"Потребителско име %s %s кода не съвпада"
+SVC_USER_DURATIONTOOSHORT,	"Потребителско име %s не е регистрирано от достатъчно дълго време за %s::%s"
+SVC_USER_NOACCESSON,		"Потребителско име %s има опция NOACCESS и не може да бъде добавяно в листа за достъп на канал"
+
+# userserv::activate
+SVC_USER_ACT_ALREADY,		"Потребителско име %s вече е било активирано за използване"
+SVC_USER_ACT_COMPLETE,		"Потребителско име %s активирано, вече можете да се идентифицирате"
+
+# userserv::resetpass
+SVC_USER_RP_LOGGEDIN,		"Не можете да искате възстановяване на паролата докато сте идентифициран"
+
+# userserv::userlist
+SVC_USER_UL_START,		"Листа съвпада с %s, лимит %u%s"
+
+# userserv::info
+# chanserv::info
+# nickserv::info
+SVC_INFO_REGDURATIONUSER,	"[%s] Потребителско име регистрирано от %s"
+SVC_INFO_REGDURATIONCHAN,	"[%s] Канал регистриран от %s от %s"
+SVC_INFO_REGDURATIONNICK,	"[%s] Псевдоним регистриран от %s от %s"
+SVC_INFO_SUSPENDED,		"[%s] Забранен от %s (продължителност до %s) %s"
+SVC_INFO_SUSPENDEDADMIN,	"[%s] Забранен от администратор (продължителност %s)%s%s"
+SVC_INFO_ACCESSLIST,		"[%s] Достъп до: %s"
+SVC_INFO_NICKNAMES,		"[%s] Регистрирани псевдоними: %s"
+SVC_INFO_EMAIL,			"[%s] Имейл адрес: %s"
+SVC_INFO_URL,			"[%s] Уеб сайт: %s"
+SVC_INFO_TOPIC,			"[%s] Тема: %s"
+SVC_INFO_SETTINGS,		"[%s] Настройки: %s"
+SVC_INFO_ENFORCEDMODES,		"[%s] Режими: %s"
+SVC_INFO_CURRENTLOGON,		"[%s] В момента идентифициран от:"
+
+# nickserv
+SVC_NICK_NOTONLINE,		"Псевдоним %s в момента не е онлайн"
+SVC_NICK_ALREADYREG,		"Псевдоним %s вече е регистриран"
+SVC_NICK_NOTREG,		"Псевдоним %s не е регистриран"
+SVC_NICK_NOWREG,		"Псевдоним %s е регистриран"
+SVC_NICK_CANTREGUID,		"Не можете да регистрирате UID, моля ивползвайте реален псевдоним"
+SVC_NICK_USING,			"Псевдоним %s вече се използва от Вас"
+SVC_NICK_TOOMANYREG,		"Вече сте регистрирали %d псевдоними"
+SVC_NICK_LOGINFIRST,		"Трябва да регистрирате потребителско име с %s и идентифицирате, преди да можете да регистрирате псевдоними"
+SVC_NICK_REGGEDOTHER,		"Псевдоним %s не е Ваш"
+SVC_NICK_CHANGEDOPTION,		"Псевдоним %s %s сменено на %s"
+SVC_NICK_QUERYOPTION,		"Псевдоним %s %s е %s"
+
+# chanserv
+SVC_CHAN_NOWREG,		"Канал %s регистриран"
+SVC_CHAN_NOTREG,		"Канал %s не е регистриран"
+SVC_CHAN_ALREADYREG,		"Канал %s вече е регистриран"
+SVC_CHAN_CHANGEDOPTION,		"Канал %s %s сменено на %s"
+SVC_CHAN_UNSETOPTION,		"Канал %s %s премахнат"	
+SVC_CHAN_QUERYOPTION,		"Канал %s %s е %s"
+SVC_CHAN_QUERYOPTIONALREADY,	"Канал %s %s вече е %s"
+SVC_CHAN_LISTSTART,		"Листа с канали съвпадащи с %s, лимит %u%s"
+SVC_CHAN_ISSUSPENDED,		"Канал %s е спрян за ползване"
+SVC_CHAN_NOACCESS,		"Недостатъчен достъп до канал %s"
+SVC_CHAN_USERNOACCESS,		"Потребител %s няма достъп до канал %s"
+SVC_CHAN_USERALREADYACCESS,	"Потребител %s вече има достъп до канал %s"
+SVC_CHAN_USERHIGHERACCESS,	"Потребител %s има по-голям или равен достъп до канал %s"
+SVC_CHAN_INVALIDACCESS,		"Ниво на досъп %s невалидно"
+SVC_CHAN_INVALIDAUTOLEVEL,	"Автоматично ниво %s невалидно"	
+SVC_CHAN_INVALIDSUSPENDLEVEL,	"Ниво на забрана %s невалидно"
+SVC_CHAN_USERSETACCESS,		"Потребител %s ниво на достъп %d зададено за канал %s"
+SVC_CHAN_USERREMOVED,		"Потребител %s премахнат от листа за достъп до канал %s"
+SVC_CHAN_USERSETAUTOLEVEL,	"Потребител %s автоматично ниво %s зададено за канал %s"
+SVC_CHAN_USERSETSUSPEND,	"Потребител %s ниво на забрана %d зададено за канал %s"
+SVC_CHAN_USERSUSPENDREMOVED,	"Потребител %s премахната забраната за достъп до канал %s"
+SVC_CHAN_USERHIGHERSUSPEND,	"Потребител %s нивото на забрана до канал %s по-високо"
+SVC_CHAN_REQUESTPENDING,	"Канал %s вече има чакаща заявка за %s"
+SVC_CHAN_REQUESTNONE,		"Канал %s няма чакаща заявка за %s"
+SVC_CHAN_TOKENMISMATCH,		"Канал %s %s кодът не съвпада"
+SVC_CHAN_NOMODE,		"Канал %s не съществува режим %s"
+SVC_CHAN_INVALIDMODE,		"Невалиден режим %s"	
+SVC_CHAN_ALREADYOPPED,		"Вече притежавате операторски статут в канал %s"
+SVC_CHAN_ALREADYVOICED,		"Вече притежавате voice в канал %s"
+SVC_CHAN_YOUNOTBANNED,		"Нямате забрана за достъп до %s"
+SVC_CHAN_USEDELOWNER,		"Потребител %s е собственик на %s. Моля използвайте %s::DELOWNER"
+SVC_CHAN_BANSET,		"Бан %s с ниво %d зададен за канал %s"
+SVC_CHAN_BANREMOVED,		"Бан %s премахнат от канал %s"
+SVC_CHAN_ALREADYBANNED,		"Бан %s вече съществува в канал %s"
+SVC_CHAN_NOTBANNED,		"Бан %s не е намерен за канал %s"
+SVC_CHAN_BANLISTFULL,		"Канал %s бан листа е пълен"
+SVC_CHAN_INVALIDBAN,		"Бан %s невалиден"
+SVC_CHAN_BANHIGHERLEVEL,	"Бан %s по-висок левел за канал %s"
+SVC_CHAN_BANHIGHERACCOUNT,	"Канал %s има бан на по-високо ниво от Вашето ниво на достъп"
+SVC_CHAN_BANLISTSTART,		"Бан листа за канал %s:"
+
+# operserv
+SVC_OPER_CONNECTIONSSTART,	"Текущи връзки (%s)"
+SVC_OPER_CONNECTIONSEND,	"Край на връзките"	
+SVC_OPER_SERVERNAMEMISMATCH,	"Имената на сървърите не съвпадат"
+SVC_OPER_OSPARTACCESS,		"Нямате достъп до %s::OSPART запълнени чрез %s канали"
+SVC_OPER_IGNORENOTFOUND,	"Филтър %s не е намерен"
+SVC_OPER_IGNOREALREADY,		"Филтър %s съвпада с вече съществуващ филтър %s"
+SVC_OPER_IGNORELIST,		"Листа с филтри:"
+
+# banserv
+SVC_BAN_ISSUED,			"Зададен %s за %s"
+SVC_BAN_ALREADYPLACED,		"%s вече е поставен в %s"
+SVC_BAN_NOTPLACED,		"%s не е поставен в %s"
+SVC_BAN_INVALID,		"Невалиден %s: %s"
+SVC_BAN_LISTSTART,		"Бан листа съвпадаща с %s"
+SVC_BAN_NOPERMACCESS,		"Нямате достъп за поставяне на перманентен %s"
+SVC_BAN_REGEXPSUCCESS,		"%s::ADDREGEXP успешен за %s, сложени %u kline(s)"
+SVC_BAN_TOOMANYMATCHES,		"Бан %s%s%s съвпада с %u (> %d) потребители"
+SVC_BAN_TOOMANYREGEXPMATCHES,	"Изразът %s съвпада с %u (> %d) потребители"
+
+# global
+SVC_GLOBAL_WELCOMETOOLONG,	"Приветстващо съобщение твърде дълго (%u > %u)",
+SVC_GLOBAL_WELCOMEINVALID,	"Грешен номер на приветстващо съобщение (%u >= %u)"
+SVC_GLOBAL_WELCOMESET,		"Приветстващо съобщение %u зададено"
+SVC_GLOBAL_WELCOMENOTSET,	"Приветстващо съобщение %u не е зададено"
+SVC_GLOBAL_WELCOMEDELETED,	"Приветстващо съобщение %u изтрито"
+SVC_GLOBAL_WELCOMELIST,		"Приветстващи съобщения:"
+
+# jupeserv
+SVC_JUPE_ALREADYJUPED,		"Сървър %s вече е разкачен"
+SVC_JUPE_NOTJUPED,		"Сървър %s не е разкачен"
+SVC_JUPE_ALREADYREQUESTED,	"%s::%s за %s вече е зададено"
+SVC_JUPE_PENDINGLIST,		"Изчакващи разкачания:"	
+
+# alis
+SVC_ALIS_LISTSTART,		"Максимум %d имена на канали съвпадащи с '%s'"
+
+# memoserv
+SVC_MEMO_RECEIVED,		"Получихте съобщение #%u от %s"
+SVC_MEMO_SENT,			"Съобщение до %s изпратено"
+SVC_MEMO_TOOMANYMEMOS,		"Невъзможно да се изпрати съобщението до %s, потребителят е достигнал допустимият лимит от съобщения"
+SVC_MEMO_INVALID,		"Невалиден номер на съобщение %s"
+SVC_MEMO_DELETED,		"Съобщение #%u изтрито"
+SVC_MEMO_DELETEDALL,		"Всички съобщения изтрити"
+SVC_MEMO_LIST,			"%u нови съобщения, %u стари съобщения"
+SVC_MEMO_LISTSTART,		"  ново    Id    Дата       Време  Изпращател"
+SVC_MEMO_READ,			"Id %u Изпратено %s Изпращател %s: %s"
+

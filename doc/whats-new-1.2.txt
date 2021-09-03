@@ -1,0 +1,82 @@
+General
+-------
+- Support for translations of helpfiles and messages from services.
+
+Userserv
+--------
+- userserv::set::noaccess added.  When this is set, the username cannot be
+  added to any channels.
+- userserv::set::nomemos added.  When this is set, the username cannot
+  be sent memos through memoserv.
+- userserv::usersetemail added.  A new command for administrators that
+  allows them to change a usernames email address.
+- userserv::usersuspend extended.  There is now support for suspending
+  a username temporarily for a given duration.
+
+Chanserv
+--------
+- chanserv::set::nouserbans added.  When this is set, all bans set on a
+  channel must be done through services.
+- chanserv::op extended.  Now when a specific channel is not give as a
+  parameter, the user will be opped in all channels that they are currently
+  not opped in.
+- chanserv::chansuspend extended.  There is now support for suspending a
+  channel temporarily for a given duration.
+
+Operserv
+--------
+- Ability to make services ignore all messages from a given nick!user@host
+  mask.
+- Ability to merge services into operserv.  The banserv, jupeserv and
+  watchserv services can now be 'merged' into operserv which will remove
+  them as separate services and provide support for using their commands
+  through operserv instead.  Helpfiles are automatically merged.
+
+  Note, when using service merging, the config files should stay the same
+  as they would when not merging services.  The loglevel and flags of the
+  service are taken from operserv however.
+
+Banserv
+-------
+- Ability to add regular expression matches.  When a client connects to the
+  network they are compared against the regular expressions and if they 
+  match services will issue a kline for their hostname.
+
+Memoserv
+--------
+- A new service allowing usernames to send memos to each other.
+
+Config File
+-----------
+- serverinfo {};
+  - 'default_language = <language>;', controls the default language used
+    when communicating with users who have not chosen a specific language
+- operator {};
+  - New flag to userserv, 'setemail', grants access to usersetemail
+  - New flag to operserv, 'ignore', grants access to control the services
+    ignore list
+  - New flag to banserv, 'regexp', grants access to add regular expression
+    matches
+- service "userserv" {};
+  - 'show_suspend_reasons = <yes|no>;', controls whether users can see the
+    reason a username was suspended (but not who suspended it).
+- service "chanserv" {};
+  - 'show_suspend_reasons = <yes|no>;', controls whether users can see the
+    reason a channel was suspended (but not who suspended it).
+- service "banserv" {};
+  - 'merge_into_operserv = <yes|no>;', merges all of banservs functions
+    into operserv
+  - 'regexp_time = <time>;', when issuing bans for users, controls how long
+    the issued kline lasts
+  - 'max_regexp_matches = <number>;', controls the upper limit on how many
+    users a regular expression can match, regexps above this level are not
+    placed
+- service "watchserv" {};
+  - 'merge_into_operserv = <yes|no>;', merges all of watchservs functions
+    into operserv
+- service "jupeserv" {};
+  - 'merge_into_operserv = <yes|no>;', merges all of jupeservs functions
+    into operserv
+- service "memoserv" {};
+  - New section, see example.conf.
+

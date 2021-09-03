@@ -1,0 +1,14 @@
+sqlite3 database backend
+------------------------
+
+PREFIX here is the path of the prefix to which ratbox-services installed to.
+
+If ratbox-services compiled sqlite itself, the sqlite3 binary can be
+found in PREFIX/bin.
+
+Then generate the schema:
+	cd /path/to/source/tools/
+	./generate-schema.pl
+
+To initialise the database:
+	sqlite3 PREFIX/etc/ratbox-services.db < /path/to/source/tools/schema-sqlite.txt

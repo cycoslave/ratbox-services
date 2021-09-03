@@ -1,0 +1,15 @@
+ ADDREGEXP     - Добавляет regexp на подключения клиентов
+ ADDREGEXPNEG  - Добавляет исключающий regexp на один из установленных
+ DELREGEXP     - Удаляет regexp
+ DELREGEXPNEG  - Удаляет исключающий regexp
+ FINDKLINE     - Поиск kline
+ FINDRESV      - Поиск resv
+ FINDXLINE     - Поиск xline
+ KLINE         - Установка kline на заданную маску
+ LISTREGEXPS   - Вывод списка всех regexp
+ RESV          - Установка resv на заданную маску
+ SYNC          - Синхронизирует все текущие баны с указанным сервером
+ UNKLINE       - Удаление kline с заданной маски
+ UNRESV        - Удаление resv с заданной маски
+ UNXLINE       - Удаление xline с заданной маски
+ XLINE         - Установка xline на заданную маску

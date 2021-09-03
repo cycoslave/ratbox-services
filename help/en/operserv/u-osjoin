@@ -1,0 +1,3 @@
+osjoin <channel>
+Joins operserv to the given channel
+  <channel>: Channel to join

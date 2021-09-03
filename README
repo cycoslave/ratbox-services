@@ -1,0 +1,59 @@
+ratbox-services
+---------------
+
+ratbox-services is a services daemon for use with ircd-ratbox.  It provides
+channel/username registration services, nickname services linked in through
+usernames, as well as a jupe service, an oper service, an operbot, a 
+list service and an oper ban service.
+
+
+Database backend
+----------------
+ratbox-services supports a number of database backends for storage, however
+it also maintains a large amount of state in RAM instead of querying the
+database.  See doc/database_mod.txt for more information.
+
+
+*********************************************************
+* MOST TABLES MUST NOT BE MODIFIED WHILST IT IS RUNNING *
+*********************************************************
+
+
+Installation
+------------
+Installation instructions are contained in INSTALL.
+
+
+Upgrading
+---------
+Important notes when upgrading are contained in UPGRADING.
+
+
+Release notes
+-------------
+Notes for this release are contained within RELEASE_NOTES.
+
+
+Website
+-------
+Additional documentation is available via the website at:
+http://services.ircd-ratbox.org/
+
+
+Support
+-------
+Support is available via IRC on #ratbox@EFNet or via email to
+ircd-ratbox@lists.ratbox.org.  Please note, if you encounter problems with
+ratbox-services, you should *first* look at your logfiles.
+
+
+Bugs
+----
+If you encounter a bug with ratbox-services, please report it via email.  If
+ratbox-services cores, please keep a copy of the corefile and the binary
+safe, and load it into gdb:
+gdb /path/to/ratbox-services /path/to/ratbox-services.core
+
+Once at a gdb prompt, type "bt" and email the output.
+
+# $Id: README 22191 2006-03-17 21:55:30Z leeh $ 

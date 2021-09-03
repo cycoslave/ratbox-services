@@ -1,0 +1,28 @@
+This service allows you to register and control various
+aspects of channels, such as who is allowed channel
+operator privileges. To use this service, you need a
+registered username. Available commands:
+ ADDBAN      - { 10} Adds a ban to chanserv
+ ADDUSER     - {150} Adds a user to a channel's access list
+ CLEARALLOPS - {140} Clears all ops with level less than your own
+ CLEARBANS   - {140} Clears bans not in the database
+ CLEARMODES  - {140} Clears simple modes (+ilk)
+ CLEAROPS    - {140} Clears channel ops without op flags
+ DELBAN      - { 10} Deletes the given ban
+ DELOWNER    - {200} Removes yourself as the owner from a channel's access list
+ DELUSER     - {150} Removes a user from a channel's access list
+ GETKEY      - {  1} Requests key (+k) of channel
+ INFO        - {  -} Shows basic information about channel
+ INVITE      - {  1} Requests an invite to channel
+ LISTBANS    - { 10} Lists bans on a channel
+ LISTUSERS   - {100} Lists users with access to a given channel
+ MODAUTO     - {150} Modifies a user's autolevel on the access list
+ MODBAN      - { 10} Modifies a ban level
+ MODUSER     - {150} Modifies a users level on the access list
+ OP          - { 50} Makes services op yourself
+ REGISTER    - {  -} Registers the given channel under your current username
+ SET         - {190} Sets various channel options
+ SUSPEND     - {100} Suspends given user at given level
+ UNBAN       - { 10} Unbans yourself from a channel
+ UNSUSPEND   - {100} Unsuspends a user's access
+ VOICE       - {  1} Makes services voice yourself

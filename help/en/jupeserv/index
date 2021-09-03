@@ -1,0 +1,7 @@
+This service allows services operators to place jupes on
+servers, which prevents them from reconnecting to the
+network. Depending on configuration, ircops may be able to
+vote upon jupes and unjupes. Available commands:
+ CALLJUPE    - Call a vote for an oper jupe on the given server.
+ CALLUNJUPE  - Call a vote for an oper unjupe of the given server.
+ PENDING     - Lists pending oper jupes.

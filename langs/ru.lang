@@ -1,0 +1,202 @@
+# ru.lang
+#   Contains a russian translation file
+#
+# Copyright (C) 2007 Lee Hardy <leeh@leeh.co.uk>
+# Copyright (C) 2007 ircd-ratbox development team
+# Copyright (C) 2007 Valery Yatsko <darkwire.tl@gmail.com>
+
+# The "code" of the language
+set LANG_CODE		"ru"
+
+# The description of the language, which appears in the help
+set LANG_DESCRIPTION	"Russian (Cyrillic windows-1251)"
+
+# general service
+SVC_UNKNOWNCOMMAND,		"Неверная команда %s::%s"
+SVC_SUCCESSFUL,			"%s::%s выполнена успешно"
+SVC_SUCCESSFULON,		"%s::%s выполнена успешно для %s"
+SVC_ISSUED,			"%s::%s выполнена"
+SVC_NEEDMOREPARAMS,		"Недостаточно параметров для %s::%s"
+SVC_ISDISABLED,			"%s::%s отключена"
+SVC_ISDISABLEDEMAIL,		"%s::%s отключена, так как не может отправлять email"
+SVC_NOTSUPPORTED,		"%s::%s не поддерживается на данном сервере"
+SVC_NOACCESS,			"Нет доступа к %s::%s"
+SVC_OPTIONINVALID,		"%s::%s некорректная опция"
+SVC_RATELIMITEDGENERIC,		"Невозможно выполнить запрос. Пожалуйста, попробуйте еще раз позднее."
+SVC_RATELIMITED,		"%s::%s использование ограничено, повторите попытку позднее"
+SVC_RATELIMITEDHOST,		"%s::%s использование ограничено для данного хоста, повторите попытку позднее"
+SVC_NOTLOGGEDIN,		"%s::%s требует идентификации"
+SVC_ENDOFLIST,			"Конец списка"
+SVC_ENDOFLISTLIMIT,		"Конец списка, достигнут лимит"
+SVC_USECOMMANDSHORTCUT,		"Команды к данному сервису должны быть использованы как /%s вместо имени."
+
+# general irc related
+SVC_IRC_NOSUCHCHANNEL,		"Канал %s несуществует"
+SVC_IRC_CHANNELINVALID,		"Неверный канал %s"
+SVC_IRC_CHANNELNOUSERS,		"На канале %s нет пользователей"
+SVC_IRC_NOSUCHSERVER,		"Сервер %s не существует"
+SVC_IRC_SERVERNAMEINVALID,	"Неверный сервер %s"
+SVC_IRC_ALREADYONCHANNEL,	"%s уже находится на канале %s"
+SVC_IRC_YOUALREADYONCHANNEL,	"Вы уже находитесь на канале %s"
+SVC_IRC_NOTINCHANNEL,		"%s отсутствует на канале %s"
+SVC_IRC_YOUNOTINCHANNEL,	"Вы отсутствуете на канале %s"
+SVC_IRC_NOTOPPEDONCHANNEL,	"Вы не являетесь оператором канала %s"
+
+# email
+SVC_EMAIL_INVALID,		"Неверный email %s"
+SVC_EMAIL_INVALIDIGNORED,	"Неверный email %s, игнорирован"
+SVC_EMAIL_BANNEDDOMAIN,		"Email провайдер забанен"
+SVC_EMAIL_TEMPUNAVAILABLE,	"Временное отсутствие возможности отправки email, повторите попытку позднее"
+SVC_EMAIL_SENDFAILED,		"Невозможно выполнить %s::%s в связи с проблемами с отправкой email"
+
+# service help
+SVC_HELP_INDEXINFO,		"%s Список разделов. Используйте HELP <команда> для получения подробной информации"
+SVC_HELP_TOPICS,		"Разделы: %s"
+SVC_HELP_UNAVAILABLE,		"Помощь по данному сервису отсутствует"
+SVC_HELP_UNAVAILABLETOPIC,	"Отсутствует помощь по %s"
+SVC_HELP_INDEXADMIN,		"Команды администраторов:"
+
+# userserv
+SVC_USER_USERLOGGEDIN,		"%s только что идентифицировался, как Вы (%s)"
+SVC_USER_REGISTERDISABLED,	"%s::%s отключена, смотрите %s"
+SVC_USER_ALREADYREG,		"Имя пользователя %s уже зарегистрировано"
+SVC_USER_NOTREG,		"Имя пользователя %s не зарегистрировано"
+SVC_USER_NOWREG,		"Имя пользователя %s зарегистрировано"
+SVC_USER_NOWREGLOGGEDIN,	"Имя пользователя %s зарегистрировано, осуществлен вход"
+SVC_USER_NOWREGEMAILED,		"Имя пользователя %s зарегистрировано, token для активации был отправлен на email"
+SVC_USER_REGDROPPED,		"Регистрация имени пользователя %s прекращена"
+SVC_USER_INVALIDUSERNAME,	"Неверное имя пользователя %s"
+SVC_USER_INVALIDPASSWORD,	"Неверный пароль"
+SVC_USER_INVALIDLANGUAGE,	"Неверный язык %s"
+SVC_USER_LONGPASSWORD,		"Пароль слишком длинный"
+SVC_USER_LOGINSUSPENDED,	"Невозможно осуществить вход, имя пользователя 'заморожено'"
+SVC_USER_LOGINUNACTIVATED,	"Невозможно осуществить вход, имя пользователя неактивно.  Сначала используйте %s::ACTIVATE"
+SVC_USER_LOGINMAX,		"Невозможно осуществить вход, имя пользователя уже имеет %d активных сессий"
+SVC_USER_ALREADYLOGGEDIN,	"Вы уже идентифицированы"
+SVC_USER_NICKNOTLOGGEDIN,	"Ник %s не идентифицирован"
+SVC_USER_NOEMAIL,		"Имя пользователя %s не имеет установленного email адреса"
+SVC_USER_CHANGEDPASSWORD,	"Пароль для имени пользователя %s изменен"
+SVC_USER_CHANGEDOPTION,		"Для имени пользователя %s %s установлена как %s"
+SVC_USER_QUERYOPTION,		"Для имени пользователя %s %s установлена как %s"
+SVC_USER_QUERYOPTIONALREADY,	"Для имени пользователя %s %s уже установлена как %s",
+SVC_USER_REQUESTISSUED,		"На имя пользователя %s выслан email для подтверждения выполнения %s"
+SVC_USER_REQUESTPENDING,	"Имя пользователя %s находится в ожидании выполнения %s"
+SVC_USER_REQUESTNONE,		"Имя пользователя %s не находится в ожидании выполнения %s"
+SVC_USER_TOKENBAD,		"Для имени пользователя %s %s token некорректно сформирован"
+SVC_USER_TOKENMISMATCH,		"Для имени пользователя %s %s token является неверным"
+SVC_USER_DURATIONTOOSHORT,	"Имя пользователя %s зарегистрировано слишком мало чтобы использовать %s::%s"
+SVC_USER_NOACCESSON,		"Имя пользователя %s отмечено как NOACCESS и не может быть добавлено в список доступа"
+
+# userserv::activate
+SVC_USER_ACT_ALREADY,		"Имя пользователя %s уже активировано"
+SVC_USER_ACT_COMPLETE,		"Имя пользователя %s активировано, теперь Вы можете использовать LOGIN"
+
+# userserv::resetpass
+SVC_USER_RP_LOGGEDIN,		"Вы не можете осуществить сброс пароля, пока Вы идентифицированы"
+
+# userserv::userlist
+SVC_USER_UL_START,		"Имя пользователя, подходящее под %s, лимит %u%s"
+
+# userserv::info
+# chanserv::info
+# nickserv::info
+SVC_INFO_REGDURATIONUSER,	"[%s] Имя пользователя зарегистрировано %s"
+SVC_INFO_REGDURATIONCHAN,	"[%s] Канал зарегистрирован на %s %s"
+SVC_INFO_REGDURATIONNICK,	"[%s] Ник зарегистрирован на %s %s"
+SVC_INFO_SUSPENDED,		"[%s] 'Заморожен' %s: %s"
+SVC_INFO_SUSPENDEDADMIN,	"[%s] 'Заморожен' администратором сервисов"
+SVC_INFO_ACCESSLIST,		"[%s] Список доступа: %s"
+SVC_INFO_NICKNAMES,		"[%s] Зарегистрированные ники: %s"
+SVC_INFO_EMAIL,			"[%s] Email: %s"
+SVC_INFO_URL,			"[%s] URL: %s"
+SVC_INFO_TOPIC,			"[%s] Топик: %s"
+SVC_INFO_SETTINGS,		"[%s] Параметры: %s"
+SVC_INFO_ENFORCEDMODES,		"[%s] Форсированные моды: %s"
+SVC_INFO_CURRENTLOGON,		"[%s] Идентифицирован как:"
+
+# nickserv
+SVC_NICK_NOTONLINE,		"Ник %s оффлайн"
+SVC_NICK_ALREADYREG,		"Ник %s уже зарегистрирован"
+SVC_NICK_NOTREG,		"Ник %s не зарегистрирован"
+SVC_NICK_NOWREG,		"Ник %s зарегистрирован"
+SVC_NICK_CANTREGUID,		"Вы не можете зарегистрировать Ваш UID, пожалуйста, смените ник на реальный"
+SVC_NICK_USING,			"Ник %s уже используется Вами"
+SVC_NICK_TOOMANYREG,		"Вы уже зарегистрировали %d ник(а,ов)"
+SVC_NICK_LOGINFIRST,		"Вы должны сначала зарегистрировать имя пользователя, используя %s и идентифицироваться, прежде чем зарегистрировать ник"
+SVC_NICK_REGGEDOTHER,		"Ник %s зарегистрирован не на Вас"
+SVC_NICK_CHANGEDOPTION,		"Для ника %s %s установлена как %s"
+SVC_NICK_QUERYOPTION,		"Nickname %s %s установлена как %s"
+
+# chanserv
+SVC_CHAN_NOWREG,		"Канал %s зарегистрирован"
+SVC_CHAN_NOTREG,		"Канал %s не зарегистрирован"
+SVC_CHAN_ALREADYREG,		"Канал уже %s зарегистрирован"
+SVC_CHAN_CHANGEDOPTION,		"Для канала %s %s установлена как %s"
+SVC_CHAN_UNSETOPTION,		"Для канала %s %s сброшена"
+SVC_CHAN_QUERYOPTION,		"Для канала %s %s установлена как %s"
+SVC_CHAN_QUERYOPTIONALREADY,	"Для канала %s %s уже установлена как %s"
+SVC_CHAN_LISTSTART,		"Канал, подходящий под %s, лимит %u%s"
+SVC_CHAN_ISSUSPENDED,		"Канал %s 'заморожен'"
+SVC_CHAN_NOACCESS,		"Отсутствует доступ к %s"
+SVC_CHAN_USERNOACCESS,		"Пользователь %s не имеет доступа на канале %s"
+SVC_CHAN_USERALREADYACCESS,	"Пользователь %s уже имеет доступ на канале %s"
+SVC_CHAN_USERHIGHERACCESS,	"Уровень доступа %s равен или выше на канале %s"
+SVC_CHAN_INVALIDACCESS,		"Уровень доступа %s задан неверно"
+SVC_CHAN_INVALIDAUTOLEVEL,	"Авто уровень %s неверен"
+SVC_CHAN_INVALIDSUSPENDLEVEL,	"Уровень 'замораживания' %s неверен"
+SVC_CHAN_USERSETACCESS,		"Уровень доступа пользователя %s установлен как %d на канале %s"
+SVC_CHAN_USERREMOVED,		"Уровень доступа пользователя %s удален на канале %s"
+SVC_CHAN_USERSETAUTOLEVEL,	"Для пользователя %s установлен автоуровень %s на канале %s"
+SVC_CHAN_USERSETSUSPEND,	"Для пользователя %s уровень 'замораживания' установлен как %d на канале %s"
+SVC_CHAN_USERSUSPENDREMOVED,	"Пользователь %s разморожен на канале %s"
+SVC_CHAN_USERHIGHERSUSPEND,	"Для пользователя %s уровень 'замораживания' выше на канале %s"
+SVC_CHAN_REQUESTPENDING,	"Канал %s уже находится в ожидании выполнения %s"
+SVC_CHAN_REQUESTNONE,		"Канал %s не находится в ожидании выполнения %s"
+SVC_CHAN_TOKENMISMATCH,		"Для канал %s %s token является неверным"
+SVC_CHAN_NOMODE,		"Канал %s не имеет режима %s"
+SVC_CHAN_INVALIDMODE,		"Неверный режим %s"
+SVC_CHAN_ALREADYOPPED,		"Вы уже имеете статус оператора на канале %s"
+SVC_CHAN_ALREADYVOICED,		"Вы уже имеете статус войса на канале %s"
+SVC_CHAN_YOUNOTBANNED,		"Вы не забанены на %s"
+SVC_CHAN_USEDELOWNER,		"Пользователь %s является владельцем %s. Используйте %s::DELOWNER"
+SVC_CHAN_BANSET,		"Бан %s уровня %d установлен на канале %s"
+SVC_CHAN_BANREMOVED,		"Бан %s удален на канале %s"
+SVC_CHAN_ALREADYBANNED,		"Бан %s уже установлен на канале %s"
+SVC_CHAN_NOTBANNED,		"Бан %s не найден на канале %s"
+SVC_CHAN_BANLISTFULL,		"Список банов %s полон"
+SVC_CHAN_INVALIDBAN,		"Бан %s является неверным"
+SVC_CHAN_BANHIGHERLEVEL,	"Уровень бана %s выше на канале %s"
+SVC_CHAN_BANHIGHERACCOUNT,	"Канал %s имеет бан с более высоким уровнем, чем Ваш"
+SVC_CHAN_BANLISTSTART,		"Список банов канала %s:"
+
+# operserv
+SVC_OPER_CONNECTIONSSTART,	"Текущие подключения (%s)"
+SVC_OPER_CONNECTIONSEND,	"Конец подключений"
+SVC_OPER_SERVERNAMEMISMATCH,	"Имена серверов не совпадают"
+SVC_OPER_OSPARTACCESS,		"Нет доступа %s::OSPART на каналах с использованием %s"
+
+# banserv
+SVC_BAN_ISSUED,			"Установлен %s для %s"
+SVC_BAN_ALREADYPLACED,		"%s уже установлен для %s"
+SVC_BAN_NOTPLACED,		"%s не установлен для %s"
+SVC_BAN_INVALID,		"Неверный %s: %s"
+SVC_BAN_LISTSTART,		"Список банов, совпадающих %s"
+SVC_BAN_NOPERMACCESS,		"Нет доступа для установки бесконечного %s"
+
+# global
+SVC_GLOBAL_WELCOMETOOLONG,	"Приветствие слишком длинное (%u > %u)",
+SVC_GLOBAL_WELCOMEINVALID,	"Неверный id приветствия (%u >= %u)"
+SVC_GLOBAL_WELCOMESET,		"Приветствие %u установлено"
+SVC_GLOBAL_WELCOMENOTSET,	"Приветствие %u не установлено"
+SVC_GLOBAL_WELCOMEDELETED,	"Приветствие %u удалено"
+SVC_GLOBAL_WELCOMELIST,		"Список приветствий:"
+
+# jupeserv
+SVC_JUPE_ALREADYJUPED,		"Для сервера %s уже установлен jupe"
+SVC_JUPE_NOTJUPED,		"Для сервера %s jupe не был установлен"
+SVC_JUPE_ALREADYREQUESTED,	"%s::%s на %s уже вызван Вашим сервером"
+SVC_JUPE_PENDINGLIST,		"Ожидающие jupe:"
+
+# alis
+SVC_ALIS_LISTSTART,		"Возврат максимума в %d имен каналов, подходящих под '%s'"
+

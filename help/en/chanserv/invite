@@ -1,0 +1,3 @@
+INVITE <channel>
+{  1} Requests an invite to channel
+  <channel>: Channel to request invitation to

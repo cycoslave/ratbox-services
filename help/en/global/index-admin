@@ -1,0 +1,4 @@
+ ADDWELCOME    - Adds a welcome message sent when users connect to IRC
+ DELWELCOME    - Deletes a welcome message
+ LISTWELCOME   - Lists welcome messages
+ NETMSG        - Sends a message to all users on the network

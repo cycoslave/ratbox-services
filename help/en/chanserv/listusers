@@ -1,0 +1,3 @@
+LISTUSERS <channel>
+{100} Lists users with access to a given channel
+  <channel>: Channel to list users from

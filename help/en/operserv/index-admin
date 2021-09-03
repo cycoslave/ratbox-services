@@ -1,0 +1,11 @@
+ ADDIGNORE     - Adds an ignore of all commands from the given mask
+ DBSYNC        - Forces the database to be synced with reality
+ DELIGNORE     - Removes the given mask from the ignore list
+ DIE           - Terminates services
+ LISTIGNORES   - Lists ignore masks for services
+ LISTOPERS     - Lists connected services opers
+ OMODE         - Issues the given modestring on the channel
+ OSJOIN        - Joins operserv to the given channel
+ OSPART        - Parts operserv from the given channel
+ REHASH        - Forces services to rehash
+ TAKEOVER      - Joins channel with TS-1, removing ops, modes and +beI lists

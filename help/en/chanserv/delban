@@ -1,0 +1,4 @@
+DELBAN <channel> <mask>
+{ 10} Deletes the given ban
+  <channel>: Channel to delete ban from
+  <mask>   : nick!user@host mask of ban to remove

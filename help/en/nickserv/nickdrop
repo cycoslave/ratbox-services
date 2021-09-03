@@ -1,0 +1,3 @@
+NICKDROP <nickname>
+[ADMIN] Drops registration of the given nickname
+  <nickname>: Nickname to drop

@@ -1,0 +1,3 @@
+USERDROP <username>
+[ADMIN] Drops registration of the given username
+  <username>: Username to drop

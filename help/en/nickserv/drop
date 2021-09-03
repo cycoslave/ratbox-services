@@ -1,0 +1,3 @@
+DROP <nickname>
+Drops registration of nickname from your username.
+  <nickname>: Nickname to drop

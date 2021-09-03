@@ -1,0 +1,22 @@
+SET <channel> <option> [parameter]
+{190} Sets various channel options
+  AUTOJOIN     [on|off]: Places services within the channel.  May be
+                         automatically enabled by NOOPS/NOVOICES.
+  NOOPS        [on|off]: Disallow any user being opped.
+  RESTRICTOPS  [on|off]: Disallow any users without OP access being opped.
+  NOVOICES     [on|off]: Disallow any user being voiced.
+  NOVOICECMD   [on|off]: Disables use of the VOICE command on the channel.
+  NOUSERBANS   [on|off]: Disallow any bans not set through services.
+  WARNOVERRIDE [on|off]: Warns chanops when INVITE/GETKEY are used.
+                         Requires AUTOJOIN.
+  CREATEMODES  [modes] : Channel modes used on channel creation.  Set to "+"
+                         to clear.
+  ENFORCEMODES [modes] : Channel modes that are enforced.  You may only
+                         enforce modes exist (eg, +n).  For proper
+                         enforcement of +i and +k, enable AUTOJOIN.  Set to
+                         "+" to clear.
+  TOPIC        [topic] : Sets channel topic to [topic].  This will be
+                         enforced periodically by services.  Set to 
+                         "-none" to clear.
+  URL          [url]   : Sets channel URL to [url].  Set to "-none" to
+                         clear.

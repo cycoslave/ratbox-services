@@ -1,0 +1,33 @@
+ratbox-services upgrade guide
+-----------------------------
+
+IF YOU ARE UPGRADING FROM 1.0.x, YOU MUST READ THE DBMOVE FILE.
+
+If you are upgrading between major version numbers (eg, 1.0.x -> 1.1.x), you
+should read doc/whats-new-VER.txt.  This file will document the major
+changes between the versions.
+
+When upgrading between versions, you should run the dbupgrade.pl script
+found in tools/.  This script will output the list of database changes
+since a given version, for a given database schema.
+
+Your database should only be upgraded after you have terminated the old
+version, but before you have started the new version.
+
+This upgrade script only accounts for released versions, not for subversion
+copies.
+
+This upgrade script *cannot* cope with moving between different database
+backends.
+
+You should always run the upgrade script with your full version -- keeping
+any "beta", "rc" tags etc.
+
+The script is run as:
+	./dbupgrade.pl <version> <schema>
+Eg,
+	./dbupgrade.pl 1.0.3 sqlite
+
+
+If you are upgrading from the 1.0.x series, you must read the DBMOVE file.
+

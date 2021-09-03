@@ -1,0 +1,3 @@
+DELIGNORE <mask>
+[ADMIN] Removes the given mask from the ignore list
+  <mask>: nick!user@host mask to remove from ignore list

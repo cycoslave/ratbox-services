@@ -1,0 +1,4 @@
+ACTIVATE <username> <token>
+With email verification, activates the given username so it may be used.
+  <username>: Username to activate
+  <token>   : Token provided in email needed to activate the username

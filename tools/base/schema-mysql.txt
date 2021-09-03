@@ -1,0 +1,179 @@
+-- $Id: schema-mysql.txt 23894 2007-05-01 17:24:07Z leeh $
+
+CREATE TABLE users (
+	id INTEGER AUTO_INCREMENT,
+	username VARCHAR(USERREGNAME_LEN) NOT NULL,
+	password VARCHAR(PASSWDLEN) NOT NULL,
+	email VARCHAR(EMAILLEN),
+	suspender VARCHAR(OPERNAMELEN),
+	suspend_reason VARCHAR(SUSPENDREASONLEN),
+	suspend_time INT UNSIGNED DEFAULT '0',
+	reg_time INT UNSIGNED,
+	last_time INT UNSIGNED,
+	flags INT UNSIGNED,
+	verify_token VARCHAR(8),
+	language VARCHAR(255) DEFAULT '',
+	PRIMARY KEY(id)
+);
+ALTER TABLE users ADD UNIQUE(username);
+
+CREATE TABLE users_resetpass (
+	username VARCHAR(USERREGNAME_LEN) NOT NULL,
+	token VARCHAR(10),
+	time INTEGER,
+	PRIMARY KEY(username)
+);
+ALTER TABLE users_resetpass ADD INDEX (time);
+
+CREATE TABLE users_resetemail (
+	username VARCHAR(USERREGNAME_LEN) NOT NULL,
+	token VARCHAR(10),
+	email VARCHAR(EMAILLEN) DEFAULT NULL,
+	time INTEGER,
+	PRIMARY KEY(username)
+);
+ALTER TABLE users_resetemail ADD INDEX (time);
+
+CREATE TABLE users_sync (
+	id INTEGER AUTO_INCREMENT, 
+	hook VARCHAR(50) NOT NULL,
+	data TEXT,
+	PRIMARY KEY(id)
+);
+
+CREATE TABLE nicks (
+	nickname VARCHAR(NICKLEN) NOT NULL,
+	username VARCHAR(USERREGNAME_LEN) NOT NULL,
+	reg_time INT UNSIGNED,
+	last_time INT UNSIGNED,
+	flags INT UNSIGNED,
+	PRIMARY KEY(nickname)
+);
+
+CREATE TABLE channels (
+	chname VARCHAR(CHANNELLEN) NOT NULL,
+	topic VARCHAR(TOPICLEN),
+	url VARCHAR(URLLEN),
+	createmodes VARCHAR(50),
+	enforcemodes VARCHAR(50),
+	tsinfo INT UNSIGNED,
+	reg_time INT UNSIGNED,
+	last_time INT UNSIGNED,
+	flags INT UNSIGNED,
+	suspender VARCHAR(OPERNAMELEN),
+	suspend_reason VARCHAR(SUSPENDREASONLEN),
+	suspend_time INT UNSIGNED DEFAULT '0',
+	PRIMARY KEY(chname)
+);
+
+CREATE TABLE channels_dropowner (
+	chname VARCHAR(CHANNELLEN) NOT NULL,
+	token VARCHAR(10),
+	time INTEGER,
+	PRIMARY KEY(chname)
+);
+ALTER TABLE channels_dropowner ADD INDEX (time);
+
+CREATE TABLE members (
+	chname VARCHAR(CHANNELLEN) NOT NULL,
+	username VARCHAR(USERREGNAME_LEN) NOT NULL,
+	lastmod VARCHAR(USERREGNAME_LEN) NOT NULL,
+	level INT,
+	flags INT UNSIGNED,
+	suspend INT,
+	PRIMARY KEY(chname, username)
+);
+ALTER TABLE members ADD INDEX (chname);
+ALTER TABLE members ADD INDEX (username);
+
+CREATE TABLE bans (
+	chname VARCHAR(CHANNELLEN) NOT NULL,
+	mask VARCHAR(CONVERT_NICK_USER_HOST) NOT NULL,
+	reason VARCHAR(50) NOT NULL,
+	username VARCHAR(USERREGNAME_LEN) NOT NULL,
+	level INT,
+	hold INT,
+	PRIMARY KEY(chname, mask)
+);
+ALTER TABLE bans ADD INDEX (chname);
+
+CREATE TABLE operbot (
+	chname VARCHAR(CHANNELLEN) NOT NULL,
+	tsinfo INT UNSIGNED,
+	oper VARCHAR(OPERNAMELEN),
+	PRIMARY KEY(chname)
+);
+
+CREATE TABLE operserv (
+	chname VARCHAR(CHANNELLEN) NOT NULL,
+	tsinfo INT UNSIGNED,
+	oper VARCHAR(OPERNAMELEN),
+	PRIMARY KEY(chname)
+);
+
+CREATE TABLE jupes (
+	servername VARCHAR(HOSTLEN) NOT NULL,
+	reason VARCHAR(REALLEN) NOT NULL,
+	PRIMARY KEY(servername)
+);
+
+CREATE TABLE operbans (
+	type CHAR(1) NOT NULL,
+	mask VARCHAR(CHANNELLEN) NOT NULL,
+	reason VARCHAR(REASONLEN) NOT NULL,
+	operreason VARCHAR(REASONLEN),
+	hold INT UNSIGNED,
+	create_time INT UNSIGNED,
+	oper VARCHAR(OPERNAMELEN),
+	remove BOOL,
+	flags INT UNSIGNED,
+	PRIMARY KEY(type, mask)
+);
+
+CREATE TABLE operbans_regexp (
+	id INTEGER AUTO_INCREMENT,
+	regex VARCHAR(255) NOT NULL,
+	reason VARCHAR(REASONLEN) NOT NULL,
+	hold INTEGER,
+	create_time INTEGER,
+	oper VARCHAR(OPERNAMELEN),
+	PRIMARY KEY(id)
+);
+
+CREATE TABLE operbans_regexp_neg (
+	id INTEGER AUTO_INCREMENT,
+	parent_id INTEGER NOT NULL,
+	regex VARCHAR(255) NOT NULL,
+	oper VARCHAR(30) NOT NULL,
+	PRIMARY KEY(id)
+);
+
+CREATE TABLE global_welcome (
+	id INTEGER,
+	text TEXT,
+	PRIMARY KEY(id)
+);
+
+CREATE TABLE email_banned_domain (
+	domain VARCHAR(255) NOT NULL,
+	PRIMARY KEY(domain)
+);
+
+CREATE TABLE ignore_hosts (
+	hostname VARCHAR(255) NOT NULL,
+	oper VARCHAR(OPERNAMELEN) NOT NULL,
+	reason VARCHAR(255) NOT NULL,
+	PRIMARY KEY(hostname)
+);
+
+CREATE TABLE memos(
+	id INTEGER AUTO_INCREMENT,
+	user_id INTEGER NOT NULL,
+	source_id INTEGER NOT NULL,
+	source VARCHAR(USERREGNAME_LEN) NOT NULL,
+	timestamp INTEGER UNSIGNED DEFAULT '0',
+	flags INTEGER UNSIGNED DEFAULT '0',
+	text TEXT,
+	PRIMARY KEY(id)
+);
+

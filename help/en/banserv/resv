@@ -1,0 +1,5 @@
+RESV [duration] <mask> <reason>
+[ADMIN] Sets a resv on the given mask
+  [duration]: Duration resv lasts
+  <mask>    : Mask to resv
+  <reason>  : Reason for resv

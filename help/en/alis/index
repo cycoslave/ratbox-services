@@ -1,0 +1,3 @@
+This service allows you to list channels with more
+flexibility than the /list command. Available commands:
+ LIST        - Gives a channel list based on parameters.

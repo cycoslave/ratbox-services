@@ -1,0 +1,6 @@
+SUSPEND <channel> <username> <level>
+{100} Suspends given user at given level
+  <channel> : Channel to suspend user on
+  <username>: Username to suspend
+  <level>   : Level to suspend user's access at
+Only users with the given level of access can unsuspend the user.

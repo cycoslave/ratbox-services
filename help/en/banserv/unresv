@@ -1,0 +1,3 @@
+UNRESV <mask>
+[ADMIN] Removes a resv on the given mask
+  <mask>: Mask of resv to remove

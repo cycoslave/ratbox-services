@@ -1,0 +1,3 @@
+nickdrop <nickname>
+Drops registration of the given nickname
+  <nickname>: Nickname to drop

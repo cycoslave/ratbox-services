@@ -1,0 +1,5 @@
+XLINE [duration] <mask> <reason>
+[ADMIN] Sets an xline on the given mask
+  [duration]: Duration xline lasts
+  <mask>    : Mask to xline
+  <reason>  : Reason for xline

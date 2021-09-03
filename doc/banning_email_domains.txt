@@ -1,0 +1,16 @@
+-   Banning email domains  -
+----------------------------
+
+When using the email functions with ratbox-services, it is possible to
+prevent certain email domains from being used in email addresses.
+
+This table cannot be modified from within ratbox-services, but runs live
+from the database.  Wildcards are not supported.
+
+The database table is 'email_banned_domain', which contains a single field
+of 'domain'.  To add an entry, simply add it into this table via the
+appropriate SQL method.
+
+Eg, to ban emails using the domain 'ircd-ratbox.org':
+	INSERT INTO email_banned_domain (domain) VALUES('ircd-ratbox.org');
+

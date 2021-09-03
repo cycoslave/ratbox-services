@@ -1,0 +1,3 @@
+userinfo <username>
+Gives extended information about a username
+  <username>: Username to give information on

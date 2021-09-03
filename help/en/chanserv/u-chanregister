@@ -1,0 +1,4 @@
+chanregister <channel> <user>
+Registers the given channel to the given username
+  <channel> : Channel to register
+  <username>: Username to register to

@@ -1,0 +1,4 @@
+LOGIN <username> <password>
+Logs in to the given username.
+  <username>: Username to log in to.
+  <password>: Password for this username.

@@ -1,0 +1,3 @@
+FINDXLINE <маска>
+[ADMIN] Поиск xline
+  <маска>: Маска поиска, разрешены wildcards.

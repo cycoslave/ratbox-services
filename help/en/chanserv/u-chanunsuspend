@@ -1,0 +1,4 @@
+chanunsuspend <channel>
+Unsuspends the given channel's registration
+  <channel>: Channel to unsuspend 
+  Note: This will reset a channels last used time

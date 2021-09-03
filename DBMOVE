@@ -1,0 +1,96 @@
+- ratbox-services database backend moving -
+-------------------------------------------
+
+This guide is for moving between different database storage engines.
+
+Anybody upgrading from 1.0.x will be moving from sqlite2, which is no longer
+supported.  What you move to is up to you.
+
+- sqlite2 to sqlite3 -
+----------------------
+
+If you are moving from sqlite2 to sqlite3 (1.0.x -> 1.1.x) then you will
+need to initialise your database in sqlite3 form.
+
+First extract your sqlite2 database:
+	sqlite etc/ratbox-services.db ".dump" > db-dump.txt
+
+Then move the old database out of the way:
+	mv etc/ratbox-services.db etc/ratbox-services-sqlite2.db
+
+Then initialise your sqlite3 database using this dump:
+	sqlite3 etc/ratbox-services.db < db-dump.txt
+
+You should then follow the instructions in UPGRADING to upgrade your
+database.
+
+
+- sqlite2 to non-sqlite warning -
+---------------------------------
+
+If you are moving from sqlite to mysql/pgsql, it is important that you run
+the sqlitecheck.pl script in tools/.  SQLite does not care about lengths of
+strings, but mysql/pgsql do and this could cause problems.
+
+The sqlitecheck script takes a single argument of the path to the database
+schema you are moving to.  This should *always* be the schema for the
+version you are currently running, but for your *new* database software.
+
+The schema MUST be generated using generate-schema.pl first.
+
+Eg, to swap from 1.0.3 to 1.1.0, moving from sqlite to mysql:
+	./sqlitecheck.pl 1.0-mysql-schema.txt
+
+This will output a bunch of SELECT statements to run against your current
+database.  If any of these statements give output, you will need to decide
+what to do, either fixing the entries by hand or accepting that some data in
+the database will be shortened when it is imported into the new software.
+
+- sqlite2 to mysql -
+--------------------
+
+First extract the data from your sqlite2 database:
+	sqlite etc/ratbox-services.db ".dump" |grep "^INSERT INTO" > db-dump.txt
+
+You then need to create the database table, follow the instructions in
+INSTALL.mysql but do NOT generate a schema or initialise the database.
+
+Then generate a schema for 1.0:
+	cd /path/to/src/tools/
+	./generate-schema.pl oldschema/1.0-mysql-schema.txt
+
+Then check your sqlite2 database for length problems, as documented above.
+
+Then initialise your database using this schema:
+	cat /path/to/src/tools/1.0-mysql-schema.txt | mysql -u <user> -p <table>
+
+Then import your data:
+	cat db-dump.txt | mysql -u <user> -p <table>
+
+You should then follow the instructions in UPGRADING to upgrade your
+database.
+
+- sqlite2 to pgsql -
+--------------------
+
+First extract the data from your sqlite2 database:
+	sqlite etc/ratbox-services.db ".dump" |grep "^INSERT INTO" > db-dump.txt
+
+You then need to create the database table, follow the instructions in
+INSTALL.pgsql but do NOT generate a schema or initialise the database.
+
+Then generate a schema for 1.0:
+	cd /path/to/src/tools/
+	./generate-schema.pl oldschema/1.0-pgsql-schema.txt
+
+Then check your sqlite2 database for length problems, as documented above.
+
+Then initialise your database using this schema:
+	psql -W ratbox_services rserv < /path/to/src/tools/1.0-pgsql-schema.txt
+
+Then import your data:
+	psql -W ratbox_services rserv < db-dump.txt
+
+You should then follow the instructions in UPGRADING to upgrade your
+database.
+

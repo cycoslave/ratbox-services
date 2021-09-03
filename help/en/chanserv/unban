@@ -1,0 +1,6 @@
+UNBAN <channel>
+{ 10} Unbans yourself from a channel
+  <channel>: Channel to unban yourself on
+Removes all +b modes on the channel matching you, unless you are banned with
+a higher level chanserv ban (see ADDBAN) or there is a +e mode (ban exception)
+matching you.

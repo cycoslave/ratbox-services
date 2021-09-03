@@ -1,0 +1,4 @@
+OMODE <channel> <modestring>
+[ADMIN] Issues the given modestring on the channel
+  <channel>: Channel to issue on
+  <modestring>: Modes to issue

@@ -1,0 +1,3 @@
+UNKLINE <маска>
+[ADMIN] ”даление kline с заданной маски
+  <маска>: user@host дл€ удалени€ kline

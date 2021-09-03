@@ -1,0 +1,3 @@
+This service allows services operators to send messages
+to all users on the network, and add welcome messages to
+be sent when a client connects.

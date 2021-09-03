@@ -1,0 +1,3 @@
+CLEAROPS <channel>
+{140} Clears channel ops without op flags
+  <channel>: Channel to clear ops on

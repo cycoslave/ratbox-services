@@ -1,0 +1,27 @@
+ADDREGEXP [duration] <regexp> <reason>
+[ADMIN] Adds regular expression match for connecting clients
+  <duration>: Duration regexp lasts (not duration of kline)
+  <regexp>  : The regular expression pattern to add
+  <reason>  : Reason for ban
+
+The regular expression takes the form of:
+  ^nickname!username@hostname#gecos$
+
+The regular expression must contain all four fields, together with the
+'^' and '$' characters.
+
+Note, regular expressions are not the same as the normal '*' and '?' 
+wildcard characters and the regular expression cannot contain an actual
+space character ' '.  The regular expressions must be in perl form.
+
+When a user connects to the network, their information is compared
+against the list of regular expressions and if any matches are found
+then a kline is issued on the users hostname.  When a regular expression
+is added, all existing users matching the expression will also be klined.
+
+Note, the duration field is the duration for the regular expression
+itself, not for how long the kline will last.  The duration of the kline
+is controlled by the config file.
+
+For an introduction to regular expressions, see:
+  http://docs.ircd-ratbox.org/regexp.shtml

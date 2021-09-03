@@ -1,0 +1,4 @@
+DELREGEXPNEG <regexp_id> <nregexp>
+[ADMIN] Удаляет исключающий regexp
+  <regexp_id>: ID существующего regexp
+  <nregexp>  : Исключающий regexp для удаления

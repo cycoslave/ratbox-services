@@ -1,0 +1,6 @@
+CHANLIST [-long] [-suspended] [mask [limit]]
+[ADMIN] Lists registered channels
+  [-long]     : More verbose output
+  [-suspended]: Show suspended channels instead
+  [mask]      : Limit results to given mask (eg, *ratbox*)
+  [limit]     : Show maximum of n results, 0 is unlimited

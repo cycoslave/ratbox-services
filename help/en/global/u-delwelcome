@@ -1,0 +1,3 @@
+delwelcome <id>
+Deletes a welcome message
+  <id>: ID of welcome message to delete

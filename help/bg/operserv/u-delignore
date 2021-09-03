@@ -1,0 +1,6 @@
+delignore <mask>
+Премахва даден филтър
+  <mask>: nick!user@host филтър за премахване
+delignore <mask>
+Премахва даден филтър
+  <mask>: nick!user@host филтър за премахване

@@ -1,0 +1,3382 @@
+leeh        2010/04/22 18:27:28 UTC	(20100422_1-27023)
+  Log:
+  - update RELEASE_NOTES
+  - revved patchlevel to 1.2.4
+  
+
+  Modified:
+	rserv/branches/1_2/RELEASE_NOTES (File Modified) 
+	rserv/branches/1_2/include/config.h (File Modified) 
+
+
+leeh        2010/04/22 18:21:17 UTC	(20100422_0-27021)
+  Log:
+  - merge from trunk
+    - r27019, add modified version of esoterics patch to add startup options
+      controlling the path to chroot to and the uid/gid to drop privs to
+  
+
+  Modified:
+	rserv/branches/1_2/src/rserv.c (File Modified) 
+
+
+leeh        2010/03/30 21:19:27 UTC	(20100330_1-27015)
+  Log:
+  - merge 27013 from trunk
+    - recv returns an ssize_t, not a size_t
+  
+
+  Modified:
+	rserv/branches/1_2/src/io.c (File Modified) 
+
+
+leeh        2010/03/30 19:46:44 UTC	(20100330_0-27011)
+  Log:
+  - merge from trunk
+    - r27007
+      - make the check for updating topics case insensitive
+    - r27009
+      - TS6 spec says a channels modes aren't actually sent in a TS6 JOIN, so
+        we shouldn't be applying them..
+  
+        This was screwing over limit/keys in some situations
+  
+
+  Modified:
+	rserv/branches/1_2/  (Property Modified)
+	rserv/branches/1_2/src/channel.c (File Modified) 
+	rserv/branches/1_2/src/s_chanserv.c (File Modified) 
+
+
+leeh        2010/03/21 13:10:03 UTC	(20100321_1-27005)
+  Log:
+  - merge 26965 from trunk
+    - clarify the INSTALL instructions as to how the database engines lookup
+      paths
+  
+
+  Modified:
+	rserv/branches/1_2/INSTALL (File Modified) 
+
+
+leeh        2010/03/21 13:08:59 UTC	(20100321_0-27003)
+  Log:
+  - merge 26913 from trunk
+    - add a hook for when the topic changes on a channel
+    - support enforcetopic_frequency of 0 to enforce automatically on a topic
+      change
+  - merge 26915 from trunk
+    - make the hook for enforcing topics only work when chanserv is in the
+      channel
+  - merge 27001 from trunk
+    - make events with a frequency == -1 'disabled', frequency==0 events are
+      'oneshot' and removed after running -- frequency==-1 are kept around
+    - make eventAdd() and eventUpdate() convert freq==0 -> -1 to disable them
+  
+
+  Modified:
+	rserv/branches/1_2/include/event.h (File Modified) 
+	rserv/branches/1_2/include/hook.h (File Modified) 
+	rserv/branches/1_2/src/channel.c (File Modified) 
+	rserv/branches/1_2/src/event.c (File Modified) 
+	rserv/branches/1_2/src/newconf.c (File Modified) 
+	rserv/branches/1_2/src/s_chanserv.c (File Modified) 
+
+
+leeh        2010/02/28 13:05:30 UTC	(20100228_0-26963)
+  Log:
+  - merge from trunk
+    - merge 26957
+      - via Narf, userserv is passing in the wrong parameter ordering to
+        SVC_INFO_SUSPENDEDADMIN when reasons are to be shown
+    - merge 26961
+      - take --include from mysql_config, not --cflags
+      - ensure we include <mysql.h> and <errmsg.h> for mysql, rather than
+        <mysql/...>
+  
+        Looks like along with everyone else, we just have to hope there are no
+        OS conficts with errmsg.h
+  
+
+  Modified:
+	rserv/branches/1_2/aclocal.m4 (File Modified) 
+	rserv/branches/1_2/configure (File Modified) 
+	rserv/branches/1_2/src/rsdb_mysql.c (File Modified) 
+	rserv/branches/1_2/src/s_userserv.c (File Modified) 
+
+
+leeh        2010/02/22 19:36:09 UTC	(20100222_1-26911)
+  Log:
+  - merge in various commits from trunk to make the whole enforcement of
+    topics in chanserv much more consistent.
+  
+    If chanserv is in the channel for any reason, it will enforce the topic
+    according to the timer -- otherwise it won't.
+  
+  - merge 26833 from trunk
+    - move the topic resetting code up to enable_inhabit(), so chanserv will
+      enforce the topic whenever it joins a channel for any reason..
+  - merge 26835 from trunk
+    - move chanservs enforcetopic over to a slightly less efficient but more
+      reliable test for whether chanserv is in there
+  - merge 26899 from trunk
+    - start storing topic_tsinfo for channels, as when the topic was last reset
+    - follow the rules on receiving a topicburst, ignoring it if the burst
+      topic is newer
+  - merge 26901 from trunk
+    - add in tracking for whether our uplink supports TB
+  - merge 26903 from trunk
+    - new param to introduce_service_channels(), controlling whether it sends a
+      TB or not, and support sending a TB when thats true and our uplink
+      supports it too
+    - introduce channels with TB on initial burst only
+    - make chanserv whinge when we get an EOB from our uplink and it doesn't
+      support TB
+  
+
+  Modified:
+	rserv/branches/1_2/include/channel.h (File Modified) 
+	rserv/branches/1_2/include/io.h (File Modified) 
+	rserv/branches/1_2/include/service.h (File Modified) 
+	rserv/branches/1_2/src/channel.c (File Modified) 
+	rserv/branches/1_2/src/client.c (File Modified) 
+	rserv/branches/1_2/src/s_chanserv.c (File Modified) 
+	rserv/branches/1_2/src/scommand.c (File Modified) 
+	rserv/branches/1_2/src/service.c (File Modified) 
+
+
+leeh        2010/02/22 18:30:06 UTC	(20100222_0-26907)
+  Log:
+  - merge 26895 from trunk
+    - fix the --enable-mysql and --enable-pgsql check
+  
+
+  Modified:
+	rserv/branches/1_2/aclocal.m4 (File Modified) 
+	rserv/branches/1_2/configure (File Modified) 
+	rserv/branches/1_2/src/channel.c (File Modified) 
+
+
+leeh        2010/02/17 20:45:09 UTC	(20100217_2-26887)
+  Log:
+  - updated RELEASE_NOTES
+  - revved patchlevel to 1.2.3
+  
+
+  Modified:
+	rserv/branches/1_2/RELEASE_NOTES (File Modified) 
+	rserv/branches/1_2/include/config.h (File Modified) 
+
+
+leeh        2010/02/17 20:29:33 UTC	(20100217_1-26885)
+  Log:
+  - merge 26883 from trunk
+    - fix a buffer overflow
+  
+
+  Modified:
+	rserv/branches/1_2/src/channel.c (File Modified) 
+
+
+leeh        2010/02/17 20:24:39 UTC	(20100217_0-26881)
+  Log:
+  - revert 26837 as I need to cut a build and it makes autojoin_empty unusable
+  
+
+  Modified:
+	rserv/branches/1_2/src/s_chanserv.c (File Modified) 
+
+
+leeh        2010/02/13 13:26:54 UTC	(20100213_3-26837)
+  Log:
+  - merge 26833 from trunk
+    - move the topic resetting code up to enable_inhabit(), so chanserv will
+      enforce the topic whenever it joins a channel for any reason..
+  - merge 26835 from trunk
+    - move chanservs enforcetopic over to a slightly less efficient but more
+      reliable test for whether chanserv is in there
+  
+
+  Modified:
+	rserv/branches/1_2/src/s_chanserv.c (File Modified) 
+
+
+leeh        2010/02/13 13:13:58 UTC	(20100213_2-26831)
+  Log:
+  - merge 28269 from trunk
+    - dont require the channel exists for chanserv::addban or chanserv::delban
+  
+
+  Modified:
+	rserv/branches/1_2/src/s_chanserv.c (File Modified) 
+
+
+leeh        2010/02/13 11:38:09 UTC	(20100213_1-26825)
+  Log:
+  - merge 26823 from trunk
+    - via Narf, ensure we exclude permanent bans from expiry checks when a
+      user joins a channel
+  
+
+  Modified:
+	rserv/branches/1_2/src/s_chanserv.c (File Modified) 
+
+
+leeh        2010/02/13 11:33:46 UTC	(20100213_0-26819)
+  Log:
+  - merge 26817 from trunk
+    - add support for +S into alis
+  
+
+  Modified:
+	rserv/branches/1_2/help/bg/alis/list (File Modified) 
+	rserv/branches/1_2/help/en/alis/list (File Modified) 
+	rserv/branches/1_2/src/s_alis.c (File Modified) 
+
+
+leeh        2010/02/04 19:16:21 UTC	(20100204_1-26775)
+  Log:
+  - update RELEASE_NOTES
+  - revved patchlevel to 1.2.2
+  
+
+  Modified:
+	rserv/branches/1_2/RELEASE_NOTES (File Modified) 
+	rserv/branches/1_2/include/config.h (File Modified) 
+
+
+leeh        2010/02/04 18:48:27 UTC	(20100204_0-26773)
+  Log:
+  - make dbupgrade.pl aware of version 1.2.1
+  
+
+  Modified:
+	rserv/branches/1_2/tools/dbupgrade.pl (File Modified) 
+
+
+leeh        2010/01/03 18:58:07 UTC	(20100103_2-26720)
+  Log:
+  - drop username length back to 10, these were being trimmed in the db anyway
+  - have userserv ignore (and warn) about accounts with long usernames
+  
+
+  Modified:
+	rserv/branches/1_2/autoconf/configure.in (File Modified) 
+	rserv/branches/1_2/configure (File Modified) 
+	rserv/branches/1_2/src/s_userserv.c (File Modified) 
+
+
+leeh        2010/01/03 18:43:02 UTC	(20100103_1-26718)
+  Log:
+  - remove a couple of unneeded variables
+  
+
+  Modified:
+	rserv/branches/1_2/src/s_chanserv.c (File Modified) 
+
+
+leeh        2010/01/03 18:30:48 UTC	(20100103_0-26716)
+  Log:
+  - remove expireban_on_join.. there's a better solution somewhere
+  
+
+  Modified:
+	rserv/branches/1_2/doc/example.conf (File Modified) 
+	rserv/branches/1_2/include/conf.h (File Modified) 
+	rserv/branches/1_2/src/conf.c (File Modified) 
+	rserv/branches/1_2/src/newconf.c (File Modified) 
+	rserv/branches/1_2/src/s_chanserv.c (File Modified) 
+
+
+leeh        2009/10/17 20:29:21 UTC	(20091017_3-26698)
+  Log:
+  - fix missing example for autojoin_empty
+  
+
+  Modified:
+	rserv/branches/1_2/doc/example.conf (File Modified) 
+
+
+leeh        2009/10/17 20:25:40 UTC	(20091017_2-26696)
+  Log:
+  - fix a missing '~' on clearing a bitmask when autojoin empty is on
+  
+
+  Modified:
+	rserv/branches/1_2/src/s_chanserv.c (File Modified) 
+
+
+leeh        2009/10/17 20:22:02 UTC	(20091017_1-26694)
+  Log:
+  - add proper username matching into OLOGIN/OPERLOGIN
+  
+
+  Modified:
+	rserv/branches/1_2/include/conf.h (File Modified) 
+	rserv/branches/1_2/src/c_message.c (File Modified) 
+	rserv/branches/1_2/src/conf.c (File Modified) 
+	rserv/branches/1_2/src/service.c (File Modified) 
+
+
+leeh        2009/10/17 20:13:29 UTC	(20091017_0-26692)
+  Log:
+  - add notification of new memos when someone logs in
+  
+
+  Modified:
+	rserv/branches/1_2/include/langs.h (File Modified) 
+	rserv/branches/1_2/src/langs.c (File Modified) 
+	rserv/branches/1_2/src/messages.c (File Modified) 
+	rserv/branches/1_2/src/s_memoserv.c (File Modified) 
+
+
+leeh        2009/09/29 19:09:42 UTC	(20090929_0-26686)
+  Log:
+  - if chanserv joins a channel because we need to for autojoin reasons, set
+    the topic if we have one
+  
+
+  Modified:
+	rserv/branches/1_2/src/s_chanserv.c (File Modified) 
+
+
+leeh        2009/09/26 16:41:42 UTC	(20090926_4-26684)
+  Log:
+  - clarify expireban_on_join a bit
+  
+
+  Modified:
+	rserv/branches/1_2/doc/example.conf (File Modified) 
+
+
+leeh        2009/09/26 16:40:06 UTC	(20090926_3-26682)
+  Log:
+  - make chanserv ignore expired channel bans when a user joins the channel
+  - new conf option to chanserv {}; expireban_on_join = <yes|no>; controls
+    whether chanserv will expire bans whenever users join channels.  Its
+    looping anyway, so no particular harm done.
+  
+    Bit nasty for users though in my opinion..
+  
+
+  Modified:
+	rserv/branches/1_2/doc/example.conf (File Modified) 
+	rserv/branches/1_2/include/conf.h (File Modified) 
+	rserv/branches/1_2/src/conf.c (File Modified) 
+	rserv/branches/1_2/src/newconf.c (File Modified) 
+	rserv/branches/1_2/src/s_chanserv.c (File Modified) 
+
+
+leeh        2009/09/26 15:58:44 UTC	(20090926_2-26680)
+  Log:
+  - make the userserv struct include the +1 for the \0, having configure add
+    it is braindead, because it broke the test for whether a username was too
+    long.
+  - raise the default username registration length to 11, because thats what
+    it was actually behaving as sometimes -- except when it reloaded the db,
+    where it cut them back to 10.. though it still appears to have maintained
+    independent accounts
+  - rebuild configure
+  
+
+  Modified:
+	rserv/branches/1_2/autoconf/configure.in (File Modified) 
+	rserv/branches/1_2/configure (File Modified) 
+	rserv/branches/1_2/include/s_userserv.h (File Modified) 
+	rserv/branches/1_2/include/setup.h.in (File Modified) 
+	rserv/branches/1_2/src/s_userserv.c (File Modified) 
+
+
+leeh        2009/09/26 15:31:41 UTC	(20090926_1-26678)
+  Log:
+  - fix a bug where the expiry timeouts for chanserv on
+    enforcetopic/enforceban were being ignored.
+    
+    the conf is parsed before chanserv is initialised nowadays, which means
+    when we add the events to expire them we can safely trust the conf values
+  
+
+  Modified:
+	rserv/branches/1_2/include/conf.h (File Modified) 
+	rserv/branches/1_2/src/conf.c (File Modified) 
+	rserv/branches/1_2/src/s_chanserv.c (File Modified) 
+
+
+leeh        2009/09/26 15:27:16 UTC	(20090926_0-26676)
+  Log:
+  - expire operbans prior to checking if one exists for kline/unkline etc..
+    It would officially be nicer to not to this, but that introduces the
+    complexity of having to do a SQL UPDATE instead of an INSERT depending on
+    the situation -- for the amount kline etc are used, it's not particularly
+    bad..
+  
+
+  Modified:
+	rserv/branches/1_2/src/s_banserv.c (File Modified) 
+
+
+leeh        2009/09/19 22:16:40 UTC	(20090919_1-26670)
+  Log:
+  - have chanserv issue a topic update to the channel on chanserv::set::topic
+    if its in there..
+  
+
+  Modified:
+	rserv/branches/1_2/src/s_chanserv.c (File Modified) 
+
+
+leeh        2009/09/19 22:09:16 UTC	(20090919_0-26668)
+  Log:
+  - only set us as being in a list if we actually get to a second variable
+  
+
+  Modified:
+	rserv/branches/1_2/src/parser.y (File Modified) 
+
+
+leeh        2009/09/17 18:49:37 UTC	(20090917_0-26666)
+  Log:
+  - add in parsing for the +S channel mode (ssl only channel)
+  - add in new config option, general::allow_sslonly = yes|no;, controls
+    whether users can use chanserv to set +S in modes
+  
+
+  Modified:
+	rserv/branches/1_2/doc/example.conf (File Modified) 
+	rserv/branches/1_2/include/channel.h (File Modified) 
+	rserv/branches/1_2/include/conf.h (File Modified) 
+	rserv/branches/1_2/src/c_mode.c (File Modified) 
+	rserv/branches/1_2/src/channel.c (File Modified) 
+	rserv/branches/1_2/src/newconf.c (File Modified) 
+	rserv/branches/1_2/src/s_chanserv.c (File Modified) 
+	rserv/branches/1_2/src/s_operserv.c (File Modified) 
+
+
+leeh        2009/09/15 18:36:42 UTC	(20090915_0-26664)
+  Log:
+  - fix a crash in userserv::set::email, as reported by mankind86.
+    Remember: copy and paste is sometimes bad.
+  
+
+  Modified:
+	rserv/branches/1_2/src/s_userserv.c (File Modified) 
+
+
+leeh        2009/09/12 16:09:10 UTC	(20090912_0-26656)
+  Log:
+  - apply jilles patch to make rserv also remove channel bans when expiring
+    bans from its database
+  
+
+  Modified:
+	rserv/branches/1_2/src/s_chanserv.c (File Modified) 
+
+
+leeh        2009/07/28 18:55:34 UTC	(20090728_0-26646)
+  Log:
+  - add some extra parens to make gcc-4.4 happy
+  
+
+  Modified:
+	rserv/branches/1_2/src/newconf.c (File Modified) 
+	rserv/branches/1_2/src/s_banserv.c (File Modified) 
+	rserv/branches/1_2/src/scommand.c (File Modified) 
+
+
+leeh        2008/07/07 17:25:13 UTC	(20080707_0-25685)
+  Log:
+  - add in missing 1.1.2 and 1.1.3
+  
+
+  Modified:
+	rserv/branches/1_2/tools/dbupgrade.pl (File Modified) 
+
+
+leeh        2008/06/28 08:56:48 UTC	(20080628_1-25639)
+  Log:
+  - update RELEASE_NOTES
+  - revved patchlevel to 1.2.1
+  
+
+  Modified:
+	rserv/branches/1_2/RELEASE_NOTES (File Modified) 
+	rserv/branches/1_2/include/config.h (File Modified) 
+
+
+leeh        2008/06/28 08:55:35 UTC	(20080628_0-25637)
+  Log:
+  - fix an unquoted sql string related to email, that could be used for
+    sql injection
+  
+
+  Modified:
+	rserv/branches/1_2/src/s_userserv.c (File Modified) 
+
+
+leeh        2008/06/27 18:15:17 UTC	(20080627_1-25625)
+  Log:
+  - update a few copyrights
+  
+
+  Modified:
+	rserv/branches/1_2/src/conf.c (File Modified) 
+	rserv/branches/1_2/src/langs.c (File Modified) 
+	rserv/branches/1_2/src/s_banserv.c (File Modified) 
+	rserv/branches/1_2/src/s_chanserv.c (File Modified) 
+
+
+leeh        2008/06/27 17:56:02 UTC	(20080627_0-25623)
+  Log:
+  - fix pcre header test, which had an extra 's' in the variable name which
+    broke the header test
+  
+
+  Modified:
+	rserv/branches/1_2/autoconf/configure.in (File Modified) 
+	rserv/branches/1_2/configure (File Modified) 
+
+
+leeh        2008/05/20 19:13:34 UTC	(20080520_3-25409)
+  Log:
+  - branch off 1.2
+  
+
+  Modified:
+	rserv/branches/1_2/ (File Added) 
+
+
+leeh        2008/05/20 19:11:01 UTC	(20080520_2-25405)
+  Log:
+  - update RELEASE_NOTES
+  - revved patchlevel to 1.2.0
+  
+
+  Modified:
+	rserv/trunk/RELEASE_NOTES (File Modified) 
+	rserv/trunk/include/config.h (File Modified) 
+
+
+leeh        2008/05/20 19:10:18 UTC	(20080520_1-25403)
+  Log:
+  - update dbupgrade.pl with the latest versions, and make it note when no
+    upgrade is required
+  
+
+  Modified:
+	rserv/trunk/tools/dbupgrade.pl (File Modified) 
+
+
+leeh        2008/05/20 19:07:22 UTC	(20080520_0-25401)
+  Log:
+  - update autoconf tag to 'stable'
+  
+
+  Modified:
+	rserv/trunk/autoconf/configure.in (File Modified) 
+	rserv/trunk/configure (File Modified) 
+
+
+leeh        2008/05/11 14:04:39 UTC	(20080511_4-25352)
+  Log:
+  - update RELEASE_NOTES
+  - revved patchlevel to 1.2.0rc2
+  
+
+  Modified:
+	rserv/trunk/RELEASE_NOTES (File Modified) 
+	rserv/trunk/include/config.h (File Modified) 
+
+
+leeh        2008/05/11 13:59:49 UTC	(20080511_3-25350)
+  Log:
+  - force disable of shared modules and C++ interface
+  - disable building of docs
+  
+
+  Modified:
+	rserv/trunk/pcre/Makefile.in (File Modified) 
+	rserv/trunk/pcre/configure (File Modified) 
+
+
+leeh        2008/05/11 13:33:31 UTC	(20080511_2-25347)
+  Log:
+  - update example.lang
+  
+
+  Modified:
+	rserv/trunk/langs/example.lang (File Modified) 
+
+
+leeh        2008/05/11 13:32:49 UTC	(20080511_1-25345)
+  Log:
+  - perl script to generate example.lang
+  
+
+  Modified:
+	rserv/trunk/langs/genexample.pl (File Added) 
+
+
+leeh        2008/05/11 13:31:02 UTC	(20080511_0-25343)
+  Log:
+  - some cosmetic alterations to messages.c so my new perl script to generate
+    example.lang works
+  
+
+  Modified:
+	rserv/trunk/src/messages.c (File Modified) 
+
+
+leeh        2008/03/19 18:46:41 UTC	(20080319_0-25141)
+  Log:
+  - via ongeboren
+    - missing help files for bulgarian translations
+  
+
+  Modified:
+	rserv/trunk/help/bg/banserv/addregexp (File Added) 
+	rserv/trunk/help/bg/banserv/addregexpneg (File Added) 
+	rserv/trunk/help/bg/banserv/delregexp (File Added) 
+	rserv/trunk/help/bg/banserv/delregexpneg (File Added) 
+	rserv/trunk/help/bg/banserv/listregexps (File Added) 
+	rserv/trunk/help/bg/memoserv/ (File Added) 
+	rserv/trunk/help/bg/memoserv/delete (File Added) 
+	rserv/trunk/help/bg/memoserv/general (File Added) 
+	rserv/trunk/help/bg/memoserv/index (File Added) 
+	rserv/trunk/help/bg/memoserv/list (File Added) 
+	rserv/trunk/help/bg/memoserv/read (File Added) 
+	rserv/trunk/help/bg/memoserv/send (File Added) 
+	rserv/trunk/help/bg/operserv/addignore (File Added) 
+	rserv/trunk/help/bg/operserv/delignore (File Added) 
+	rserv/trunk/help/bg/operserv/listignores (File Added) 
+	rserv/trunk/help/bg/operserv/u-addignore (File Added) 
+	rserv/trunk/help/bg/operserv/u-delignore (File Added) 
+	rserv/trunk/help/bg/operserv/u-listignores (File Added) 
+	rserv/trunk/help/bg/userserv/u-usersetemail (File Added) 
+	rserv/trunk/help/bg/userserv/usersetemail (File Added) 
+
+
+leeh        2008/03/13 21:42:48 UTC	(20080313_0-25121)
+  Log:
+  - via ongeboren
+    - updated bulgarian translations
+  
+
+  Modified:
+	rserv/trunk/help/bg/banserv/index-admin (File Modified) 
+	rserv/trunk/help/bg/chanserv/addban (File Modified) 
+	rserv/trunk/help/bg/chanserv/chansuspend (File Modified) 
+	rserv/trunk/help/bg/chanserv/set (File Modified) 
+	rserv/trunk/help/bg/chanserv/u-chansuspend (File Modified) 
+	rserv/trunk/help/bg/main/u-rehash (File Modified) 
+	rserv/trunk/help/bg/operserv/index-admin (File Modified) 
+	rserv/trunk/help/bg/userserv/index (File Modified) 
+	rserv/trunk/help/bg/userserv/index-admin (File Modified) 
+	rserv/trunk/help/bg/userserv/language (File Modified) 
+	rserv/trunk/help/bg/userserv/set (File Modified) 
+	rserv/trunk/help/bg/userserv/userlist (File Modified) 
+	rserv/trunk/help/bg/watchserv/general (File Modified) 
+	rserv/trunk/help/bg/watchserv/index (File Modified) 
+	rserv/trunk/langs/bg.lang (File Modified) 
+
+
+leeh        2008/02/23 19:17:13 UTC	(20080223_2-25089)
+  Log:
+  - update RELEASE_NOTES
+  - revved patchlevel to 1.2.0rc1
+  
+
+  Modified:
+	rserv/trunk/RELEASE_NOTES (File Modified) 
+	rserv/trunk/include/config.h (File Modified) 
+
+
+leeh        2008/02/23 18:59:53 UTC	(20080223_1-25087)
+  Log:
+  - add support for matching cidr bans
+  
+
+  Modified:
+	rserv/trunk/src/s_chanserv.c (File Modified) 
+
+
+leeh        2008/02/23 18:58:53 UTC	(20080223_0-25085)
+  Log:
+  - swap match_cidr() so its return val is consistent with rserv
+  
+
+  Modified:
+	rserv/trunk/src/cidr.c (File Modified) 
+
+
+leeh        2008/02/17 15:33:40 UTC	(20080217_0-25079)
+  Log:
+  - merge from 1.1 branch:
+    - r2465, fix the autoconf check for mysql, using a modified variant of the
+      one on the autoconf archive
+    - r24663, fix the autoconf check for postgresql, using a modified variant
+      of the one on the autoconf archive
+  
+
+  Modified:
+	rserv/trunk/Makefile.in (File Modified) 
+	rserv/trunk/aclocal.m4 (File Added) 
+	rserv/trunk/autoconf/configure.in (File Modified) 
+	rserv/trunk/configure (File Modified) 
+	rserv/trunk/include/setup.h.in (File Modified) 
+	rserv/trunk/src/rsdb_pgsql.c (File Modified) 
+
+
+leeh        2008/02/12 20:37:54 UTC	(20080212_0-25070)
+  Log:
+  - update RELEASE_NOTES
+  - revved patchlevel to 1.2.0beta2
+  
+
+  Modified:
+	rserv/trunk/RELEASE_NOTES (File Modified) 
+	rserv/trunk/include/config.h (File Modified) 
+
+
+leeh        2008/02/08 21:23:35 UTC	(20080208_3-25068)
+  Log:
+  - update example.conf
+  
+
+  Modified:
+	rserv/trunk/doc/example.conf (File Modified) 
+
+
+leeh        2008/02/08 21:23:13 UTC	(20080208_2-25066)
+  Log:
+  - add new oper flag to banserv, "nomax" which will allow an oper to exceed
+    maximum kline/xline matches
+  
+
+  Modified:
+	rserv/trunk/include/conf.h (File Modified) 
+	rserv/trunk/src/conf.c (File Modified) 
+	rserv/trunk/src/newconf.c (File Modified) 
+	rserv/trunk/src/s_banserv.c (File Modified) 
+
+
+leeh        2008/02/08 21:16:19 UTC	(20080208_1-25064)
+  Log:
+  - missing prototypes for cidr.c
+  
+
+  Modified:
+	rserv/trunk/include/rserv.h (File Modified) 
+
+
+leeh        2008/02/08 20:27:59 UTC	(20080208_0-25062)
+  Log:
+  - add the relevant checks for max_xline_matches
+  
+
+  Modified:
+	rserv/trunk/src/s_banserv.c (File Modified) 
+
+
+leeh        2008/01/29 20:00:23 UTC	(20080129_0-25052)
+  Log:
+  - add cidr.c from atheme-services for doing ip mask matches
+  
+
+  Modified:
+	rserv/trunk/src/Makefile.in (File Modified) 
+	rserv/trunk/src/cidr.c (File Added) 
+
+
+leeh        2008/01/15 21:31:42 UTC	(20080115_5-24960)
+  Log:
+  - add code for checking maximum number of clients to match on kline
+  
+
+  Modified:
+	rserv/trunk/src/s_banserv.c (File Modified) 
+
+
+leeh        2008/01/15 21:27:52 UTC	(20080115_4-24958)
+  Log:
+  - add a pgsql boolean check into find_ban_remove() too
+  
+
+  Modified:
+	rserv/trunk/src/s_banserv.c (File Modified) 
+
+
+leeh        2008/01/15 21:26:18 UTC	(20080115_3-24956)
+  Log:
+  - make the find_ban() check match against pgsqls boolean t/f, so that it can
+    properly determine if a ban has been removed or not
+  
+
+  Modified:
+	rserv/trunk/src/s_banserv.c (File Modified) 
+
+
+leeh        2008/01/15 21:25:08 UTC	(20080115_2-24954)
+  Log:
+  - need some more parameters in that too many matches one for banserv..
+  
+
+  Modified:
+	rserv/trunk/src/messages.c (File Modified) 
+
+
+leeh        2008/01/15 19:07:14 UTC	(20080115_1-24952)
+  Log:
+  - add a new message for when a generic ban matches too many users
+  
+
+  Modified:
+	rserv/trunk/include/langs.h (File Modified) 
+	rserv/trunk/src/langs.c (File Modified) 
+	rserv/trunk/src/messages.c (File Modified) 
+
+
+leeh        2008/01/15 18:57:39 UTC	(20080115_0-24950)
+  Log:
+  - add new conf options for max kline/resv/xline matches
+  
+
+  Modified:
+	rserv/trunk/include/conf.h (File Modified) 
+	rserv/trunk/src/conf.c (File Modified) 
+	rserv/trunk/src/newconf.c (File Modified) 
+
+
+leeh        2007/12/02 16:00:54 UTC	(20071202_1-24655)
+  Log:
+  - add russian cyrillic translations, via Valery Yatsko
+    <darkwire.tl@gmail.com>
+  
+
+  Modified:
+	rserv/trunk/langs/Makefile.in (File Modified) 
+	rserv/trunk/langs/ru.lang (File Added) 
+
+
+leeh        2007/12/02 15:42:29 UTC	(20071202_0-24652)
+  Log:
+  - new gcc complains about using !(x) in EmptyString macro on static strings
+  
+
+  Modified:
+	rserv/trunk/include/tools.h (File Modified) 
+
+
+leeh        2007/09/11 20:30:30 UTC	(20070911_1-24406)
+  Log:
+  - err, I really do mean usernames
+  
+
+  Modified:
+	rserv/trunk/help/en/userserv/userlist (File Modified) 
+
+
+leeh        2007/09/11 20:29:51 UTC	(20070911_0-24404)
+  Log:
+  - s/channels/usernames
+  
+
+  Modified:
+	rserv/trunk/help/en/userserv/userlist (File Modified) 
+
+
+leeh        2007/09/08 13:36:57 UTC	(20070908_0-24402)
+  Log:
+  - russian translations, via
+    Valery Yatsko <darkwire.tl@gmail.com>
+  
+
+  Modified:
+	rserv/trunk/help/Makefile.in (File Modified) 
+	rserv/trunk/help/genindex.sh (File Modified) 
+	rserv/trunk/help/ru/ (File Added) 
+	rserv/trunk/help/ru/README (File Added) 
+	rserv/trunk/help/ru/alis/ (File Added) 
+	rserv/trunk/help/ru/alis/general (File Added) 
+	rserv/trunk/help/ru/alis/index (File Added) 
+	rserv/trunk/help/ru/alis/list (File Added) 
+	rserv/trunk/help/ru/banserv/ (File Added) 
+	rserv/trunk/help/ru/banserv/addregexp (File Added) 
+	rserv/trunk/help/ru/banserv/addregexpneg (File Added) 
+	rserv/trunk/help/ru/banserv/delregexp (File Added) 
+	rserv/trunk/help/ru/banserv/delregexpneg (File Added) 
+	rserv/trunk/help/ru/banserv/findkline (File Added) 
+	rserv/trunk/help/ru/banserv/findresv (File Added) 
+	rserv/trunk/help/ru/banserv/findxline (File Added) 
+	rserv/trunk/help/ru/banserv/general (File Added) 
+	rserv/trunk/help/ru/banserv/index (File Added) 
+	rserv/trunk/help/ru/banserv/index-admin (File Added) 
+	rserv/trunk/help/ru/banserv/kline (File Added) 
+	rserv/trunk/help/ru/banserv/listregexps (File Added) 
+	rserv/trunk/help/ru/banserv/resv (File Added) 
+	rserv/trunk/help/ru/banserv/sync (File Added) 
+	rserv/trunk/help/ru/banserv/u-findkline (File Added) 
+	rserv/trunk/help/ru/banserv/u-findresv (File Added) 
+	rserv/trunk/help/ru/banserv/u-findxline (File Added) 
+	rserv/trunk/help/ru/banserv/u-kline (File Added) 
+	rserv/trunk/help/ru/banserv/u-resv (File Added) 
+	rserv/trunk/help/ru/banserv/u-sync (File Added) 
+	rserv/trunk/help/ru/banserv/u-unkline (File Added) 
+	rserv/trunk/help/ru/banserv/u-unresv (File Added) 
+	rserv/trunk/help/ru/banserv/u-unxline (File Added) 
+	rserv/trunk/help/ru/banserv/u-xline (File Added) 
+	rserv/trunk/help/ru/banserv/unkline (File Added) 
+	rserv/trunk/help/ru/banserv/unresv (File Added) 
+	rserv/trunk/help/ru/banserv/unxline (File Added) 
+	rserv/trunk/help/ru/banserv/xline (File Added) 
+	rserv/trunk/help/ru/chanserv/ (File Added) 
+	rserv/trunk/help/ru/chanserv/addban (File Added) 
+	rserv/trunk/help/ru/chanserv/adduser (File Added) 
+	rserv/trunk/help/ru/chanserv/chandrop (File Added) 
+	rserv/trunk/help/ru/chanserv/chaninfo (File Added) 
+	rserv/trunk/help/ru/chanserv/chanlist (File Added) 
+	rserv/trunk/help/ru/chanserv/chanregister (File Added) 
+	rserv/trunk/help/ru/chanserv/chansuspend (File Added) 
+	rserv/trunk/help/ru/chanserv/chanunsuspend (File Added) 
+	rserv/trunk/help/ru/chanserv/clearallops (File Added) 
+	rserv/trunk/help/ru/chanserv/clearbans (File Added) 
+	rserv/trunk/help/ru/chanserv/clearmodes (File Added) 
+	rserv/trunk/help/ru/chanserv/clearops (File Added) 
+	rserv/trunk/help/ru/chanserv/delban (File Added) 
+	rserv/trunk/help/ru/chanserv/delowner (File Added) 
+	rserv/trunk/help/ru/chanserv/deluser (File Added) 
+	rserv/trunk/help/ru/chanserv/general (File Added) 
+	rserv/trunk/help/ru/chanserv/getkey (File Added) 
+	rserv/trunk/help/ru/chanserv/index (File Added) 
+	rserv/trunk/help/ru/chanserv/index-admin (File Added) 
+	rserv/trunk/help/ru/chanserv/info (File Added) 
+	rserv/trunk/help/ru/chanserv/invite (File Added) 
+	rserv/trunk/help/ru/chanserv/listbans (File Added) 
+	rserv/trunk/help/ru/chanserv/listusers (File Added) 
+	rserv/trunk/help/ru/chanserv/modauto (File Added) 
+	rserv/trunk/help/ru/chanserv/modban (File Added) 
+	rserv/trunk/help/ru/chanserv/moduser (File Added) 
+	rserv/trunk/help/ru/chanserv/op (File Added) 
+	rserv/trunk/help/ru/chanserv/register (File Added) 
+	rserv/trunk/help/ru/chanserv/set (File Added) 
+	rserv/trunk/help/ru/chanserv/suspend (File Added) 
+	rserv/trunk/help/ru/chanserv/u-chandrop (File Added) 
+	rserv/trunk/help/ru/chanserv/u-chaninfo (File Added) 
+	rserv/trunk/help/ru/chanserv/u-chanregister (File Added) 
+	rserv/trunk/help/ru/chanserv/u-chansuspend (File Added) 
+	rserv/trunk/help/ru/chanserv/u-chanunsuspend (File Added) 
+	rserv/trunk/help/ru/chanserv/unban (File Added) 
+	rserv/trunk/help/ru/chanserv/unsuspend (File Added) 
+	rserv/trunk/help/ru/chanserv/voice (File Added) 
+	rserv/trunk/help/ru/global/ (File Added) 
+	rserv/trunk/help/ru/global/addwelcome (File Added) 
+	rserv/trunk/help/ru/global/delwelcome (File Added) 
+	rserv/trunk/help/ru/global/general (File Added) 
+	rserv/trunk/help/ru/global/index (File Added) 
+	rserv/trunk/help/ru/global/index-admin (File Added) 
+	rserv/trunk/help/ru/global/listwelcome (File Added) 
+	rserv/trunk/help/ru/global/netmsg (File Added) 
+	rserv/trunk/help/ru/global/u-addwelcome (File Added) 
+	rserv/trunk/help/ru/global/u-delwelcome (File Added) 
+	rserv/trunk/help/ru/global/u-listwelcome (File Added) 
+	rserv/trunk/help/ru/global/u-netmsg (File Added) 
+	rserv/trunk/help/ru/jupeserv/ (File Added) 
+	rserv/trunk/help/ru/jupeserv/calljupe (File Added) 
+	rserv/trunk/help/ru/jupeserv/callunjupe (File Added) 
+	rserv/trunk/help/ru/jupeserv/general (File Added) 
+	rserv/trunk/help/ru/jupeserv/index (File Added) 
+	rserv/trunk/help/ru/jupeserv/index-admin (File Added) 
+	rserv/trunk/help/ru/jupeserv/jupe (File Added) 
+	rserv/trunk/help/ru/jupeserv/pending (File Added) 
+	rserv/trunk/help/ru/jupeserv/u-jupe (File Added) 
+	rserv/trunk/help/ru/jupeserv/u-unjupe (File Added) 
+	rserv/trunk/help/ru/jupeserv/unjupe (File Added) 
+	rserv/trunk/help/ru/main/ (File Added) 
+	rserv/trunk/help/ru/main/u-boot (File Added) 
+	rserv/trunk/help/ru/main/u-chat (File Added) 
+	rserv/trunk/help/ru/main/u-connect (File Added) 
+	rserv/trunk/help/ru/main/u-events (File Added) 
+	rserv/trunk/help/ru/main/u-quit (File Added) 
+	rserv/trunk/help/ru/main/u-rehash (File Added) 
+	rserv/trunk/help/ru/main/u-service (File Added) 
+	rserv/trunk/help/ru/main/u-stats (File Added) 
+	rserv/trunk/help/ru/main/u-status (File Added) 
+	rserv/trunk/help/ru/memoserv/ (File Added) 
+	rserv/trunk/help/ru/memoserv/delete (File Added) 
+	rserv/trunk/help/ru/memoserv/general (File Added) 
+	rserv/trunk/help/ru/memoserv/index (File Added) 
+	rserv/trunk/help/ru/memoserv/list (File Added) 
+	rserv/trunk/help/ru/memoserv/read (File Added) 
+	rserv/trunk/help/ru/memoserv/send (File Added) 
+	rserv/trunk/help/ru/nickserv/ (File Added) 
+	rserv/trunk/help/ru/nickserv/drop (File Added) 
+	rserv/trunk/help/ru/nickserv/general (File Added) 
+	rserv/trunk/help/ru/nickserv/index (File Added) 
+	rserv/trunk/help/ru/nickserv/index-admin (File Added) 
+	rserv/trunk/help/ru/nickserv/info (File Added) 
+	rserv/trunk/help/ru/nickserv/nickdrop (File Added) 
+	rserv/trunk/help/ru/nickserv/regain (File Added) 
+	rserv/trunk/help/ru/nickserv/register (File Added) 
+	rserv/trunk/help/ru/nickserv/release (File Added) 
+	rserv/trunk/help/ru/nickserv/set (File Added) 
+	rserv/trunk/help/ru/nickserv/u-nickdrop (File Added) 
+	rserv/trunk/help/ru/operbot/ (File Added) 
+	rserv/trunk/help/ru/operbot/general (File Added) 
+	rserv/trunk/help/ru/operbot/index (File Added) 
+	rserv/trunk/help/ru/operbot/index-admin (File Added) 
+	rserv/trunk/help/ru/operbot/invite (File Added) 
+	rserv/trunk/help/ru/operbot/objoin (File Added) 
+	rserv/trunk/help/ru/operbot/obpart (File Added) 
+	rserv/trunk/help/ru/operbot/op (File Added) 
+	rserv/trunk/help/ru/operbot/u-objoin (File Added) 
+	rserv/trunk/help/ru/operbot/u-obpart (File Added) 
+	rserv/trunk/help/ru/operserv/ (File Added) 
+	rserv/trunk/help/ru/operserv/addignore (File Added) 
+	rserv/trunk/help/ru/operserv/dbsync (File Added) 
+	rserv/trunk/help/ru/operserv/delignore (File Added) 
+	rserv/trunk/help/ru/operserv/die (File Added) 
+	rserv/trunk/help/ru/operserv/general (File Added) 
+	rserv/trunk/help/ru/operserv/index (File Added) 
+	rserv/trunk/help/ru/operserv/index-admin (File Added) 
+	rserv/trunk/help/ru/operserv/listignores (File Added) 
+	rserv/trunk/help/ru/operserv/listopers (File Added) 
+	rserv/trunk/help/ru/operserv/omode (File Added) 
+	rserv/trunk/help/ru/operserv/osjoin (File Added) 
+	rserv/trunk/help/ru/operserv/ospart (File Added) 
+	rserv/trunk/help/ru/operserv/rehash (File Added) 
+	rserv/trunk/help/ru/operserv/takeover (File Added) 
+	rserv/trunk/help/ru/operserv/u-addignore (File Added) 
+	rserv/trunk/help/ru/operserv/u-dbsync (File Added) 
+	rserv/trunk/help/ru/operserv/u-delignore (File Added) 
+	rserv/trunk/help/ru/operserv/u-die (File Added) 
+	rserv/trunk/help/ru/operserv/u-listignores (File Added) 
+	rserv/trunk/help/ru/operserv/u-listopers (File Added) 
+	rserv/trunk/help/ru/operserv/u-omode (File Added) 
+	rserv/trunk/help/ru/operserv/u-osjoin (File Added) 
+	rserv/trunk/help/ru/operserv/u-ospart (File Added) 
+	rserv/trunk/help/ru/operserv/u-takeover (File Added) 
+	rserv/trunk/help/ru/userserv/ (File Added) 
+	rserv/trunk/help/ru/userserv/activate (File Added) 
+	rserv/trunk/help/ru/userserv/general (File Added) 
+	rserv/trunk/help/ru/userserv/index (File Added) 
+	rserv/trunk/help/ru/userserv/index-admin (File Added) 
+	rserv/trunk/help/ru/userserv/info (File Added) 
+	rserv/trunk/help/ru/userserv/language (File Added) 
+	rserv/trunk/help/ru/userserv/login (File Added) 
+	rserv/trunk/help/ru/userserv/logout (File Added) 
+	rserv/trunk/help/ru/userserv/register (File Added) 
+	rserv/trunk/help/ru/userserv/resetemail (File Added) 
+	rserv/trunk/help/ru/userserv/resetpass (File Added) 
+	rserv/trunk/help/ru/userserv/set (File Added) 
+	rserv/trunk/help/ru/userserv/u-userdrop (File Added) 
+	rserv/trunk/help/ru/userserv/u-userinfo (File Added) 
+	rserv/trunk/help/ru/userserv/u-userregister (File Added) 
+	rserv/trunk/help/ru/userserv/u-usersetemail (File Added) 
+	rserv/trunk/help/ru/userserv/u-usersetpass (File Added) 
+	rserv/trunk/help/ru/userserv/u-usersuspend (File Added) 
+	rserv/trunk/help/ru/userserv/u-userunsuspend (File Added) 
+	rserv/trunk/help/ru/userserv/userdrop (File Added) 
+	rserv/trunk/help/ru/userserv/userinfo (File Added) 
+	rserv/trunk/help/ru/userserv/userlist (File Added) 
+	rserv/trunk/help/ru/userserv/userregister (File Added) 
+	rserv/trunk/help/ru/userserv/usersetemail (File Added) 
+	rserv/trunk/help/ru/userserv/usersetpass (File Added) 
+	rserv/trunk/help/ru/userserv/usersuspend (File Added) 
+	rserv/trunk/help/ru/userserv/userunsuspend (File Added) 
+	rserv/trunk/help/ru/watchserv/ (File Added) 
+	rserv/trunk/help/ru/watchserv/general (File Added) 
+	rserv/trunk/help/ru/watchserv/index (File Added) 
+	rserv/trunk/help/ru/watchserv/index-admin (File Added) 
+	rserv/trunk/help/ru/watchserv/u-watch (File Added) 
+	rserv/trunk/help/ru/watchserv/watch (File Added) 
+
+
+leeh        2007/08/15 20:35:22 UTC	(20070815_3-24219)
+  Log:
+  - fix chanserv::info parameter ordering when issuing the notice about
+    suspends
+  
+
+  Modified:
+	rserv/trunk/src/s_chanserv.c (File Modified) 
+
+
+leeh        2007/08/15 20:30:52 UTC	(20070815_2-24217)
+  Log:
+  - swap parv[0] for reg_p->name in chanserv::chansuspend
+  
+
+  Modified:
+	rserv/trunk/src/s_chanserv.c (File Modified) 
+
+
+leeh        2007/08/15 18:55:45 UTC	(20070815_1-24215)
+  Log:
+  - when we expire usernames, expiry any temporary suspends too
+  
+
+  Modified:
+	rserv/trunk/src/s_userserv.c (File Modified) 
+
+
+leeh        2007/08/15 18:49:31 UTC	(20070815_0-24213)
+  Log:
+  - extend chanserv::chansuspend to support suspend times
+    I have no idea how I missed this..
+  
+
+  Modified:
+	rserv/trunk/src/s_chanserv.c (File Modified) 
+
+
+leeh        2007/07/14 20:06:09 UTC	(20070714_4-23987)
+  Log:
+  - via ongeboren
+    - userserv::resetemail was sending the second confirmation out to the old
+      address, rather than the new address
+  
+
+  Modified:
+	rserv/trunk/src/s_userserv.c (File Modified) 
+
+
+leeh        2007/07/14 20:03:25 UTC	(20070714_3-23985)
+  Log:
+  - move the userserv expire code which walks the hash expiring/updating users
+    last access iterate the hash in bits to stop it hogging cpu
+  
+
+  Modified:
+	rserv/trunk/src/s_userserv.c (File Modified) 
+
+
+leeh        2007/07/14 19:59:40 UTC	(20070714_2-23983)
+  Log:
+  - via ongeboren
+    - memoserv commands need to require users are logged in
+  
+
+  Modified:
+	rserv/trunk/src/s_memoserv.c (File Modified) 
+
+
+leeh        2007/07/14 19:57:12 UTC	(20070714_1-23981)
+  Log:
+  - add HASH_WALK_SAFE_POS which walks a hash, starting/ending at a certain
+    hash position
+  
+
+  Modified:
+	rserv/trunk/include/tools.h (File Modified) 
+
+
+leeh        2007/07/14 19:55:54 UTC	(20070714_0-23979)
+  Log:
+  - install memoserv helpfiles
+  
+
+  Modified:
+	rserv/trunk/help/Makefile.in (File Modified) 
+
+
+leeh        2007/05/13 20:54:57 UTC	(20070513_1-23951)
+  Log:
+  - ongeboren needs to be in CREDITS
+  
+
+  Modified:
+	rserv/trunk/CREDITS (File Modified) 
+
+
+leeh        2007/05/13 20:53:00 UTC	(20070513_0-23947)
+  Log:
+  - via ongeboren
+    - fix global capability test for RSFNC which was breaking nickserv::regain
+  
+
+  Modified:
+	rserv/trunk/src/scommand.c (File Modified) 
+
+
+leeh        2007/05/10 20:34:22 UTC	(20070510_5-23941)
+  Log:
+  - update RELEASE_NOTES
+  - revved patchlevel to 1.2.0beta1
+  
+
+  Modified:
+	rserv/trunk/RELEASE_NOTES (File Modified) 
+	rserv/trunk/include/config.h (File Modified) 
+
+
+leeh        2007/05/10 20:31:37 UTC	(20070510_4-23939)
+  Log:
+  - memoserv help
+  
+
+  Modified:
+	rserv/trunk/help/en/memoserv/ (File Added) 
+	rserv/trunk/help/en/memoserv/delete (File Added) 
+	rserv/trunk/help/en/memoserv/general (File Added) 
+	rserv/trunk/help/en/memoserv/index (File Added) 
+	rserv/trunk/help/en/memoserv/list (File Added) 
+	rserv/trunk/help/en/memoserv/read (File Added) 
+	rserv/trunk/help/en/memoserv/send (File Added) 
+	rserv/trunk/help/genindex.sh (File Modified) 
+
+
+leeh        2007/05/10 20:23:11 UTC	(20070510_3-23937)
+  Log:
+  - add in whats-new-1.2.txt
+  
+
+  Modified:
+	rserv/trunk/doc/whats-new-1.2.txt (File Added) 
+
+
+leeh        2007/05/10 20:04:28 UTC	(20070510_2-23935)
+  Log:
+  - retag configure as development
+  
+
+  Modified:
+	rserv/trunk/autoconf/configure.in (File Modified) 
+	rserv/trunk/configure (File Modified) 
+
+
+leeh        2007/05/10 20:01:49 UTC	(20070510_1-23933)
+  Log:
+  - sort dbupgrade.pl out in preparation for 1.2.0beta1
+  
+
+  Modified:
+	rserv/trunk/tools/dbupgrade.pl (File Modified) 
+
+
+leeh        2007/05/10 19:47:39 UTC	(20070510_0-23930)
+  Log:
+  - add optional logging to memoserv
+  
+
+  Modified:
+	rserv/trunk/doc/example.conf (File Modified) 
+	rserv/trunk/src/s_memoserv.c (File Modified) 
+
+
+leeh        2007/05/09 18:10:26 UTC	(20070509_1-23928)
+  Log:
+  - add max_regexp_matches to banserver {}; which controls how many users a
+    regexp can match before being disallowed
+  
+
+  Modified:
+	rserv/trunk/doc/example.conf (File Modified) 
+	rserv/trunk/include/conf.h (File Modified) 
+	rserv/trunk/include/langs.h (File Modified) 
+	rserv/trunk/src/conf.c (File Modified) 
+	rserv/trunk/src/langs.c (File Modified) 
+	rserv/trunk/src/messages.c (File Modified) 
+	rserv/trunk/src/newconf.c (File Modified) 
+	rserv/trunk/src/s_banserv.c (File Modified) 
+
+
+leeh        2007/05/09 17:45:20 UTC	(20070509_0-23926)
+  Log:
+  - add memo_regtime_duration to memoserv {};, controlling how long a username
+    must be registered for before it can send memos
+  
+
+  Modified:
+	rserv/trunk/doc/example.conf (File Modified) 
+	rserv/trunk/include/conf.h (File Modified) 
+	rserv/trunk/src/conf.c (File Modified) 
+	rserv/trunk/src/newconf.c (File Modified) 
+	rserv/trunk/src/s_memoserv.c (File Modified) 
+
+
+leeh        2007/05/07 14:23:03 UTC	(20070507_0-23922)
+  Log:
+  - memleak fix in free_cachefile()
+  
+
+  Modified:
+	rserv/trunk/src/cache.c (File Modified) 
+
+
+jilles      2007/05/04 23:00:20 UTC	(20070504_0-23916)
+  Log:
+  As in ircd-ratbox 2.2 r23037, search the shortest list
+  (user's or channel's) to look up a channel membership.
+  This fixes abysmal performance on burst with clients
+  which are in very many channels.
+  Tested by ongeboren.
+  
+
+  Modified:
+	rserv/trunk/src/channel.c (File Modified) 
+
+
+leeh        2007/05/02 19:15:10 UTC	(20070502_2-23908)
+  Log:
+  - tidy up the helpfiles slightly for when they're merged
+  - fix the userserv language help so its nicer with genindex
+  
+
+  Modified:
+	rserv/trunk/help/en/banserv/general (File Modified) 
+	rserv/trunk/help/en/banserv/index (File Modified) 
+	rserv/trunk/help/en/userserv/index (File Modified) 
+	rserv/trunk/help/en/userserv/language (File Modified) 
+	rserv/trunk/help/en/watchserv/general (File Modified) 
+	rserv/trunk/help/en/watchserv/index (File Modified) 
+
+
+leeh        2007/05/02 19:13:03 UTC	(20070502_1-23906)
+  Log:
+  - extend cache_file() so it takes an option to add a blank line at the end
+    of files
+  - tidy up loading of index helpfiles so they add a blank line at end
+  
+
+  Modified:
+	rserv/trunk/include/cache.h (File Modified) 
+	rserv/trunk/src/cache.c (File Modified) 
+	rserv/trunk/src/service.c (File Modified) 
+	rserv/trunk/src/ucommand.c (File Modified) 
+
+
+leeh        2007/05/02 18:52:40 UTC	(20070502_0-23904)
+  Log:
+  - memoserv::read
+  
+
+  Modified:
+	rserv/trunk/include/langs.h (File Modified) 
+	rserv/trunk/src/langs.c (File Modified) 
+	rserv/trunk/src/messages.c (File Modified) 
+	rserv/trunk/src/s_memoserv.c (File Modified) 
+
+
+jilles      2007/05/01 21:57:39 UTC	(20070501_4-23902)
+  Log:
+  modebuild: Use TMODE instead of MODE if the uplink supports
+  TS6. The TS6 spec wants this and it can avoid certain
+  desyncs involving multiple server restarts. In particular
+  this will affect autoop/autovoice on join. There are other
+  places using MODE which this commit does not change;
+  they need a smarter approach (sendto_server_mode()?).
+  
+
+  Modified:
+	rserv/trunk/src/modebuild.c (File Modified) 
+
+
+jilles      2007/05/01 21:33:48 UTC	(20070501_3-23900)
+  Log:
+  Allow WARNOVERRIDE to work without AUTOJOIN with
+  ircd-ratbox 2.2.3 or newer (by sending it from the
+  server if !AUTOJOIN).
+  
+
+  Modified:
+	rserv/trunk/src/s_chanserv.c (File Modified) 
+
+
+leeh        2007/05/01 18:04:09 UTC	(20070501_2-23898)
+  Log:
+  - memoserv::list
+  - fix memoserv::send to the new db structure
+  
+
+  Modified:
+	rserv/trunk/include/langs.h (File Modified) 
+	rserv/trunk/src/langs.c (File Modified) 
+	rserv/trunk/src/messages.c (File Modified) 
+	rserv/trunk/src/s_memoserv.c (File Modified) 
+
+
+leeh        2007/05/01 17:56:28 UTC	(20070501_1-23896)
+  Log:
+  - extend get_time() so tz is optional
+  
+
+  Modified:
+	rserv/trunk/include/tools.h (File Modified) 
+	rserv/trunk/src/tools.c (File Modified) 
+
+
+leeh        2007/05/01 17:24:07 UTC	(20070501_0-23894)
+  Log:
+  - store a text based version of the source as well
+  
+
+  Modified:
+	rserv/trunk/tools/base/schema-mysql.txt (File Modified) 
+	rserv/trunk/tools/base/schema-pgsql.txt (File Modified) 
+	rserv/trunk/tools/base/schema-sqlite.txt (File Modified) 
+	rserv/trunk/tools/dbupgrade.pl (File Modified) 
+
+
+leeh        2007/04/28 15:37:59 UTC	(20070428_3-23892)
+  Log:
+  - add in code for deleting memos
+  
+
+  Modified:
+	rserv/trunk/include/langs.h (File Modified) 
+	rserv/trunk/src/langs.c (File Modified) 
+	rserv/trunk/src/messages.c (File Modified) 
+	rserv/trunk/src/s_memoserv.c (File Modified) 
+
+
+leeh        2007/04/28 15:16:03 UTC	(20070428_2-23890)
+  Log:
+  - add in conf stuff for memoserv, including max_memos to define maximum
+    number of memos a user may have
+  
+
+  Modified:
+	rserv/trunk/doc/example.conf (File Modified) 
+	rserv/trunk/include/conf.h (File Modified) 
+	rserv/trunk/include/langs.h (File Modified) 
+	rserv/trunk/src/conf.c (File Modified) 
+	rserv/trunk/src/langs.c (File Modified) 
+	rserv/trunk/src/messages.c (File Modified) 
+	rserv/trunk/src/newconf.c (File Modified) 
+	rserv/trunk/src/s_memoserv.c (File Modified) 
+
+
+leeh        2007/04/28 15:01:11 UTC	(20070428_1-23888)
+  Log:
+  - base memoserv code
+  
+
+  Modified:
+	rserv/trunk/autoconf/configure.in (File Modified) 
+	rserv/trunk/configure (File Modified) 
+	rserv/trunk/include/c_init.h (File Modified) 
+	rserv/trunk/include/langs.h (File Modified) 
+	rserv/trunk/include/setup.h.in (File Modified) 
+	rserv/trunk/src/Makefile.in (File Modified) 
+	rserv/trunk/src/langs.c (File Modified) 
+	rserv/trunk/src/messages.c (File Modified) 
+	rserv/trunk/src/rserv.c (File Modified) 
+	rserv/trunk/src/s_memoserv.c (File Added) 
+
+
+leeh        2007/04/28 14:34:55 UTC	(20070428_0-23886)
+  Log:
+  - schemas for memos table
+  
+
+  Modified:
+	rserv/trunk/tools/base/schema-mysql.txt (File Modified) 
+	rserv/trunk/tools/base/schema-pgsql.txt (File Modified) 
+	rserv/trunk/tools/base/schema-sqlite.txt (File Modified) 
+	rserv/trunk/tools/dbupgrade.pl (File Modified) 
+
+
+leeh        2007/04/25 18:32:30 UTC	(20070425_0-23879)
+  Log:
+  - make the dbhook for registering users update ids via a callback
+  
+
+  Modified:
+	rserv/trunk/src/s_userserv.c (File Modified) 
+
+
+leeh        2007/04/24 20:17:01 UTC	(20070424_1-23877)
+  Log:
+  - make rsdb_hook_schedule() take a callback function for once its executed
+    the sql
+  
+
+  Modified:
+	rserv/trunk/include/dbhook.h (File Modified) 
+	rserv/trunk/src/dbhook.c (File Modified) 
+	rserv/trunk/src/s_userserv.c (File Modified) 
+
+
+leeh        2007/04/24 19:56:17 UTC	(20070424_0-23875)
+  Log:
+  - store the id field for the row from users table, and when inserting rows
+    grab the id of what we just inserted
+  
+
+  Modified:
+	rserv/trunk/include/s_userserv.h (File Modified) 
+	rserv/trunk/src/s_userserv.c (File Modified) 
+
+
+leeh        2007/04/23 20:05:43 UTC	(20070423_1-23867)
+  Log:
+  - rework the users table so that it has an id field
+  
+
+  Modified:
+	rserv/trunk/tools/base/schema-mysql.txt (File Modified) 
+	rserv/trunk/tools/base/schema-pgsql.txt (File Modified) 
+	rserv/trunk/tools/base/schema-sqlite.txt (File Modified) 
+	rserv/trunk/tools/dbupgrade.pl (File Modified) 
+
+
+leeh        2007/04/23 18:06:00 UTC	(20070423_0-23865)
+  Log:
+  - add userserv::set::nomemos, to forbid memos being sent to the user
+  
+
+  Modified:
+	rserv/trunk/help/en/userserv/set (File Modified) 
+	rserv/trunk/include/s_userserv.h (File Modified) 
+	rserv/trunk/src/s_userserv.c (File Modified) 
+
+
+leeh        2007/04/22 10:53:35 UTC	(20070422_2-23841)
+  Log:
+  - forgot to rename function calls for dcc commands
+  
+
+  Modified:
+	rserv/trunk/src/s_banserv.c (File Modified) 
+
+
+leeh        2007/04/22 10:23:52 UTC	(20070422_1-23839)
+  Log:
+  - example.conf needs to know about regexp flag to operator {};
+  
+
+  Modified:
+	rserv/trunk/doc/example.conf (File Modified) 
+
+
+leeh        2007/04/22 10:21:45 UTC	(20070422_0-23837)
+  Log:
+  - add helpfiles for regular expressions
+  
+
+  Modified:
+	rserv/trunk/help/en/banserv/addregexp (File Added) 
+	rserv/trunk/help/en/banserv/addregexpneg (File Added) 
+	rserv/trunk/help/en/banserv/delregexp (File Added) 
+	rserv/trunk/help/en/banserv/delregexpneg (File Added) 
+	rserv/trunk/help/en/banserv/index-admin (File Modified) 
+	rserv/trunk/help/en/banserv/listregexps (File Added) 
+
+
+leeh        2007/04/21 11:04:29 UTC	(20070421_0-23835)
+  Log:
+  - rename operserv::regexp to operserv::addregexp, and operserv::unregexp to
+    operserv::delregexp (same for regexpneg)
+  
+
+  Modified:
+	rserv/trunk/src/messages.c (File Modified) 
+	rserv/trunk/src/s_banserv.c (File Modified) 
+
+
+leeh        2007/04/11 22:49:35 UTC	(20070411_2-23829)
+  Log:
+  - when merging services, use dlink_add_tail so helpfile ordering doesn't
+    move around when its rehashed
+  
+
+  Modified:
+	rserv/trunk/src/service.c (File Modified) 
+
+
+leeh        2007/04/11 22:48:39 UTC	(20070411_1-23827)
+  Log:
+  - make watchserv support merging into operserv
+  
+
+  Modified:
+	rserv/trunk/doc/example.conf (File Modified) 
+	rserv/trunk/include/conf.h (File Modified) 
+	rserv/trunk/src/conf.c (File Modified) 
+	rserv/trunk/src/newconf.c (File Modified) 
+	rserv/trunk/src/s_watchserv.c (File Modified) 
+
+
+leeh        2007/04/11 22:40:55 UTC	(20070411_0-23825)
+  Log:
+  - add ability to merge jupeserv into operserv
+  
+
+  Modified:
+	rserv/trunk/include/conf.h (File Modified) 
+	rserv/trunk/src/conf.c (File Modified) 
+	rserv/trunk/src/newconf.c (File Modified) 
+	rserv/trunk/src/s_jupeserv.c (File Modified) 
+
+
+leeh        2007/04/09 17:34:03 UTC	(20070409_3-23823)
+  Log:
+  - add the ability to merge banserv into operserv
+  
+
+  Modified:
+	rserv/trunk/doc/example.conf (File Modified) 
+	rserv/trunk/include/conf.h (File Modified) 
+	rserv/trunk/src/conf.c (File Modified) 
+	rserv/trunk/src/newconf.c (File Modified) 
+	rserv/trunk/src/s_banserv.c (File Modified) 
+
+
+leeh        2007/04/09 13:57:40 UTC	(20070409_2-23821)
+  Log:
+  - database uses REALLEN for server jupes, we should too
+  
+
+  Modified:
+	rserv/trunk/src/s_jupeserv.c (File Modified) 
+
+
+leeh        2007/04/09 11:49:52 UTC	(20070409_1-23819)
+  Log:
+  - note cmd_entry may be invalid after we have executed the command
+  
+
+  Modified:
+	rserv/trunk/src/service.c (File Modified) 
+
+
+leeh        2007/04/09 04:51:36 UTC	(20070409_0-23817)
+  Log:
+  - userserv::userinfo should have minpara of 1
+  
+
+  Modified:
+	rserv/trunk/src/s_userserv.c (File Modified) 
+
+
+leeh        2007/04/05 20:54:44 UTC	(20070405_4-23815)
+  Log:
+  - ignore Makefile here
+  
+
+  Modified:
+	rserv/trunk/langs/  (Property Modified)
+
+
+leeh        2007/04/05 20:36:55 UTC	(20070405_3-23813)
+  Log:
+  - add the code to merge the index/index-admin helpfiles upwards too
+  
+
+  Modified:
+	rserv/trunk/src/service.c (File Modified) 
+
+
+leeh        2007/04/05 20:20:30 UTC	(20070405_2-23811)
+  Log:
+  - add dlink_move_list_tail(), moves one list to the end of another list
+  
+
+  Modified:
+	rserv/trunk/include/tools.h (File Modified) 
+	rserv/trunk/src/tools.c (File Modified) 
+
+
+leeh        2007/04/05 20:09:55 UTC	(20070405_1-23809)
+  Log:
+  - add support for merging one service upwards into another service
+  
+
+  Modified:
+	rserv/trunk/include/client.h (File Modified) 
+	rserv/trunk/include/service.h (File Modified) 
+	rserv/trunk/src/service.c (File Modified) 
+	rserv/trunk/src/ucommand.c (File Modified) 
+
+
+leeh        2007/04/05 18:30:48 UTC	(20070405_0-23807)
+  Log:
+  - rework dcc commands so they just use the struct ucommand_handler from the
+    service_handler, instead of building a linked list of them
+  
+
+  Modified:
+	rserv/trunk/include/client.h (File Modified) 
+	rserv/trunk/src/service.c (File Modified) 
+	rserv/trunk/src/ucommand.c (File Modified) 
+
+
+leeh        2007/04/04 20:50:24 UTC	(20070404_0-23805)
+  Log:
+  - langs_description shouldnt be const, we need to free() it
+  
+
+  Modified:
+	rserv/trunk/include/langs.h (File Modified) 
+	rserv/trunk/src/langs.c (File Modified) 
+
+
+leeh        2007/04/03 18:14:24 UTC	(20070403_1-23801)
+  Log:
+  - document banned email domains
+  
+
+  Modified:
+	rserv/trunk/doc/banning_email_domains.txt (File Added) 
+
+
+leeh        2007/04/03 18:09:31 UTC	(20070403_0-23799)
+  Log:
+  - make cacheline_heap external
+  - store the language descriptions from the translation files into
+    langs_description
+  - when loading service help files, append a list of languages and their
+    descriptions to the language help for userserv
+  
+
+  Modified:
+	rserv/trunk/help/en/userserv/language (File Modified) 
+	rserv/trunk/include/cache.h (File Modified) 
+	rserv/trunk/include/langs.h (File Modified) 
+	rserv/trunk/src/cache.c (File Modified) 
+	rserv/trunk/src/langs.c (File Modified) 
+	rserv/trunk/src/service.c (File Modified) 
+
+
+leeh        2007/04/02 20:19:44 UTC	(20070402_3-23793)
+  Log:
+  - fix hook on connecting clients to match negative regexps
+  - tidy up the listregexps output
+  
+
+  Modified:
+	rserv/trunk/src/s_banserv.c (File Modified) 
+
+
+leeh        2007/04/02 20:14:34 UTC	(20070402_2-23791)
+  Log:
+  - add banserv::unregexpneg, to remove a negative regexp
+  
+
+  Modified:
+	rserv/trunk/src/s_banserv.c (File Modified) 
+
+
+leeh        2007/04/02 20:07:01 UTC	(20070402_1-23789)
+  Log:
+  - I swear I have a blind spot for nested DLINK_FOREACH(), refactor some code
+    slightly so its not needed
+  
+
+  Modified:
+	rserv/trunk/src/s_banserv.c (File Modified) 
+
+
+leeh        2007/04/02 20:03:30 UTC	(20070402_0-23787)
+  Log:
+  - add banserv::regexpneg, to add a regexp negation
+  - extend banserv::listregexps to list negations
+  
+
+  Modified:
+	rserv/trunk/src/s_banserv.c (File Modified) 
+
+
+leeh        2007/04/01 18:14:27 UTC	(20070401_6-23785)
+  Log:
+  - add in the sql stuff for regexp negation, and the db loader functions
+  - extend regexp_free() to do the sql clearing of operbans_regexp and
+    operbans_regexp_neg
+  
+
+  Modified:
+	rserv/trunk/include/s_banserv.h (File Modified) 
+	rserv/trunk/src/s_banserv.c (File Modified) 
+	rserv/trunk/tools/base/schema-mysql.txt (File Modified) 
+	rserv/trunk/tools/base/schema-pgsql.txt (File Modified) 
+	rserv/trunk/tools/base/schema-sqlite.txt (File Modified) 
+	rserv/trunk/tools/dbupgrade.pl (File Modified) 
+
+
+jilles      2007/04/01 17:49:20 UTC	(20070401_5-23783)
+  Log:
+  Make rsdb_sqlite3.c compile.
+  
+
+  Modified:
+	rserv/trunk/src/rsdb_sqlite3.c (File Modified) 
+
+
+leeh        2007/04/01 17:39:22 UTC	(20070401_4-23781)
+  Log:
+  - forgot to add s_banserv.h
+  
+
+  Modified:
+	rserv/trunk/include/s_banserv.h (File Added) 
+
+
+leeh        2007/04/01 16:32:37 UTC	(20070401_3-23777)
+  Log:
+  - swap schemas so suspend_time defaults to 0
+  - make users database load handle an empty string for suspend_time
+  
+
+  Modified:
+	rserv/trunk/src/s_userserv.c (File Modified) 
+	rserv/trunk/tools/base/schema-mysql.txt (File Modified) 
+	rserv/trunk/tools/base/schema-pgsql.txt (File Modified) 
+	rserv/trunk/tools/base/schema-sqlite.txt (File Modified) 
+	rserv/trunk/tools/dbupgrade.pl (File Modified) 
+
+
+jilles      2007/04/01 16:23:46 UTC	(20070401_2-23775)
+  Log:
+  Don't lower TS, desynching services, when joining
+  a channel for inhabit.
+  
+
+  Modified:
+	rserv/trunk/src/s_chanserv.c (File Modified) 
+
+
+jilles      2007/04/01 16:15:43 UTC	(20070401_1-23773)
+  Log:
+  If chanserv::addban kicks out the last user, enable
+  inhabit first so the channel is not destroyed (which
+  would cause a crash).
+  
+
+  Modified:
+	rserv/trunk/src/s_chanserv.c (File Modified) 
+
+
+leeh        2007/04/01 11:47:00 UTC	(20070401_0-23771)
+  Log:
+  - add regexp_time to example.conf, controls how long klines issued as part
+    of regexps last
+  
+
+  Modified:
+	rserv/trunk/doc/example.conf (File Modified) 
+	rserv/trunk/include/conf.h (File Modified) 
+	rserv/trunk/src/conf.c (File Modified) 
+	rserv/trunk/src/newconf.c (File Modified) 
+	rserv/trunk/src/s_banserv.c (File Modified) 
+
+
+leeh        2007/03/31 15:46:18 UTC	(20070331_4-23769)
+  Log:
+  - add banserv::listregexps, to list regexps
+  - add stuff to the end of regexp_list, so the list looks nicer
+  - id is argv[0] in sql lookup, not argv[1]
+  
+
+  Modified:
+	rserv/trunk/src/s_banserv.c (File Modified) 
+
+
+leeh        2007/03/31 13:52:21 UTC	(20070331_3-23767)
+  Log:
+  - need to install the english helpfiles too..
+  
+
+  Modified:
+	rserv/trunk/help/Makefile.in (File Modified) 
+
+
+leeh        2007/03/31 13:42:17 UTC	(20070331_2-23765)
+  Log:
+  - rework banserv regexps so they have an auto incrementing 'id' column
+  
+
+  Modified:
+	rserv/trunk/src/s_banserv.c (File Modified) 
+	rserv/trunk/tools/base/schema-mysql.txt (File Modified) 
+	rserv/trunk/tools/base/schema-pgsql.txt (File Modified) 
+	rserv/trunk/tools/base/schema-sqlite.txt (File Modified) 
+	rserv/trunk/tools/dbupgrade.pl (File Modified) 
+
+
+leeh        2007/03/31 13:41:07 UTC	(20070331_1-23763)
+  Log:
+  - add rsdb_exec_insert(), which extends rsdb api to be able to return the
+    inserted id from an auto incrementing column
+  
+
+  Modified:
+	rserv/trunk/include/rsdb.h (File Modified) 
+	rserv/trunk/src/rsdb_mysql.c (File Modified) 
+	rserv/trunk/src/rsdb_pgsql.c (File Modified) 
+	rserv/trunk/src/rsdb_sqlite3.c (File Modified) 
+
+
+leeh        2007/03/31 13:40:09 UTC	(20070331_0-23761)
+  Log:
+  - update rsdb documentation
+  
+
+  Modified:
+	rserv/trunk/doc/rsdb.txt (File Modified) 
+
+
+leeh        2007/03/30 19:49:03 UTC	(20070330_4-23759)
+  Log:
+  - when a client connects to the network, have banserv scan through the
+    regexps and kline it if necessary
+  
+
+  Modified:
+	rserv/trunk/src/s_banserv.c (File Modified) 
+
+
+leeh        2007/03/30 19:26:43 UTC	(20070330_3-23757)
+  Log:
+  - code for loading in regexps from the database
+  
+
+  Modified:
+	rserv/trunk/src/s_banserv.c (File Modified) 
+
+
+leeh        2007/03/30 19:18:18 UTC	(20070330_2-23755)
+  Log:
+  - make banserv::regexp walk through the client list and issue klines to any
+    matching clients
+  
+
+  Modified:
+	rserv/trunk/include/langs.h (File Modified) 
+	rserv/trunk/src/langs.c (File Modified) 
+	rserv/trunk/src/messages.c (File Modified) 
+	rserv/trunk/src/s_banserv.c (File Modified) 
+
+
+leeh        2007/03/30 18:56:44 UTC	(20070330_1-23753)
+  Log:
+  - add expiry of regexps
+  
+
+  Modified:
+	rserv/trunk/src/s_banserv.c (File Modified) 
+
+
+leeh        2007/03/30 18:37:29 UTC	(20070330_0-23751)
+  Log:
+  - add banserv::unregexp
+  
+
+  Modified:
+	rserv/trunk/src/s_banserv.c (File Modified) 
+
+
+leeh        2007/03/29 21:19:02 UTC	(20070329_1-23749)
+  Log:
+  - new flag, banserv::regexp, grants ability to set/delete regexps
+  - add operserv::regexp, to add a regexp
+  
+
+  Modified:
+	rserv/trunk/include/conf.h (File Modified) 
+	rserv/trunk/src/conf.c (File Modified) 
+	rserv/trunk/src/newconf.c (File Modified) 
+	rserv/trunk/src/s_banserv.c (File Modified) 
+
+
+leeh        2007/03/29 21:17:33 UTC	(20070329_0-23747)
+  Log:
+  - sql for operbans_regexp table
+  
+
+  Modified:
+	rserv/trunk/tools/base/schema-mysql.txt (File Modified) 
+	rserv/trunk/tools/base/schema-pgsql.txt (File Modified) 
+	rserv/trunk/tools/base/schema-sqlite.txt (File Modified) 
+	rserv/trunk/tools/dbupgrade.pl (File Modified) 
+
+
+leeh        2007/03/28 19:26:20 UTC	(20070328_3-23742)
+  Log:
+  - swap the release notes around
+  
+
+  Modified:
+	rserv/trunk/RELEASE_NOTES (File Modified) 
+	rserv/trunk/doc/release_notes/RELEASE_NOTES_1.1 (File Added) 
+
+
+leeh        2007/03/28 18:29:22 UTC	(20070328_2-23740)
+  Log:
+  - add helpfiles for the operserv ignore stuff
+  
+
+  Modified:
+	rserv/trunk/help/en/operserv/addignore (File Added) 
+	rserv/trunk/help/en/operserv/delignore (File Added) 
+	rserv/trunk/help/en/operserv/index-admin (File Modified) 
+	rserv/trunk/help/en/operserv/listignores (File Added) 
+	rserv/trunk/help/en/operserv/u-addignore (File Added) 
+	rserv/trunk/help/en/operserv/u-delignore (File Added) 
+	rserv/trunk/help/en/operserv/u-listignores (File Added) 
+
+
+leeh        2007/03/28 18:24:19 UTC	(20070328_1-23738)
+  Log:
+  - add operserv::listignores
+  
+
+  Modified:
+	rserv/trunk/include/langs.h (File Modified) 
+	rserv/trunk/src/langs.c (File Modified) 
+	rserv/trunk/src/messages.c (File Modified) 
+	rserv/trunk/src/s_operserv.c (File Modified) 
+
+
+leeh        2007/03/28 18:17:49 UTC	(20070328_0-23736)
+  Log:
+  - operserv::addignore should send out a notice on success
+  - operserv::delignore was missing the sql to remove the ignore from db
+  
+
+  Modified:
+	rserv/trunk/src/s_operserv.c (File Modified) 
+
+
+leeh        2007/03/27 21:00:55 UTC	(20070327_1-23726)
+  Log:
+  - add operserv::addignore and operserv::delignore
+  
+
+  Modified:
+	rserv/trunk/include/langs.h (File Modified) 
+	rserv/trunk/include/service.h (File Modified) 
+	rserv/trunk/src/langs.c (File Modified) 
+	rserv/trunk/src/messages.c (File Modified) 
+	rserv/trunk/src/s_operserv.c (File Modified) 
+	rserv/trunk/src/service.c (File Modified) 
+
+
+leeh        2007/03/27 20:48:28 UTC	(20070327_0-23724)
+  Log:
+  - make ignore_list external
+  - add in new operserv flag, 'ignore', controls access to ignore functions
+  
+
+  Modified:
+	rserv/trunk/doc/example.conf (File Modified) 
+	rserv/trunk/include/conf.h (File Modified) 
+	rserv/trunk/include/service.h (File Modified) 
+	rserv/trunk/src/conf.c (File Modified) 
+	rserv/trunk/src/newconf.c (File Modified) 
+	rserv/trunk/src/service.c (File Modified) 
+
+
+leeh        2007/03/26 19:16:02 UTC	(20070326_0-23722)
+  Log:
+  - as pointed out by hml on irc, s/REGISTER/USERSUSPEND in a notice sent out
+  
+
+  Modified:
+	rserv/trunk/src/s_userserv.c (File Modified) 
+
+
+leeh        2007/03/25 21:42:04 UTC	(20070325_0-23718)
+  Log:
+  - make table of ignore hosts support tracking reason/oper too
+  
+
+  Modified:
+	rserv/trunk/tools/base/schema-mysql.txt (File Modified) 
+	rserv/trunk/tools/base/schema-pgsql.txt (File Modified) 
+	rserv/trunk/tools/base/schema-sqlite.txt (File Modified) 
+	rserv/trunk/tools/dbupgrade.pl (File Modified) 
+
+
+leeh        2007/03/24 20:28:32 UTC	(20070324_0-23716)
+  Log:
+  - services ignores, the sql and code for ignoring users
+  
+
+  Modified:
+	rserv/trunk/src/service.c (File Modified) 
+	rserv/trunk/tools/base/schema-mysql.txt (File Modified) 
+	rserv/trunk/tools/base/schema-pgsql.txt (File Modified) 
+	rserv/trunk/tools/base/schema-sqlite.txt (File Modified) 
+	rserv/trunk/tools/dbupgrade.pl (File Modified) 
+
+
+leeh        2007/03/19 21:44:06 UTC	(20070319_0-23714)
+  Log:
+  - show expiry of channel and user suspends
+  
+
+  Modified:
+	rserv/trunk/src/messages.c (File Modified) 
+	rserv/trunk/src/s_chanserv.c (File Modified) 
+	rserv/trunk/src/s_userserv.c (File Modified) 
+
+
+leeh        2007/03/18 20:24:05 UTC	(20070318_0-23712)
+  Log:
+  - via ongeboren, missing "chptr = msptr->chptr;" in chanserv::op
+  
+
+  Modified:
+	rserv/trunk/src/s_chanserv.c (File Modified) 
+
+
+leeh        2007/03/16 21:58:18 UTC	(20070316_4-23710)
+  Log:
+  - erroneous ','
+  
+
+  Modified:
+	rserv/trunk/src/s_userserv.c (File Modified) 
+
+
+leeh        2007/03/16 21:56:05 UTC	(20070316_3-23708)
+  Log:
+  - clarify show_suspend_reasons wont display who suspended it
+  
+
+  Modified:
+	rserv/trunk/doc/example.conf (File Modified) 
+
+
+leeh        2007/03/16 21:55:12 UTC	(20070316_2-23706)
+  Log:
+  - new conf option to chanserv and userserv, show_suspend_reasons =
+    <yes|no>;, controlling whether suspend reasons are shown to users
+  
+
+  Modified:
+	rserv/trunk/doc/example.conf (File Modified) 
+	rserv/trunk/include/conf.h (File Modified) 
+	rserv/trunk/src/conf.c (File Modified) 
+	rserv/trunk/src/messages.c (File Modified) 
+	rserv/trunk/src/newconf.c (File Modified) 
+	rserv/trunk/src/s_chanserv.c (File Modified) 
+	rserv/trunk/src/s_userserv.c (File Modified) 
+
+
+leeh        2007/03/16 21:46:42 UTC	(20070316_1-23704)
+  Log:
+  - temporary channel suspends
+  
+
+  Modified:
+	rserv/trunk/include/s_chanserv.h (File Modified) 
+	rserv/trunk/src/s_chanserv.c (File Modified) 
+	rserv/trunk/tools/base/schema-mysql.txt (File Modified) 
+	rserv/trunk/tools/base/schema-pgsql.txt (File Modified) 
+	rserv/trunk/tools/base/schema-sqlite.txt (File Modified) 
+	rserv/trunk/tools/dbupgrade.pl (File Modified) 
+
+
+leeh        2007/03/16 21:22:00 UTC	(20070316_0-23702)
+  Log:
+  - remove the doc/ stuff from Makefile.in, as we dont have it to install
+  
+
+  Modified:
+	rserv/trunk/pcre/Makefile.in (File Modified) 
+
+
+leeh        2007/03/15 20:25:38 UTC	(20070315_0-23700)
+  Log:
+  - bulgarian translations, courtesy of
+    Christian Stoyanov <raptorat -at- gmail.com>
+    Alexander Kotzev <noex.mc -at- gmail.com>
+    X-PrAnK <x-prank -at- x-spot.org>
+    and ongeboren
+  
+
+  Modified:
+	rserv/trunk/help/Makefile.in (File Modified) 
+	rserv/trunk/help/bg/ (File Added) 
+	rserv/trunk/help/bg/alis/ (File Added) 
+	rserv/trunk/help/bg/alis/general (File Added) 
+	rserv/trunk/help/bg/alis/index (File Added) 
+	rserv/trunk/help/bg/alis/list (File Added) 
+	rserv/trunk/help/bg/banserv/ (File Added) 
+	rserv/trunk/help/bg/banserv/findkline (File Added) 
+	rserv/trunk/help/bg/banserv/findresv (File Added) 
+	rserv/trunk/help/bg/banserv/findxline (File Added) 
+	rserv/trunk/help/bg/banserv/general (File Added) 
+	rserv/trunk/help/bg/banserv/index (File Added) 
+	rserv/trunk/help/bg/banserv/index-admin (File Added) 
+	rserv/trunk/help/bg/banserv/kline (File Added) 
+	rserv/trunk/help/bg/banserv/resv (File Added) 
+	rserv/trunk/help/bg/banserv/sync (File Added) 
+	rserv/trunk/help/bg/banserv/u-findkline (File Added) 
+	rserv/trunk/help/bg/banserv/u-findresv (File Added) 
+	rserv/trunk/help/bg/banserv/u-findxline (File Added) 
+	rserv/trunk/help/bg/banserv/u-kline (File Added) 
+	rserv/trunk/help/bg/banserv/u-resv (File Added) 
+	rserv/trunk/help/bg/banserv/u-sync (File Added) 
+	rserv/trunk/help/bg/banserv/u-unkline (File Added) 
+	rserv/trunk/help/bg/banserv/u-unresv (File Added) 
+	rserv/trunk/help/bg/banserv/u-unxline (File Added) 
+	rserv/trunk/help/bg/banserv/u-xline (File Added) 
+	rserv/trunk/help/bg/banserv/unkline (File Added) 
+	rserv/trunk/help/bg/banserv/unresv (File Added) 
+	rserv/trunk/help/bg/banserv/unxline (File Added) 
+	rserv/trunk/help/bg/banserv/xline (File Added) 
+	rserv/trunk/help/bg/chanserv/ (File Added) 
+	rserv/trunk/help/bg/chanserv/addban (File Added) 
+	rserv/trunk/help/bg/chanserv/adduser (File Added) 
+	rserv/trunk/help/bg/chanserv/chandrop (File Added) 
+	rserv/trunk/help/bg/chanserv/chaninfo (File Added) 
+	rserv/trunk/help/bg/chanserv/chanlist (File Added) 
+	rserv/trunk/help/bg/chanserv/chanregister (File Added) 
+	rserv/trunk/help/bg/chanserv/chansuspend (File Added) 
+	rserv/trunk/help/bg/chanserv/chanunsuspend (File Added) 
+	rserv/trunk/help/bg/chanserv/clearallops (File Added) 
+	rserv/trunk/help/bg/chanserv/clearbans (File Added) 
+	rserv/trunk/help/bg/chanserv/clearmodes (File Added) 
+	rserv/trunk/help/bg/chanserv/clearops (File Added) 
+	rserv/trunk/help/bg/chanserv/delban (File Added) 
+	rserv/trunk/help/bg/chanserv/delowner (File Added) 
+	rserv/trunk/help/bg/chanserv/deluser (File Added) 
+	rserv/trunk/help/bg/chanserv/general (File Added) 
+	rserv/trunk/help/bg/chanserv/getkey (File Added) 
+	rserv/trunk/help/bg/chanserv/index (File Added) 
+	rserv/trunk/help/bg/chanserv/index-admin (File Added) 
+	rserv/trunk/help/bg/chanserv/info (File Added) 
+	rserv/trunk/help/bg/chanserv/invite (File Added) 
+	rserv/trunk/help/bg/chanserv/listbans (File Added) 
+	rserv/trunk/help/bg/chanserv/listusers (File Added) 
+	rserv/trunk/help/bg/chanserv/modauto (File Added) 
+	rserv/trunk/help/bg/chanserv/modban (File Added) 
+	rserv/trunk/help/bg/chanserv/moduser (File Added) 
+	rserv/trunk/help/bg/chanserv/op (File Added) 
+	rserv/trunk/help/bg/chanserv/register (File Added) 
+	rserv/trunk/help/bg/chanserv/set (File Added) 
+	rserv/trunk/help/bg/chanserv/suspend (File Added) 
+	rserv/trunk/help/bg/chanserv/u-chandrop (File Added) 
+	rserv/trunk/help/bg/chanserv/u-chaninfo (File Added) 
+	rserv/trunk/help/bg/chanserv/u-chanregister (File Added) 
+	rserv/trunk/help/bg/chanserv/u-chansuspend (File Added) 
+	rserv/trunk/help/bg/chanserv/u-chanunsuspend (File Added) 
+	rserv/trunk/help/bg/chanserv/unban (File Added) 
+	rserv/trunk/help/bg/chanserv/unsuspend (File Added) 
+	rserv/trunk/help/bg/chanserv/voice (File Added) 
+	rserv/trunk/help/bg/global/ (File Added) 
+	rserv/trunk/help/bg/global/addwelcome (File Added) 
+	rserv/trunk/help/bg/global/delwelcome (File Added) 
+	rserv/trunk/help/bg/global/general (File Added) 
+	rserv/trunk/help/bg/global/index (File Added) 
+	rserv/trunk/help/bg/global/index-admin (File Added) 
+	rserv/trunk/help/bg/global/listwelcome (File Added) 
+	rserv/trunk/help/bg/global/netmsg (File Added) 
+	rserv/trunk/help/bg/global/u-addwelcome (File Added) 
+	rserv/trunk/help/bg/global/u-delwelcome (File Added) 
+	rserv/trunk/help/bg/global/u-listwelcome (File Added) 
+	rserv/trunk/help/bg/global/u-netmsg (File Added) 
+	rserv/trunk/help/bg/jupeserv/ (File Added) 
+	rserv/trunk/help/bg/jupeserv/calljupe (File Added) 
+	rserv/trunk/help/bg/jupeserv/callunjupe (File Added) 
+	rserv/trunk/help/bg/jupeserv/general (File Added) 
+	rserv/trunk/help/bg/jupeserv/index (File Added) 
+	rserv/trunk/help/bg/jupeserv/index-admin (File Added) 
+	rserv/trunk/help/bg/jupeserv/jupe (File Added) 
+	rserv/trunk/help/bg/jupeserv/pending (File Added) 
+	rserv/trunk/help/bg/jupeserv/u-jupe (File Added) 
+	rserv/trunk/help/bg/jupeserv/u-unjupe (File Added) 
+	rserv/trunk/help/bg/jupeserv/unjupe (File Added) 
+	rserv/trunk/help/bg/main/ (File Added) 
+	rserv/trunk/help/bg/main/u-boot (File Added) 
+	rserv/trunk/help/bg/main/u-chat (File Added) 
+	rserv/trunk/help/bg/main/u-connect (File Added) 
+	rserv/trunk/help/bg/main/u-events (File Added) 
+	rserv/trunk/help/bg/main/u-quit (File Added) 
+	rserv/trunk/help/bg/main/u-rehash (File Added) 
+	rserv/trunk/help/bg/main/u-service (File Added) 
+	rserv/trunk/help/bg/main/u-stats (File Added) 
+	rserv/trunk/help/bg/main/u-status (File Added) 
+	rserv/trunk/help/bg/nickserv/ (File Added) 
+	rserv/trunk/help/bg/nickserv/drop (File Added) 
+	rserv/trunk/help/bg/nickserv/general (File Added) 
+	rserv/trunk/help/bg/nickserv/index (File Added) 
+	rserv/trunk/help/bg/nickserv/index-admin (File Added) 
+	rserv/trunk/help/bg/nickserv/info (File Added) 
+	rserv/trunk/help/bg/nickserv/nickdrop (File Added) 
+	rserv/trunk/help/bg/nickserv/regain (File Added) 
+	rserv/trunk/help/bg/nickserv/register (File Added) 
+	rserv/trunk/help/bg/nickserv/release (File Added) 
+	rserv/trunk/help/bg/nickserv/set (File Added) 
+	rserv/trunk/help/bg/nickserv/u-nickdrop (File Added) 
+	rserv/trunk/help/bg/operbot/ (File Added) 
+	rserv/trunk/help/bg/operbot/general (File Added) 
+	rserv/trunk/help/bg/operbot/index (File Added) 
+	rserv/trunk/help/bg/operbot/index-admin (File Added) 
+	rserv/trunk/help/bg/operbot/invite (File Added) 
+	rserv/trunk/help/bg/operbot/objoin (File Added) 
+	rserv/trunk/help/bg/operbot/obpart (File Added) 
+	rserv/trunk/help/bg/operbot/op (File Added) 
+	rserv/trunk/help/bg/operbot/u-objoin (File Added) 
+	rserv/trunk/help/bg/operbot/u-obpart (File Added) 
+	rserv/trunk/help/bg/operserv/ (File Added) 
+	rserv/trunk/help/bg/operserv/dbsync (File Added) 
+	rserv/trunk/help/bg/operserv/die (File Added) 
+	rserv/trunk/help/bg/operserv/general (File Added) 
+	rserv/trunk/help/bg/operserv/index (File Added) 
+	rserv/trunk/help/bg/operserv/index-admin (File Added) 
+	rserv/trunk/help/bg/operserv/listopers (File Added) 
+	rserv/trunk/help/bg/operserv/omode (File Added) 
+	rserv/trunk/help/bg/operserv/osjoin (File Added) 
+	rserv/trunk/help/bg/operserv/ospart (File Added) 
+	rserv/trunk/help/bg/operserv/rehash (File Added) 
+	rserv/trunk/help/bg/operserv/takeover (File Added) 
+	rserv/trunk/help/bg/operserv/u-dbsync (File Added) 
+	rserv/trunk/help/bg/operserv/u-die (File Added) 
+	rserv/trunk/help/bg/operserv/u-listopers (File Added) 
+	rserv/trunk/help/bg/operserv/u-omode (File Added) 
+	rserv/trunk/help/bg/operserv/u-osjoin (File Added) 
+	rserv/trunk/help/bg/operserv/u-ospart (File Added) 
+	rserv/trunk/help/bg/operserv/u-takeover (File Added) 
+	rserv/trunk/help/bg/userserv/ (File Added) 
+	rserv/trunk/help/bg/userserv/activate (File Added) 
+	rserv/trunk/help/bg/userserv/general (File Added) 
+	rserv/trunk/help/bg/userserv/index (File Added) 
+	rserv/trunk/help/bg/userserv/index-admin (File Added) 
+	rserv/trunk/help/bg/userserv/info (File Added) 
+	rserv/trunk/help/bg/userserv/language (File Added) 
+	rserv/trunk/help/bg/userserv/login (File Added) 
+	rserv/trunk/help/bg/userserv/logout (File Added) 
+	rserv/trunk/help/bg/userserv/register (File Added) 
+	rserv/trunk/help/bg/userserv/resetemail (File Added) 
+	rserv/trunk/help/bg/userserv/resetpass (File Added) 
+	rserv/trunk/help/bg/userserv/set (File Added) 
+	rserv/trunk/help/bg/userserv/u-userdrop (File Added) 
+	rserv/trunk/help/bg/userserv/u-userinfo (File Added) 
+	rserv/trunk/help/bg/userserv/u-userregister (File Added) 
+	rserv/trunk/help/bg/userserv/u-usersetpass (File Added) 
+	rserv/trunk/help/bg/userserv/u-usersuspend (File Added) 
+	rserv/trunk/help/bg/userserv/u-userunsuspend (File Added) 
+	rserv/trunk/help/bg/userserv/userdrop (File Added) 
+	rserv/trunk/help/bg/userserv/userinfo (File Added) 
+	rserv/trunk/help/bg/userserv/userlist (File Added) 
+	rserv/trunk/help/bg/userserv/userregister (File Added) 
+	rserv/trunk/help/bg/userserv/usersetpass (File Added) 
+	rserv/trunk/help/bg/userserv/usersuspend (File Added) 
+	rserv/trunk/help/bg/userserv/userunsuspend (File Added) 
+	rserv/trunk/help/bg/watchserv/ (File Added) 
+	rserv/trunk/help/bg/watchserv/general (File Added) 
+	rserv/trunk/help/bg/watchserv/index (File Added) 
+	rserv/trunk/help/bg/watchserv/index-admin (File Added) 
+	rserv/trunk/help/bg/watchserv/u-watch (File Added) 
+	rserv/trunk/help/bg/watchserv/watch (File Added) 
+	rserv/trunk/help/en/chanserv/chansuspend (File Modified) 
+	rserv/trunk/help/en/chanserv/u-chansuspend (File Modified) 
+	rserv/trunk/help/en/chanserv/u-chanunsuspend (File Modified) 
+	rserv/trunk/help/genindex.sh (File Modified) 
+	rserv/trunk/langs/Makefile.in (File Modified) 
+	rserv/trunk/langs/bg.lang (File Added) 
+
+
+leeh        2007/03/14 20:08:05 UTC	(20070314_0-23698)
+  Log:
+  - extend chanserv::op so if it isn't given a channel parameter, it ops users
+    on all available channels where they're not already opped
+  
+
+  Modified:
+	rserv/trunk/help/en/chanserv/op (File Modified) 
+	rserv/trunk/src/s_chanserv.c (File Modified) 
+
+
+leeh        2007/03/04 19:26:51 UTC	(20070304_0-23694)
+  Log:
+  - via ongeboren, chanserv::delowner was using ureg_p rather than chreg_p in
+    a sql statement
+  
+
+  Modified:
+	rserv/trunk/src/s_chanserv.c (File Modified) 
+
+
+leeh        2007/03/01 20:16:41 UTC	(20070301_2-23692)
+  Log:
+  - consistency, make duration of suspend the first param and update the help
+  
+
+  Modified:
+	rserv/trunk/help/en/userserv/u-usersuspend (File Modified) 
+	rserv/trunk/help/en/userserv/usersuspend (File Modified) 
+	rserv/trunk/src/s_userserv.c (File Modified) 
+
+
+leeh        2007/03/01 20:12:18 UTC	(20070301_1-23690)
+  Log:
+  - if the language field in the db is empty, dont give users a language
+  - account for a preferred language not being loaded when grabbing
+    translations for messages
+  
+
+  Modified:
+	rserv/trunk/src/langs.c (File Modified) 
+	rserv/trunk/src/s_userserv.c (File Modified) 
+
+
+leeh        2007/03/01 20:09:14 UTC	(20070301_0-23688)
+  Log:
+  - add database field suspend_time to users table, for tracking the suspend
+    time
+  - disable userserv::resetpass and userserv::activate if username is
+    suspended
+  - add ability to do temporary suspends of users
+  
+
+  Modified:
+	rserv/trunk/include/langs.h (File Modified) 
+	rserv/trunk/include/s_userserv.h (File Modified) 
+	rserv/trunk/src/langs.c (File Modified) 
+	rserv/trunk/src/messages.c (File Modified) 
+	rserv/trunk/src/s_userserv.c (File Modified) 
+	rserv/trunk/tools/base/schema-mysql.txt (File Modified) 
+	rserv/trunk/tools/base/schema-pgsql.txt (File Modified) 
+	rserv/trunk/tools/base/schema-sqlite.txt (File Modified) 
+	rserv/trunk/tools/dbupgrade.pl (File Modified) 
+
+
+leeh        2007/02/28 18:32:23 UTC	(20070228_0-23684)
+  Log:
+  - fix language to be loaded from the db at startup
+  - fix inverted test for a translation being valid
+  - fix a check for an empty string in translations
+  
+
+  Modified:
+	rserv/trunk/src/langs.c (File Modified) 
+	rserv/trunk/src/langs_format.c (File Modified) 
+	rserv/trunk/src/s_userserv.c (File Modified) 
+
+
+leeh        2007/02/27 19:01:57 UTC	(20070227_0-23672)
+  Log:
+  - add userserv::usersetemail for admins to reset a users email address, with
+    associated operator {}; priv
+  
+
+  Modified:
+	rserv/trunk/doc/example.conf (File Modified) 
+	rserv/trunk/help/en/userserv/index-admin (File Modified) 
+	rserv/trunk/help/en/userserv/u-usersetemail (File Added) 
+	rserv/trunk/help/en/userserv/usersetemail (File Added) 
+	rserv/trunk/include/conf.h (File Modified) 
+	rserv/trunk/src/newconf.c (File Modified) 
+	rserv/trunk/src/s_userserv.c (File Modified) 
+
+
+leeh        2007/02/26 21:16:31 UTC	(20070226_3-23670)
+  Log:
+  - add CHANSERV::SET::NOUSERBANS, to force all bans to go through services
+  
+
+  Modified:
+	rserv/trunk/help/en/chanserv/set (File Modified) 
+	rserv/trunk/include/s_chanserv.h (File Modified) 
+	rserv/trunk/src/s_chanserv.c (File Modified) 
+
+
+leeh        2007/02/26 21:13:35 UTC	(20070226_2-23668)
+  Log:
+  - make HOOK_MODE_BAN only for user set +b
+  - make del_ban() external
+  
+
+  Modified:
+	rserv/trunk/include/channel.h (File Modified) 
+	rserv/trunk/include/hook.h (File Modified) 
+	rserv/trunk/src/c_mode.c (File Modified) 
+
+
+leeh        2007/02/26 21:01:18 UTC	(20070226_1-23666)
+  Log:
+  - add a hook for +b modes
+  
+
+  Modified:
+	rserv/trunk/include/hook.h (File Modified) 
+	rserv/trunk/src/c_mode.c (File Modified) 
+
+
+leeh        2007/02/26 19:25:21 UTC	(20070226_0-23664)
+  Log:
+  - add USERSERV::SET::NOACCESS, which prevents the username from being added
+    to any channels
+  
+
+  Modified:
+	rserv/trunk/help/en/userserv/set (File Modified) 
+	rserv/trunk/include/langs.h (File Modified) 
+	rserv/trunk/include/s_userserv.h (File Modified) 
+	rserv/trunk/langs/example.lang (File Modified) 
+	rserv/trunk/src/langs.c (File Modified) 
+	rserv/trunk/src/messages.c (File Modified) 
+	rserv/trunk/src/s_chanserv.c (File Modified) 
+	rserv/trunk/src/s_userserv.c (File Modified) 
+
+
+leeh        2007/02/21 18:27:19 UTC	(20070221_1-23654)
+  Log:
+  - handle some conversion specifiers, and error if we get a part of a format
+    string we dont understand
+  
+
+  Modified:
+	rserv/trunk/src/langs_format.c (File Modified) 
+
+
+leeh        2007/02/21 18:16:21 UTC	(20070221_0-23652)
+  Log:
+  - watch for MAX_FMT_ARGS overflowing
+  
+
+  Modified:
+	rserv/trunk/src/langs_format.c (File Modified) 
+
+
+leeh        2007/02/18 21:13:35 UTC	(20070218_5-23650)
+  Log:
+  - make USR1/rehash help also reload the translations
+  
+
+  Modified:
+	rserv/trunk/help/en/main/u-rehash (File Modified) 
+	rserv/trunk/help/en/operserv/rehash (File Modified) 
+	rserv/trunk/include/langs.h (File Modified) 
+	rserv/trunk/src/langs.c (File Modified) 
+	rserv/trunk/src/langs_format.c (File Modified) 
+	rserv/trunk/src/rserv.c (File Modified) 
+	rserv/trunk/src/s_operserv.c (File Modified) 
+	rserv/trunk/src/ucommand.c (File Modified) 
+
+
+leeh        2007/02/18 19:22:58 UTC	(20070218_4-23648)
+  Log:
+  - finished testing, dont want to install example.lang
+  
+
+  Modified:
+	rserv/trunk/langs/Makefile.in (File Modified) 
+
+
+leeh        2007/02/18 14:27:11 UTC	(20070218_3-23646)
+  Log:
+  - add a basic format string validator
+  
+
+  Modified:
+	rserv/trunk/include/langs.h (File Modified) 
+	rserv/trunk/src/Makefile.in (File Modified) 
+	rserv/trunk/src/langs.c (File Modified) 
+	rserv/trunk/src/langs_format.c (File Added) 
+
+
+leeh        2007/02/18 14:15:34 UTC	(20070218_2-23644)
+  Log:
+  - s/filename/pathbuf
+  
+
+  Modified:
+	rserv/trunk/src/langs.c (File Modified) 
+
+
+leeh        2007/02/18 12:38:17 UTC	(20070218_1-23642)
+  Log:
+  - clarify default_language in the conf doesn't care about validity
+  
+
+  Modified:
+	rserv/trunk/doc/example.conf (File Modified) 
+
+
+leeh        2007/02/18 12:36:38 UTC	(20070218_0-23640)
+  Log:
+  - add in the code for loading translation files.
+    This currently doesn't check for format string validity..
+  
+
+  Modified:
+	rserv/trunk/include/langs.h (File Modified) 
+	rserv/trunk/src/langs.c (File Modified) 
+
+
+leeh        2007/02/16 20:53:37 UTC	(20070216_0-23638)
+  Log:
+  - rename example.lang.x to example.lang
+  - add in Makefile to help/
+  
+
+  Modified:
+	rserv/trunk/Makefile.in (File Modified) 
+	rserv/trunk/autoconf/configure.in (File Modified) 
+	rserv/trunk/configure (File Modified) 
+	rserv/trunk/langs/Makefile.in (File Added) 
+	rserv/trunk/langs/example.lang (File Added) 
+	rserv/trunk/langs/example.lang.x (File Deleted) 
+	rserv/trunk/src/Makefile.in (File Modified) 
+
+
+leeh        2007/02/15 19:39:05 UTC	(20070215_2-23634)
+  Log:
+  - finish renaming en_GB to en
+  
+
+  Modified:
+	rserv/trunk/doc/example.conf (File Modified) 
+	rserv/trunk/include/langs.h (File Modified) 
+
+
+leeh        2007/02/15 19:38:29 UTC	(20070215_1-23632)
+  Log:
+  - add in an example translation file
+  
+
+  Modified:
+	rserv/trunk/langs/ (File Added) 
+	rserv/trunk/langs/example.lang.x (File Added) 
+
+
+leeh        2007/02/15 19:29:42 UTC	(20070215_0-23630)
+  Log:
+  - rename en_GB to en
+  
+
+  Modified:
+	rserv/trunk/help/Makefile.in (File Modified) 
+	rserv/trunk/help/en/ (File Added) 
+	rserv/trunk/help/en_GB/ (File Deleted) 
+	rserv/trunk/help/genindex.sh (File Modified) 
+
+
+leeh        2007/02/13 22:17:30 UTC	(20070213_3-23622)
+  Log:
+  - to avoid conflicts with code taken from ircd, rserv is now under the GPL
+  
+
+  Modified:
+	rserv/trunk/LICENSE (File Modified) 
+
+
+leeh        2007/02/13 22:08:37 UTC	(20070213_2-23616)
+  Log:
+  - add autoconf test for dirent.h
+  - define PATH_MAX if not already defined
+  - make init_langs() fill langs_available will the list of subdirs in the
+    help folder
+  
+
+  Modified:
+	rserv/trunk/autoconf/configure.in (File Modified) 
+	rserv/trunk/configure (File Modified) 
+	rserv/trunk/include/setup.h.in (File Modified) 
+	rserv/trunk/include/stdinc.h (File Modified) 
+	rserv/trunk/src/langs.c (File Modified) 
+
+
+leeh        2007/02/13 20:52:16 UTC	(20070213_1-23614)
+  Log:
+  - move over to a dynamic list of available languages
+  
+
+  Modified:
+	rserv/trunk/include/langs.h (File Modified) 
+	rserv/trunk/include/s_userserv.h (File Modified) 
+	rserv/trunk/src/conf.c (File Modified) 
+	rserv/trunk/src/langs.c (File Modified) 
+	rserv/trunk/src/newconf.c (File Modified) 
+	rserv/trunk/src/rserv.c (File Modified) 
+	rserv/trunk/src/s_userserv.c (File Modified) 
+	rserv/trunk/src/service.c (File Modified) 
+	rserv/trunk/src/ucommand.c (File Modified) 
+
+
+leeh        2007/02/13 15:04:51 UTC	(20070213_0-23612)
+  Log:
+  - store language as a string rather than an integer
+  
+
+  Modified:
+	rserv/trunk/src/s_userserv.c (File Modified) 
+	rserv/trunk/tools/base/schema-mysql.txt (File Modified) 
+	rserv/trunk/tools/base/schema-pgsql.txt (File Modified) 
+	rserv/trunk/tools/base/schema-sqlite.txt (File Modified) 
+	rserv/trunk/tools/dbupgrade.pl (File Modified) 
+
+
+leeh        2007/02/05 21:35:27 UTC	(20070205_0-23596)
+  Log:
+  - sync all the messages so the language file has %s::%s instead of passing
+    the "::" as a param
+  
+
+  Modified:
+	rserv/trunk/src/messages.c (File Modified) 
+	rserv/trunk/src/s_alis.c (File Modified) 
+	rserv/trunk/src/s_banserv.c (File Modified) 
+	rserv/trunk/src/s_chanserv.c (File Modified) 
+	rserv/trunk/src/s_jupeserv.c (File Modified) 
+	rserv/trunk/src/s_nickserv.c (File Modified) 
+	rserv/trunk/src/s_operbot.c (File Modified) 
+	rserv/trunk/src/s_operserv.c (File Modified) 
+	rserv/trunk/src/s_userserv.c (File Modified) 
+
+
+leeh        2007/02/02 18:25:06 UTC	(20070202_0-23591)
+  Log:
+  - add copyrights and license to langs.c/messages.c
+  
+
+  Modified:
+	rserv/trunk/src/langs.c (File Modified) (Property Modified)
+	rserv/trunk/src/messages.c (File Modified) (Property Modified)
+
+
+leeh        2007/02/01 20:39:41 UTC	(20070201_1-23587)
+  Log:
+  - move service.c over to the new framework, so those are all done now..
+  
+
+  Modified:
+	rserv/trunk/include/langs.h (File Modified) 
+	rserv/trunk/src/langs.c (File Modified) 
+	rserv/trunk/src/messages.c (File Modified) 
+	rserv/trunk/src/service.c (File Modified) 
+
+
+leeh        2007/02/01 20:20:13 UTC	(20070201_0-23585)
+  Log:
+  - move jupeserv over to the new framework
+  
+
+  Modified:
+	rserv/trunk/include/langs.h (File Modified) 
+	rserv/trunk/src/langs.c (File Modified) 
+	rserv/trunk/src/messages.c (File Modified) 
+	rserv/trunk/src/s_jupeserv.c (File Modified) 
+
+
+leeh        2007/01/30 18:23:22 UTC	(20070130_1-23548)
+  Log:
+  - move alis over to new framework
+  
+
+  Modified:
+	rserv/trunk/include/langs.h (File Modified) 
+	rserv/trunk/src/langs.c (File Modified) 
+	rserv/trunk/src/messages.c (File Modified) 
+	rserv/trunk/src/s_alis.c (File Modified) 
+
+
+leeh        2007/01/30 18:17:34 UTC	(20070130_0-23546)
+  Log:
+  - finish moving chanserv over to the new framework
+  
+
+  Modified:
+	rserv/trunk/include/langs.h (File Modified) 
+	rserv/trunk/src/langs.c (File Modified) 
+	rserv/trunk/src/messages.c (File Modified) 
+	rserv/trunk/src/s_chanserv.c (File Modified) 
+
+
+leeh        2007/01/28 18:51:49 UTC	(20070128_1-23541)
+  Log:
+  - more conversions of chanserv to the new framework
+  
+
+  Modified:
+	rserv/trunk/include/langs.h (File Modified) 
+	rserv/trunk/src/langs.c (File Modified) 
+	rserv/trunk/src/messages.c (File Modified) 
+	rserv/trunk/src/s_chanserv.c (File Modified) 
+	rserv/trunk/src/s_operbot.c (File Modified) 
+	rserv/trunk/src/s_operserv.c (File Modified) 
+
+
+leeh        2007/01/28 17:52:55 UTC	(20070128_0-23539)
+  Log:
+  - move more of chanserv over to the new framework
+  
+
+  Modified:
+	rserv/trunk/include/langs.h (File Modified) 
+	rserv/trunk/src/langs.c (File Modified) 
+	rserv/trunk/src/messages.c (File Modified) 
+	rserv/trunk/src/s_chanserv.c (File Modified) 
+	rserv/trunk/src/s_userserv.c (File Modified) 
+
+
+leeh        2007/01/27 16:04:04 UTC	(20070127_7-23535)
+  Log:
+  - move global over to the new framework
+  
+
+  Modified:
+	rserv/trunk/include/langs.h (File Modified) 
+	rserv/trunk/src/langs.c (File Modified) 
+	rserv/trunk/src/messages.c (File Modified) 
+	rserv/trunk/src/s_global.c (File Modified) 
+
+
+leeh        2007/01/27 15:55:41 UTC	(20070127_6-23533)
+  Log:
+  - swap SVC_USER_UL_END and SVC_BAN_LISTEND for a single SVC_ENDOFLIST
+  
+
+  Modified:
+	rserv/trunk/include/langs.h (File Modified) 
+	rserv/trunk/src/langs.c (File Modified) 
+	rserv/trunk/src/messages.c (File Modified) 
+	rserv/trunk/src/s_banserv.c (File Modified) 
+	rserv/trunk/src/s_userserv.c (File Modified) 
+
+
+leeh        2007/01/27 15:50:52 UTC	(20070127_5-23531)
+  Log:
+  - finish moving operserv across to the new framework
+  
+
+  Modified:
+	rserv/trunk/include/langs.h (File Modified) 
+	rserv/trunk/src/langs.c (File Modified) 
+	rserv/trunk/src/messages.c (File Modified) 
+	rserv/trunk/src/s_operserv.c (File Modified) 
+
+
+leeh        2007/01/27 15:45:37 UTC	(20070127_4-23529)
+  Log:
+  - finish moving operbot onto the new framework
+  
+
+  Modified:
+	rserv/trunk/include/langs.h (File Modified) 
+	rserv/trunk/src/langs.c (File Modified) 
+	rserv/trunk/src/messages.c (File Modified) 
+	rserv/trunk/src/s_operbot.c (File Modified) 
+
+
+leeh        2007/01/27 15:41:12 UTC	(20070127_3-23527)
+  Log:
+  - move nickserv over to the new framework
+  
+
+  Modified:
+	rserv/trunk/include/langs.h (File Modified) 
+	rserv/trunk/src/langs.c (File Modified) 
+	rserv/trunk/src/messages.c (File Modified) 
+	rserv/trunk/src/s_nickserv.c (File Modified) 
+
+
+leeh        2007/01/27 14:22:00 UTC	(20070127_2-23523)
+  Log:
+  - need another parameter to that..
+  
+
+  Modified:
+	rserv/trunk/src/s_userserv.c (File Modified) 
+
+
+leeh        2007/01/27 14:20:57 UTC	(20070127_1-23521)
+  Log:
+  - morph CHANGEDEMAIL into CHANGEOPTION
+  
+
+  Modified:
+	rserv/trunk/include/langs.h (File Modified) 
+	rserv/trunk/src/langs.c (File Modified) 
+	rserv/trunk/src/messages.c (File Modified) 
+	rserv/trunk/src/s_userserv.c (File Modified) 
+
+
+leeh        2007/01/27 14:15:46 UTC	(20070127_0-23519)
+  Log:
+  - move chanserv::info over to the new framework, tidying it into
+    userserv::info
+  
+
+  Modified:
+	rserv/trunk/include/langs.h (File Modified) 
+	rserv/trunk/src/langs.c (File Modified) 
+	rserv/trunk/src/messages.c (File Modified) 
+	rserv/trunk/src/s_chanserv.c (File Modified) 
+	rserv/trunk/src/s_userserv.c (File Modified) 
+
+
+leeh        2007/01/26 23:37:04 UTC	(20070126_1-23513)
+  Log:
+  - move some chanserv notices over to new framework
+  
+
+  Modified:
+	rserv/trunk/src/s_chanserv.c (File Modified) 
+
+
+leeh        2007/01/26 21:20:57 UTC	(20070126_0-23511)
+  Log:
+  - add SVC_SUCCESSFULON so we can be more helpful..
+  
+
+  Modified:
+	rserv/trunk/include/langs.h (File Modified) 
+	rserv/trunk/src/langs.c (File Modified) 
+	rserv/trunk/src/messages.c (File Modified) 
+	rserv/trunk/src/s_operbot.c (File Modified) 
+	rserv/trunk/src/s_operserv.c (File Modified) 
+
+
+androsyn    2007/01/17 19:17:35 UTC	(20070117_0-23499)
+  Log:
+  use sockof(portbuf) instead of a magic number in gethostinfo()
+
+  Modified:
+	rserv/trunk/src/io.c (File Modified) 
+
+
+leeh        2007/01/16 21:40:26 UTC	(20070116_0-23495)
+  Log:
+  - swap banserv over to the new framework
+  
+
+  Modified:
+	rserv/trunk/include/langs.h (File Modified) 
+	rserv/trunk/src/langs.c (File Modified) 
+	rserv/trunk/src/messages.c (File Modified) 
+	rserv/trunk/src/s_banserv.c (File Modified) 
+
+
+leeh        2007/01/15 19:26:28 UTC	(20070115_3-23493)
+  Log:
+  - move most of operbot over to the new framework
+  - operserv needs langs.h
+  
+
+  Modified:
+	rserv/trunk/src/s_operbot.c (File Modified) 
+	rserv/trunk/src/s_operserv.c (File Modified) 
+
+
+leeh        2007/01/15 19:23:35 UTC	(20070115_2-23491)
+  Log:
+  - whoops, missed a save there
+  
+
+  Modified:
+	rserv/trunk/src/s_operserv.c (File Modified) 
+
+
+leeh        2007/01/15 19:22:46 UTC	(20070115_1-23489)
+  Log:
+  - move most of operserv over to the new framework
+  
+
+  Modified:
+	rserv/trunk/include/langs.h (File Modified) 
+	rserv/trunk/src/langs.c (File Modified) 
+	rserv/trunk/src/messages.c (File Modified) 
+	rserv/trunk/src/s_operserv.c (File Modified) 
+
+
+leeh        2007/01/15 18:59:43 UTC	(20070115_0-23487)
+  Log:
+  - finish off moving s_userserv.c over to the new framework, except a little
+    bit in userlist that is complicated
+  
+
+  Modified:
+	rserv/trunk/include/langs.h (File Modified) 
+	rserv/trunk/src/langs.c (File Modified) 
+	rserv/trunk/src/messages.c (File Modified) 
+	rserv/trunk/src/s_userserv.c (File Modified) 
+
+
+leeh        2007/01/14 22:07:56 UTC	(20070114_8-23483)
+  Log:
+  - move rest of service_error() in s_userserv over to new framework, barring
+    userserv::info
+  
+
+  Modified:
+	rserv/trunk/include/langs.h (File Modified) 
+	rserv/trunk/src/langs.c (File Modified) 
+	rserv/trunk/src/messages.c (File Modified) 
+	rserv/trunk/src/s_userserv.c (File Modified) 
+
+
+leeh        2007/01/14 21:47:57 UTC	(20070114_7-23481)
+  Log:
+  - more userserv notices over to the new framework
+  
+
+  Modified:
+	rserv/trunk/include/langs.h (File Modified) 
+	rserv/trunk/src/langs.c (File Modified) 
+	rserv/trunk/src/messages.c (File Modified) 
+	rserv/trunk/src/s_userserv.c (File Modified) 
+
+
+leeh        2007/01/14 18:35:54 UTC	(20070114_6-23479)
+  Log:
+  - move various more userserv notices over to the new framework
+  
+
+  Modified:
+	rserv/trunk/include/langs.h (File Modified) 
+	rserv/trunk/src/langs.c (File Modified) 
+	rserv/trunk/src/messages.c (File Modified) 
+	rserv/trunk/src/s_userserv.c (File Modified) 
+
+
+leeh        2007/01/14 17:50:38 UTC	(20070114_5-23475)
+  Log:
+  - swap some userserv notices over to the translation methods
+  - swap a couple of LANG_LAST for SVC_LAST
+  - fix length checking of password on userserv::usersetpass
+  
+
+  Modified:
+	rserv/trunk/include/langs.h (File Modified) 
+	rserv/trunk/src/langs.c (File Modified) 
+	rserv/trunk/src/messages.c (File Modified) 
+	rserv/trunk/src/s_userserv.c (File Modified) 
+
+
+leeh        2007/01/14 17:15:19 UTC	(20070114_4-23471)
+  Log:
+  - rerun make depend
+  
+
+  Modified:
+	rserv/trunk/src/.depend (File Modified) 
+
+
+leeh        2007/01/14 17:04:07 UTC	(20070114_3-23469)
+  Log:
+  - uncomplicate the notice sending stuff, based on what va_args() actually
+    does, rather than what I think it does..
+  
+
+  Modified:
+	rserv/trunk/include/langs.h (File Modified) 
+	rserv/trunk/include/service.h (File Modified) 
+	rserv/trunk/src/langs.c (File Modified) 
+	rserv/trunk/src/s_userserv.c (File Modified) 
+	rserv/trunk/src/service.c (File Modified) 
+
+
+leeh        2007/01/14 16:53:40 UTC	(20070114_2-23467)
+  Log:
+  - add an alternate version of service_error() too
+  
+
+  Modified:
+	rserv/trunk/include/langs.h (File Modified) 
+	rserv/trunk/include/service.h (File Modified) 
+	rserv/trunk/src/langs.c (File Modified) 
+	rserv/trunk/src/s_userserv.c (File Modified) 
+	rserv/trunk/src/service.c (File Modified) 
+
+
+leeh        2007/01/14 16:49:23 UTC	(20070114_1-23465)
+  Log:
+  - add in the backend sending methods for dealing with translations for
+    server notices
+  
+
+  Modified:
+	rserv/trunk/include/langs.h (File Modified) 
+	rserv/trunk/include/service.h (File Modified) 
+	rserv/trunk/src/Makefile.in (File Modified) 
+	rserv/trunk/src/langs.c (File Modified) 
+	rserv/trunk/src/messages.c (File Added) 
+	rserv/trunk/src/rserv.c (File Modified) 
+	rserv/trunk/src/s_userserv.c (File Modified) 
+	rserv/trunk/src/service.c (File Modified) 
+
+
+leeh        2007/01/14 16:06:04 UTC	(20070114_0-23463)
+  Log:
+  - newconf.c needs langs.h
+  
+
+  Modified:
+	rserv/trunk/src/newconf.c (File Modified) 
+
+
+leeh        2007/01/13 22:26:00 UTC	(20070113_6-23450)
+  Log:
+  - add the ability to set a default_language in the conf
+  
+
+  Modified:
+	rserv/trunk/doc/example.conf (File Modified) 
+	rserv/trunk/include/conf.h (File Modified) 
+	rserv/trunk/src/conf.c (File Modified) 
+	rserv/trunk/src/langs.c (File Modified) 
+	rserv/trunk/src/newconf.c (File Modified) 
+
+
+leeh        2007/01/13 22:14:51 UTC	(20070113_5-23448)
+  Log:
+  - add lang_get_cachefile() to attempt to pull the right translation from an
+    array of cachefile pointers
+  
+
+  Modified:
+	rserv/trunk/include/langs.h (File Modified) 
+	rserv/trunk/src/langs.c (File Modified) 
+	rserv/trunk/src/service.c (File Modified) 
+	rserv/trunk/src/ucommand.c (File Modified) 
+
+
+leeh        2007/01/13 21:03:16 UTC	(20070113_4-23446)
+  Log:
+  - ugh, just mark the fact we dont want C++ libraries in the configure script
+    itself
+  
+
+  Modified:
+	rserv/trunk/pcre/configure (File Modified) 
+
+
+leeh        2007/01/13 20:55:39 UTC	(20070113_3-23444)
+  Log:
+  - add autoconf checks for pcre
+  
+
+  Modified:
+	rserv/trunk/Makefile.in (File Modified) 
+	rserv/trunk/autoconf/configure.in (File Modified) 
+	rserv/trunk/configure (File Modified) 
+	rserv/trunk/src/Makefile.in (File Modified) 
+
+
+leeh        2007/01/13 20:19:57 UTC	(20070113_2-23441)
+  Log:
+  - rebuild with autoconf2.50
+  
+
+  Modified:
+	rserv/trunk/Makefile.in (File Modified) 
+	rserv/trunk/autoconf/configure.in (File Modified) 
+	rserv/trunk/configure (File Modified) 
+	rserv/trunk/help/Makefile.in (File Modified) 
+	rserv/trunk/include/setup.h.in (File Modified) 
+	rserv/trunk/src/Makefile.in (File Modified) 
+
+
+leeh        2007/01/13 14:58:17 UTC	(20070113_1-23439)
+  Log:
+  - make ucommand help account for language translations
+  
+
+  Modified:
+	rserv/trunk/include/ucommand.h (File Modified) 
+	rserv/trunk/src/service.c (File Modified) 
+	rserv/trunk/src/ucommand.c (File Modified) 
+
+
+leeh        2007/01/13 14:50:18 UTC	(20070113_0-23435)
+  Log:
+  - split the loading/clearing of the non-service dcc commands into their own
+    functions, so we can load the helpfiles easier on boot, fixing them not
+    being loaded
+  
+
+  Modified:
+	rserv/trunk/include/ucommand.h (File Modified) 
+	rserv/trunk/src/rserv.c (File Modified) 
+	rserv/trunk/src/service.c (File Modified) 
+	rserv/trunk/src/ucommand.c (File Modified) 
+
+
+leeh        2007/01/12 22:03:06 UTC	(20070112_2-23431)
+  Log:
+  - add a dummy language handler in userserv and help on languages
+  - add userserv::set::language to change language, with associated db storage
+  
+
+  Modified:
+	rserv/trunk/help/en_GB/userserv/language (File Added) 
+	rserv/trunk/help/en_GB/userserv/set (File Modified) 
+	rserv/trunk/include/langs.h (File Modified) 
+	rserv/trunk/src/s_userserv.c (File Modified) 
+	rserv/trunk/tools/base/schema-mysql.txt (File Modified) 
+	rserv/trunk/tools/base/schema-pgsql.txt (File Modified) 
+	rserv/trunk/tools/base/schema-sqlite.txt (File Modified) 
+	rserv/trunk/tools/dbupgrade.pl (File Modified) 
+
+
+leeh        2007/01/12 21:23:53 UTC	(20070112_1-23429)
+  Log:
+  - make service command handlers deal with a null function to do nothing
+  
+
+  Modified:
+	rserv/trunk/src/service.c (File Modified) 
+
+
+leeh        2007/01/12 20:48:17 UTC	(20070112_0-23427)
+  Log:
+  - make the registered username struct have the language enum in it, and move
+    the declaration of langs_available over to langs.c
+  
+
+  Modified:
+	rserv/trunk/include/langs.h (File Modified) 
+	rserv/trunk/include/s_userserv.h (File Modified) 
+	rserv/trunk/src/Makefile.in (File Modified) 
+	rserv/trunk/src/client.c (File Modified) 
+	rserv/trunk/src/langs.c (File Added) 
+	rserv/trunk/src/log.c (File Modified) 
+	rserv/trunk/src/rserv.c (File Modified) 
+	rserv/trunk/src/s_chanserv.c (File Modified) 
+	rserv/trunk/src/s_nickserv.c (File Modified) 
+	rserv/trunk/src/s_userserv.c (File Modified) 
+	rserv/trunk/src/s_watchserv.c (File Modified) 
+	rserv/trunk/src/scommand.c (File Modified) 
+	rserv/trunk/src/service.c (File Modified) 
+
+
+leeh        2007/01/10 20:50:04 UTC	(20070110_4-23415)
+  Log:
+  - make the service help file loading account for languages
+  
+
+  Modified:
+	rserv/trunk/include/client.h (File Modified) 
+	rserv/trunk/include/langs.h (File Added) 
+	rserv/trunk/include/service.h (File Modified) 
+	rserv/trunk/src/service.c (File Modified) 
+
+
+leeh        2007/01/10 20:32:38 UTC	(20070110_3-23411)
+  Log:
+  - fix a few service {}; conf options to handle a disabled service without
+    coring
+  
+
+  Modified:
+	rserv/trunk/src/newconf.c (File Modified) 
+
+
+leeh        2007/01/10 20:10:25 UTC	(20070110_2-23409)
+  Log:
+  - fix the generation of installation of helpfiles, and index generation to
+    accomodate languages
+  
+
+  Modified:
+	rserv/trunk/help/Makefile.in (File Modified) 
+	rserv/trunk/help/genindex.sh (File Modified) 
+
+
+leeh        2007/01/10 19:52:30 UTC	(20070110_1-23407)
+  Log:
+  - move the helpfiles into en_GB subdirectory
+  
+
+  Modified:
+	rserv/trunk/help/alis/ (File Deleted) 
+	rserv/trunk/help/banserv/ (File Deleted) 
+	rserv/trunk/help/chanserv/ (File Deleted) 
+	rserv/trunk/help/en_GB/ (File Added) 
+	rserv/trunk/help/en_GB/alis/ (File Added) 
+	rserv/trunk/help/en_GB/banserv/ (File Added) 
+	rserv/trunk/help/en_GB/chanserv/ (File Added) 
+	rserv/trunk/help/en_GB/global/ (File Added) 
+	rserv/trunk/help/en_GB/jupeserv/ (File Added) 
+	rserv/trunk/help/en_GB/main/ (File Added) 
+	rserv/trunk/help/en_GB/nickserv/ (File Added) 
+	rserv/trunk/help/en_GB/operbot/ (File Added) 
+	rserv/trunk/help/en_GB/operserv/ (File Added) 
+	rserv/trunk/help/en_GB/userserv/ (File Added) 
+	rserv/trunk/help/en_GB/watchserv/ (File Added) 
+	rserv/trunk/help/global/ (File Deleted) 
+	rserv/trunk/help/jupeserv/ (File Deleted) 
+	rserv/trunk/help/main/ (File Deleted) 
+	rserv/trunk/help/nickserv/ (File Deleted) 
+	rserv/trunk/help/operbot/ (File Deleted) 
+	rserv/trunk/help/operserv/ (File Deleted) 
+	rserv/trunk/help/userserv/ (File Deleted) 
+	rserv/trunk/help/watchserv/ (File Deleted) 
+
+
+leeh        2007/01/10 19:44:30 UTC	(20070110_0-23403)
+  Log:
+  - via ongeboren
+    - fix compile of rserv with --disable-chanserv
+  
+
+  Modified:
+	rserv/trunk/src/s_userserv.c (File Modified) 
+
+
+leeh        2007/01/08 15:34:51 UTC	(20070108_0-23395)
+  Log:
+  - via Ralf S. Engelschall
+    - fix some autoconf tests to be POSIX compliant
+  
+
+  Modified:
+	rserv/trunk/autoconf/configure.in (File Modified) 
+
+
+leeh        2007/01/07 22:16:36 UTC	(20070107_4-23387)
+  Log:
+  - start storing the ip addresses for remote users via TS6
+  
+
+  Modified:
+	rserv/trunk/include/client.h (File Modified) 
+	rserv/trunk/src/client.c (File Modified) 
+
+
+leeh        2007/01/07 20:22:32 UTC	(20070107_3-23385)
+  Log:
+  - trunk is now 1.2.0beta
+  
+
+  Modified:
+	rserv/trunk/include/config.h (File Modified) 
+
+
+leeh        2007/01/07 20:21:49 UTC	(20070107_2-23383)
+  Log:
+  - extend copyrights to 2007
+  
+
+  Modified:
+	rserv/trunk/LICENSE (File Modified) 
+	rserv/trunk/doc/example.conf (File Modified) 
+	rserv/trunk/src/c_error.c (File Modified) 
+	rserv/trunk/src/c_message.c (File Modified) 
+	rserv/trunk/src/c_mode.c (File Modified) 
+	rserv/trunk/src/cache.c (File Modified) 
+	rserv/trunk/src/channel.c (File Modified) 
+	rserv/trunk/src/client.c (File Modified) 
+	rserv/trunk/src/conf.c (File Modified) 
+	rserv/trunk/src/crypt.c (File Modified) 
+	rserv/trunk/src/dbhook.c (File Modified) 
+	rserv/trunk/src/email.c (File Modified) 
+	rserv/trunk/src/hook.c (File Modified) 
+	rserv/trunk/src/io.c (File Modified) 
+	rserv/trunk/src/log.c (File Modified) 
+	rserv/trunk/src/modebuild.c (File Modified) 
+	rserv/trunk/src/rsdb_mysql.c (File Modified) 
+	rserv/trunk/src/rsdb_pgsql.c (File Modified) 
+	rserv/trunk/src/rsdb_sqlite3.c (File Modified) 
+	rserv/trunk/src/rserv.c (File Modified) 
+	rserv/trunk/src/s_alis.c (File Modified) 
+	rserv/trunk/src/s_banserv.c (File Modified) 
+	rserv/trunk/src/s_chanserv.c (File Modified) 
+	rserv/trunk/src/s_global.c (File Modified) 
+	rserv/trunk/src/s_jupeserv.c (File Modified) 
+	rserv/trunk/src/s_nickserv.c (File Modified) 
+	rserv/trunk/src/s_operbot.c (File Modified) 
+	rserv/trunk/src/s_operserv.c (File Modified) 
+	rserv/trunk/src/s_userserv.c (File Modified) 
+	rserv/trunk/src/s_watchserv.c (File Modified) 
+	rserv/trunk/src/scommand.c (File Modified) 
+	rserv/trunk/src/service.c (File Modified) 
+	rserv/trunk/src/tools.c (File Modified) 
+	rserv/trunk/src/u_stats.c (File Modified) 
+	rserv/trunk/src/ucommand.c (File Modified) 
+

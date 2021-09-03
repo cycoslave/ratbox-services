@@ -1,0 +1,86 @@
+/* $Id: 1.0-sqlite-schema.txt 22357 2006-04-19 19:47:15Z leeh $ */
+
+CREATE TABLE nicks (
+	nickname TEXT,
+	username TEXT,
+	reg_time INTEGER,
+	last_time INTEGER,
+	flags INTEGER,
+	PRIMARY KEY(nickname)
+);
+
+CREATE TABLE users (
+	username TEXT,
+	password TEXT,
+	email TEXT,
+	suspender TEXT,
+	reg_time INTEGER,
+	last_time INTEGER,
+	flags INTEGER,
+	PRIMARY KEY(username)
+);
+
+CREATE TABLE channels (
+	chname TEXT,
+	topic TEXT,
+	url TEXT,
+	createmodes TEXT,
+	enforcemodes TEXT,
+	tsinfo INTEGER,
+	reg_time INTEGER,
+	last_time INTEGER,
+	flags INTEGER,
+	suspender TEXT,
+	PRIMARY KEY(chname)
+);
+
+CREATE TABLE members (
+	chname TEXT,
+	username TEXT,
+	lastmod TEXT,
+	level INTEGER,
+	flags INTEGER,
+	suspend INTEGER,
+	FOREIGN KEY(chname) REFERENCES channels (chname) MATCH FULL,
+	FOREIGN KEY(username) REFERENCES users (username) MATCH FULL	
+);
+
+CREATE TABLE bans (
+	chname TEXT,
+	mask TEXT,
+	reason TEXT,
+	username TEXT,
+	level INTEGER,
+	hold INTEGER,
+	FOREIGN KEY(chname) REFERENCES channels (chname) MATCH FULL
+);
+
+CREATE TABLE operbot (
+	chname TEXT,
+	tsinfo INTEGER,
+	oper TEXT
+);
+
+CREATE TABLE operserv (
+	chname TEXT,
+	tsinfo INTEGER,
+	oper TEXT
+);
+
+CREATE TABLE jupes (
+	servername TEXT,
+	reason TEXT
+);
+
+CREATE TABLE operbans (
+	type TEXT,
+	mask TEXT,
+	reason TEXT,
+	operreason TEXT,
+	hold INTEGER,
+	create_time INTEGER,
+	oper TEXT,
+	remove INTEGER,
+	flags INTEGER
+);
+

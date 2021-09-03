@@ -1,0 +1,102 @@
+# $Id: Makefile.in 25052 2008-01-29 20:00:23Z leeh $
+
+CC=@CC@
+RM=@RM@
+MV=@MV@
+INSTALL=@INSTALL@
+LEX=@LEX@
+LEXLIB=@LEXLIB@
+YACC=@YACC@
+BIN=ratbox-services@EXEEXT@
+INCLUDES=-I ../include/ @DB_INCLUDES@ @PCRE_INCLUDES@
+LDFLAGS=@LDFLAGS@
+LIBS=@LIBS@
+DB_LIBS=@DB_LIBS@
+MAKE = make
+
+prefix=@prefix@
+sysconfdir=@sysconfdir@
+localstatedir=@localstatedir@
+logdir=@logdir@
+rundir=@rundir@
+helpdir=@helpdir@
+langdir=@langdir@
+datarootdir=@datarootdir@
+
+CFLAGS=@CPPFLAGS@ @CFLAGS@ -DPREFIX=\"$(prefix)\" -DSYSCONFDIR=\"$(sysconfdir)\" \
+	-DLOGDIR=\"$(logdir)\" -DRUNDIR=\"$(rundir)\" -DHELPDIR=\"$(helpdir)\" -DLANGDIR=\"$(langdir)\"
+
+# Anything marked with the .PHONY attribute is always considered "out of date"
+.PHONY: $(BIN)
+
+BSRCS = 		\
+        balloc.c        \
+        c_error.c       \
+	c_message.c	\
+	c_mode.c	\
+        cache.c         \
+	channel.c	\
+	cidr.c		\
+	client.c	\
+	crypt.c		\
+	conf.c		\
+	dbhook.c	\
+	email.c		\
+	event.c		\
+	hook.c		\
+	io.c		\
+	langs.c		\
+	langs_format.c	\
+	log.c		\
+	match.c		\
+	messages.c	\
+	modebuild.c	\
+        newconf.c       \
+	rserv.c		\
+	scommand.c	\
+	service.c	\
+	snprintf.c	\
+	tools.c		\
+        u_stats.c       \
+	ucommand.c	
+
+SRCS = ${BSRCS} @S_NICKSERV@ @S_USERSERV@ @S_CHANSERV@ @S_OPERSERV@ @S_ALIS@\
+	@S_OPERBOT@ @S_JUPESERV@ @S_GLOBAL@ @S_BANSERV@ @S_WATCHSERV@\
+	@S_MEMOSERV@ rsdb_@DB_BACKEND@.c
+
+OBJS=$(SRCS:.c=.o)
+
+all: $(BIN)
+
+$(BIN): $(OBJS) y.tab.o lex.yy.o
+	${CC} ${CFLAGS} ${LDFLAGS} -o $@ ${OBJS} y.tab.o lex.yy.o $(DB_LIBS) $(LIBS) $(LEXLIB)
+
+.c.o:
+	${CC} $(INCLUDES) ${CFLAGS} -c $<
+
+y.tab.o:	y.tab.c parser.y
+	$(CC) $(INCLUDES) -I. $(CFLAGS) -c y.tab.c
+
+y.tab.c:	parser.y
+	$(YACC) -d parser.y
+
+lex.yy.o:	lex.yy.c lexer.l
+	$(CC) $(INCLUDES) -I. $(CFLAGS) -c lex.yy.c
+
+lex.yy.c:	lexer.l
+	$(LEX) lexer.l
+
+build: $(BIN)
+
+clean:
+	$(RM) -f $(BIN) *.o y.tab.* lex.yy.c
+
+distclean: clean
+	$(RM) Makefile
+
+depend:
+	$(CC) -MM $(INCLUDES) $(CFLAGS) $(SRCS) > .depend
+
+install:
+
+include .depend

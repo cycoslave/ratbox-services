@@ -1,0 +1,8 @@
+This service allows registered users to send memos to other
+registered users.
+
+Available commands:
+ DELETE      - Deletes a given memo.
+ LIST        - Lists memos.
+ READ        - Reads a given memo.
+ SEND        - Sends a memo to the given username.

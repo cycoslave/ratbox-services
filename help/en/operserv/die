@@ -1,0 +1,3 @@
+DIE <servername>
+[ADMIN] Terminates services
+  <servername>: Services server name

@@ -1,0 +1,15 @@
+ ADDREGEXP     - Adds regular expression match for connecting clients
+ ADDREGEXPNEG  - Добавя отрицание на съществуващ регулярен израз
+ DELREGEXP     - Премахва регулярен израз
+ DELREGEXPNEG  - Премахва регулярен израз
+ FINDKLINE     - Намира всички съвпадащи k-lines
+ FINDRESV      - Намира всички съвпадащи resvs
+ FINDXLINE     - Намира всички съвпадащи xlines
+ KLINE         - Поставя kline на дадена маска.
+ LISTREGEXPS   - Изкарва листата с дефинирани регулярни изрази
+ RESV          - Поставя resv на дадена маска.
+ SYNC          - Синхронизира текущите банове с даден сървър
+ UNKLINE       - Премахва kline на дадена маска
+ UNRESV        - премахва resv на дадена маска
+ UNXLINE       - премахва xline на дадена маска
+ xline         - Поставя xline на дадена маска

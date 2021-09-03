@@ -1,0 +1,3 @@
+findkline <маска>
+Поиск kline
+  <маска>: Поиск по user@host, разрешены wildcards.

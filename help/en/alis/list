@@ -1,0 +1,10 @@
+LIST <mask> [options]
+Gives a channel list based on parameters.
+  <mask>   : mask to search for (accepts wildcard '*')
+  [options]:
+    -min <n>: minimum users in channel
+    -max <n>: maximum users in channel
+    -skip <n>: skip first n matches
+    -show [m][t]: show modes/topicwho
+    -mode <+|-|=><iklmntS>: modes set/unset/equal on channel
+    -topic <string>: require topic to contain string

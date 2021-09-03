@@ -1,0 +1,3 @@
+findkline <маска>
+Намира всички съвпадащи klines
+  <маска>: Търсене по user@host, wildcards са позволени

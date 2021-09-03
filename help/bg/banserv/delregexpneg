@@ -1,0 +1,8 @@
+DELREGEXPNEG <regexp_id> <nregexp>
+[ADMIN] ѕремахва регул€рен израз
+  <regexp_id>: ID на регул€рниат израз
+  <nregexp>  : Ќегативен регул€рен израз за премахване
+DELREGEXPNEG <regexp_id> <nregexp>
+[ADMIN] ѕремахва регул€рен израз
+  <regexp_id>: ID на регул€рниат израз
+  <nregexp>  : Ќегативен регул€рен израз за премахване

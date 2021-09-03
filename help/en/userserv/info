@@ -1,0 +1,6 @@
+INFO <username>
+Gives information about the given username.
+  <username> : Gives information about the given username.
+               Most places where a username is given, you may instead
+               use "=nickname" to use the username that that nickname
+               is logged in with.

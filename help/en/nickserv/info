@@ -1,0 +1,3 @@
+INFO <nickname>
+Gives information about the given nickname.
+  <nickname>: Registered nickname to give information on

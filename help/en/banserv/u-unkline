@@ -1,0 +1,3 @@
+unkline <mask>
+Removes a kline on the given mask
+  <mask>: user@host of kline to remove

@@ -1,0 +1,93 @@
+-- $Id: 1.0-mysql-schema.txt 22357 2006-04-19 19:47:15Z leeh $
+
+CREATE TABLE users (
+	username VARCHAR(USERREGNAME_LEN) NOT NULL,
+	password VARCHAR(PASSWDLEN) NOT NULL,
+	email VARCHAR(EMAILLEN),
+	suspender VARCHAR(OPERNAMELEN),
+	reg_time INT UNSIGNED,
+	last_time INT UNSIGNED,
+	flags INT UNSIGNED,
+	PRIMARY KEY(username)
+);
+
+CREATE TABLE nicks (
+	nickname VARCHAR(NICKLEN) NOT NULL,
+	username VARCHAR(USERREGNAME_LEN) NOT NULL,
+	reg_time INT UNSIGNED,
+	last_time INT UNSIGNED,
+	flags INT UNSIGNED,
+	PRIMARY KEY(nickname),
+	FOREIGN KEY(username) REFERENCES users (username) MATCH FULL
+);
+
+CREATE TABLE channels (
+	chname VARCHAR(CHANNELLEN) NOT NULL,
+	topic VARCHAR(TOPICLEN),
+	url VARCHAR(TOPICLEN),
+	createmodes VARCHAR(50),
+	enforcemodes VARCHAR(50),
+	tsinfo INT UNSIGNED,
+	reg_time INT UNSIGNED,
+	last_time INT UNSIGNED,
+	flags INT UNSIGNED,
+	suspender VARCHAR(OPERNAMELEN),
+	PRIMARY KEY(chname)
+);
+
+CREATE TABLE members (
+	chname VARCHAR(CHANNELLEN) NOT NULL,
+	username VARCHAR(USERREGNAME_LEN) NOT NULL,
+	lastmod VARCHAR(USERREGNAME_LEN) NOT NULL,
+	level INT,
+	flags INT UNSIGNED,
+	suspend INT,
+	FOREIGN KEY(chname) REFERENCES channels (chname) MATCH FULL,
+	FOREIGN KEY(username) REFERENCES users (username) MATCH FULL
+);
+
+CREATE TABLE bans (
+	chname VARCHAR(CHANNELLEN) NOT NULL,
+	mask VARCHAR(2) NOT NULL,
+	reason VARCHAR(50) NOT NULL,
+	username VARCHAR(USERREGNAME_LEN) NOT NULL,
+	level INT,
+	hold INT,
+	FOREIGN KEY(chname) REFERENCES channels (chname) MATCH FULL
+--	FOREIGN KEY(username) REFERENCES users (username) MATCH FULL
+--	Username might not exist?
+);
+
+CREATE TABLE operbot (
+	chname VARCHAR(CHANNELLEN) NOT NULL,
+	tsinfo INT UNSIGNED,
+	oper VARCHAR(OPERNAMELEN),
+	PRIMARY KEY(chname)
+);
+
+CREATE TABLE operserv (
+	chname VARCHAR(CHANNELLEN) NOT NULL,
+	tsinfo INT UNSIGNED,
+	oper VARCHAR(OPERNAMELEN),
+	PRIMARY KEY(chname)
+);
+
+CREATE TABLE jupes (
+	servername VARCHAR(HOSTLEN) NOT NULL,
+	reason VARCHAR(REALLEN) NOT NULL,
+	PRIMARY KEY(servername)
+);
+
+CREATE TABLE operbans (
+	type CHAR(1) NOT NULL,
+	mask VARCHAR(CHANNELLEN) NOT NULL,
+	reason VARCHAR(REASONLEN) NOT NULL,
+	operreason VARCHAR(REASONLEN),
+	hold INT UNSIGNED,
+	create_time INT UNSIGNED,
+	oper VARCHAR(OPERNAMELEN),
+	remove BOOL,
+	flags INT UNSIGNED,
+	PRIMARY KEY(type, mask)
+);
+

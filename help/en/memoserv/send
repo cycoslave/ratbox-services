@@ -1,0 +1,4 @@
+SEND <username> <message>
+Sends a memo to the given username.
+  <username>: Username/=nickname to send memo to.
+  <message> : Message to send

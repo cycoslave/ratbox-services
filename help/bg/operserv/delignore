@@ -1,0 +1,6 @@
+DELIGNORE <mask>
+[ADMIN] Премахва даден филтър
+  <mask>: nick!user@host филтър за премахване
+DELIGNORE <mask>
+[ADMIN] Премахва даден филтър
+  <mask>: nick!user@host филтър за премахване

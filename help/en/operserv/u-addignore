@@ -1,0 +1,6 @@
+addignore <mask> <reason>
+Adds an ignore of all commands from the given mask
+  <mask>  : nick!user@host mask to ignore
+  <reason>: Reason for ignore
+ 
+Note, services admins will always be able to issue OLOGIN even if ignored.

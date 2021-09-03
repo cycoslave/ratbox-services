@@ -1,0 +1,5 @@
+KLINE [duration] <mask> <reason>
+[ADMIN] Issues a kline on the given mask.
+  [duration]: Duration kline lasts
+  <mask>    : user@host to set kline on
+  <reason>  : Reason for kline

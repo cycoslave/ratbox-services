@@ -1,0 +1,90 @@
+
+This is the current stable version of ratbox-services.
+
+-- ratbox-services-1.2.4
+- properly fix --enable-mysql, which now takes the path to mysql_config
+- properly fix --enable-pgsql, which now takes the path to pg_config
+- make chanserv enforcing topics more consistent.  Chanserv will now enforce
+  topics whenever it is in the channel.
+- fix userserv::info giving parameters in the wrong order
+- extend enforce_topicfrequency in chanserv {}; so that when it is set to 0,
+  chanserv will enforce topics immediately rather than on a timer
+- support updating topics that are different only in case
+- fix a bug where keys/limits were being accidentally removed in some
+  situations
+- fix the handling when we get a read error from a server
+- new startup options for controlling path to chroot to and uid/gid to drop
+  privs to
+
+-- ratbox-services-1.2.3
+- add support for +S into ALIS
+- fix permanent chanserv bans not applying to users joining a channel
+- chanserv::addban and chanserv::delban no longer require the channel exists
+- fix a minor buffer overflow relating to +S and ALIS.
+  This affects 1.2.2 only, no other versions are affected and the impact is
+  somewhat limited.
+
+-- ratbox-services-1.2.2
+- fix compilation with gcc-4.4
+- chanserv will now remove bans from the channel when they expire in the
+  database
+- fix a potential crash by a user changing their email address with userserv
+- add in support for chanmode +S (ssl-only).  rserv will now always support
+  the ircd sending channel mode +S
+- new general {}; conf option: allow_sslonly = <yes|no>;
+  controls whether users can instruct chanserv to use the +S mode.
+  This should match the ircd setting
+- chanserv::set::topic will now cause chanserv to update the topic if it is
+  already present in the channel
+- banserv expires based on events, but this prevented a kline (etc) that had 
+  just expired from being reset.  Enforce an expiry of all bans prior to
+  handling a request from an oper
+- chanserv { expireban_frequency }; and chanserv { expiretopic_frequency };
+  were being ignored and defaults used in their place
+- memoserv will now notify users when they login if they have unread memos
+- OLOGIN/OPERLOGIN will now enforce usernames are correct
+- fix an issue with userserv allowing usernames above the maximum length.
+  It will now ignore these and warn about them on startup.
+
+-- ratbox-services-1.2.1
+- fix an unquoted sql string related to email, that could be used for
+  sql injection
+- fix the configure test for --with-pcre
+
+-- ratbox-services-1.2.0
+- no changes
+
+-- ratbox-services-1.2.0rc2
+- updated bulgarian translations from ongeboren
+- update example.lang translation file
+- update packaged pcre to 7.7
+
+-- ratbox-services-1.2.0rc1
+- improved checks for mysql and postgresql 
+- support for matching CIDR bans in chanserv::unban
+
+-- ratbox-services-1.2.0beta2
+- fix global capability test which was breaking nickserv::regain
+- fix installation of memoserv helpfiles
+- fix crash with memoserv not requiring users be logged in
+- move the userserv expire code which walks the hash expiring/updating users
+  last access iterate the hash in bits to stop it hogging cpu
+- userserv::resetemail was sending the second confirmation out to the old
+  address rather than the new address
+- fix chanserv::chansuspend to properly support suspend times
+- russian translations, via
+  Valery Yatsko <darkwire.tl@gmail.com>
+- new banserv {}; conf option: max_kline_matches = <number>;
+  controls the maximum number of clients a kline can match for it to be
+  allowed
+- new banserv {}; conf option: max_xline_matches = <number>;
+  controls the maximum number of clients an xline can match for it to be
+  allowed
+- fix a problem with postgresql and banserv klines
+- new oper {}; flag to banserv: nomax
+  Allows an oper to exceed max_kline_matches and max_xline_matches
+
+-- ratbox-services-1.2.0beta1
+- initial release, read doc/whats-new-1.2.txt
+
+$Id: RELEASE_NOTES 27023 2010-04-22 18:27:28Z leeh $

@@ -1,0 +1,126 @@
+-          ratbox-services database hooks            -
+------------------------------------------------------
+
+This document describes the database hook system contained in
+ratbox-services, which provides a method for external programs to
+modify parts of the database that ratbox-services keeps in RAM.
+
+
+- Database tables -
+-------------------
+
+All tables used for database hooks must follow the same schema, the only
+thing that is variable is the name of the table.  The table contains three 
+columns, an automatically generated ID, the name of a hook and the data.
+
+sqlite schema:
+	CREATE TABLE <name> (id INTEGER PRIMARY KEY, hook TEXT, data TEXT);
+
+mysql schema:
+	CREATE TABLE <name> (id INTEGER AUTO_INCREMENT, hook VARCHAR(50) NOT NULL,
+				data TEXT, PRIMARY KEY(id));
+
+pgsql schema:
+	CREATE TABLE <name> (id SERIAL, hook VARCHAR(50) NOT NULL,
+				    data TEXT, PRIMARY KEY(id));
+
+
+- Inserting data -
+------------------
+
+The id column should always be entered as NULL (and not 'NULL') so that an
+id is generated automatically.
+
+The hook column should be the name of the hook, this name correlates with
+the hook in ratbox-services so the right callback is used.  This is case
+sensitive.
+
+The data column is a character delimeted text field of the arguments
+ratbox-services needs to deal with the request.  The delimeter can be any
+character the database will store, there are no limits on the number of
+arguments.
+
+Examples:
+	INSERT INTO sync_table (id, hook, data) VALUES(NULL, 'HOOKNAME', 'arg1|arg2|arg3');
+	INSERT INTO sync_table (id, hook, data) VALUES(NULL, 'HOOKMK2', 'arg1 arg2');
+	INSERT INTO sync_table (id, hook, data) VALUES(NULL, 'RBHOOK', '');
+
+
+- Adding the hook -
+-------------------
+
+A function of type dbh_callback should be added to the code, which takes
+two arguments, struct rsdb_hook *dbh, const char *data:
+	dbh_callback sync_func(struct rsdb_hook *dbh, const char *data);
+
+This function MUST NOT perform any database queries directly.
+
+This function should then be added as a hook through rsdb_hook_add(), which
+takes four parameters:
+	- (const char *) The name of the table to search
+	- (const char *) The name of the hook
+	- (int) How often to search for entries
+	- (dbh_callback) The callback function
+
+Eg:
+	rsdb_hook_add("sync_table", "HOOKNAME", 900, sync_func);
+
+
+- Called hooks -
+----------------
+
+The hook function will be called when there is a row in the given table,
+with the given hook.  The hook function should "return 1;" when the row 
+needs to be deleted, or "return 0;" when the row should be left in the
+database.
+
+string_to_array_delim() is provided to convert the data from its delimited
+form into a (char **) array.  This function takes the following parameters:
+- (char *) string to parse
+- (char **) array to store values in
+- (char) delimiter
+- (int) maximum number of parameters.  Always add 1 to the number of
+  parameters you need.
+
+string_to_array_delim() will convert the string into the given array and set
+the last field of the array to NULL.  To achieve this always, it will parse
+upto maxpara-1 parameters -- hence you always need to add 1 to the number of
+parameters you need.  string_to_array_delim() returns the number of fields
+now in the given array (not including the terminating NULL field).
+
+To use string_to_array_delim() on the text in the callback, you should first
+make a copy of it.
+
+Eg:
+	static int
+	sync_func(struct rsdb_hook *dbh, const char *c_data)
+	{
+		char *argv[3+1];
+		char *data;
+		int argc;
+
+		data = LOCAL_COPY(c_data);
+		argc = string_to_array_delim(data, argv, '|', 4);
+
+		...
+
+		return 1;
+	}
+
+
+- Performing database queries -
+-------------------------------
+
+If you need to perform database queries you should schedule these using
+rsdb_hook_schedule().  Simply pass the query you wish to execute to this
+function, and once ratbox-services has exhausted all rows in the result set,
+the queries will be executed.
+
+Eg:
+	rsdb_hook_schedule("DELETE FROM table WHERE x='%Q'", argv[0]);
+
+
+- Copyright (C) 2006 Lee Hardy <lee -at- leeh.co.uk> -
+- Copyright (C) 2006 ircd-ratbox development team    -
+- $Id: dbhook.txt 22820 2006-06-21 18:01:00Z leeh $ -
+------------------------------------------------------

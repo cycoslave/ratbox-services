@@ -1,0 +1,5 @@
+chansuspend [duration] <channel> <reason>
+Suspends the given channel's registration
+  [duration]: Duration suspend lasts
+  <channel> : Channel to suspend 
+  <reason>  : Reason for suspension

@@ -1,0 +1,4 @@
+USERSETEMAIL <username> <email>
+[ADMIN] Changes the given usernames email address
+  <username>: Username to change email address for
+  <email>   : Email address to change to

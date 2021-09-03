@@ -1,0 +1,4 @@
+SET <nickname> <option> [parameter]
+Sets various nickname options
+  WARN     [on|off]: Warn users using this nickname that it is 
+                     registered.

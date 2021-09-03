@@ -1,0 +1,3 @@
+FINDRESV <маска>
+[ADMIN] Поиск resv
+  <маска>: Маска поиска, разрешены wildcards.

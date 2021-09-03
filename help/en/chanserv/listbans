@@ -1,0 +1,3 @@
+LISTBANS <channel>
+{ 10} Lists bans on a channel
+  <channel>: Channel to list bans from

@@ -1,0 +1,5 @@
+MODBAN <channel> <mask> <level>
+{ 10} Modifies a ban level
+  <channel>: Channel to modify ban for
+  <mask>   : Ban to modify
+  <level>  : Level to set

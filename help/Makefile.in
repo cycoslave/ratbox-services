@@ -1,0 +1,47 @@
+# Generated automatically from Makefile.in by configure.
+# $Id: Makefile.in 24402 2007-09-08 13:36:57Z leeh $
+
+MV=@MV@
+RM=@RM@
+INSTALL=@INSTALL@
+INSTALL_DATA=@INSTALL_DATA@
+prefix=@prefix@
+helpdir=@helpdir@
+datarootdir=@datarootdir@
+
+LANGS=en bg ru
+SERVICES=alis main operbot chanserv userserv jupeserv operserv nickserv global banserv watchserv memoserv
+
+install: 
+	@if [ -d $(DESTDIR)$(helpdir)-old ]; then \
+		echo "Removing old helpfiles"; \
+		$(RM) -rf $(DESTDIR)$(helpdir)-old; \
+	fi
+	@if [ -d $(DESTDIR)$(helpdir) ]; then \
+		echo "Backing up current helpfiles"; \
+		$(MV) $(DESTDIR)$(helpdir) $(DESTDIR)$(helpdir)-old; \
+	fi
+
+	@echo "Installing new helpfiles"
+	@$(INSTALL) -m 750 -d $(DESTDIR)$(helpdir)
+
+	@for k in $(LANGS); do \
+		$(INSTALL) -m 750 -d $(DESTDIR)$(helpdir)/$$k; \
+		for i in $(SERVICES); do \
+			$(INSTALL) -m 750 -d $(DESTDIR)$(helpdir)/$$k/$$i; \
+			for j in $$k/$$i/*; do \
+				if [ -f $$j ]; then \
+					$(INSTALL_DATA) $$j $(DESTDIR)$(helpdir)/$$k/$$i; \
+				fi \
+			done \
+		done \
+	done
+
+build:
+clean:
+depend:
+all:
+
+distclean:
+	$(RM) -f Makefile
+

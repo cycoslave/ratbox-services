@@ -1,0 +1,9 @@
+ADDREGEXPNEG <regexp_id> <nregexp>
+[ADMIN] Adds regular expression negation to existing regular expression
+  <regexp_id>: ID of existing regular expression to add negation to
+  <nregexp>  : The regular expression negation pattern to add
+
+If a connecting user matches a regular expression, their information
+is then also compared against the list of negations for that 
+expression.  If they match any of the expressions in the negation list
+then they will not be klined.

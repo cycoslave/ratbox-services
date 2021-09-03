@@ -1,0 +1,396 @@
+#!/usr/make
+#
+# Makefile for SQLITE
+#
+# This makefile is suppose to be configured automatically using the
+# autoconf.  But if that does not work for you, you can configure
+# the makefile manually.  Just set the parameters below to values that
+# work well for your system.
+#
+# If the configure script does not work out-of-the-box, you might
+# be able to get it to work by giving it some hints.  See the comment
+# at the beginning of configure.in for additional information.
+#
+
+# The toplevel directory of the source tree.  This is the directory
+# that contains this "Makefile.in" and the "configure.in" script.
+#
+TOP = @srcdir@
+
+# C Compiler and options for use in building executables that
+# will run on the platform that is doing the build.
+#
+BCC = @BUILD_CC@ @BUILD_CFLAGS@
+
+# C Compile and options for use in building executables that 
+# will run on the target platform.  (BCC and TCC are usually the
+# same unless your are cross-compiling.)
+#
+TCC = @TARGET_CC@ @TARGET_CFLAGS@ -I. -I${TOP}/src
+
+# Define -DNDEBUG to compile without debugging (i.e., for production usage)
+# Omitting the define will cause extra debugging code to be inserted and
+# includes extra comments when "EXPLAIN stmt" is used.
+#
+TCC += @TARGET_DEBUG@ @XTHREADCONNECT@
+
+# Compiler options needed for programs that use the readline() library.
+#
+READLINE_FLAGS = -DHAVE_READLINE=@TARGET_HAVE_READLINE@ @TARGET_READLINE_INC@
+
+# The library that programs using readline() must link against.
+#
+LIBREADLINE = @TARGET_READLINE_LIBS@
+
+# Should the database engine be compiled threadsafe
+#
+TCC += -DTHREADSAFE=@THREADSAFE@
+
+# The pthreads library if needed
+#
+LIBPTHREAD=@TARGET_THREAD_LIB@
+
+# Do threads override each others locks by default (1), or do we test (-1)
+#
+TCC += -DSQLITE_THREAD_OVERRIDE_LOCK=@THREADSOVERRIDELOCKS@
+
+# The fdatasync library
+TLIBS = @TARGET_LIBS@
+
+# Flags controlling use of the in memory btree implementation
+#
+# TEMP_STORE is 0 to force temporary tables to be in a file, 1 to
+# default to file, 2 to default to memory, and 3 to force temporary
+# tables to always be in memory.
+#
+TEMP_STORE = -DTEMP_STORE=@TEMP_STORE@
+
+# Version numbers and release number for the SQLite being compiled.
+#
+VERSION = @VERSION@
+VERSION_NUMBER = @VERSION_NUMBER@
+RELEASE = @RELEASE@
+
+# Filename extensions
+#
+BEXE = @BUILD_EXEEXT@
+TEXE = @TARGET_EXEEXT@
+
+# The suffix used on shared libraries.  Ex:  ".dll", ".so", ".dylib"
+#
+SHLIB_SUFFIX = @TCL_SHLIB_SUFFIX@
+
+# The directory into which to store package information for
+
+# Some standard variables and programs
+#
+prefix = @prefix@
+exec_prefix = @exec_prefix@
+libdir = @libdir@
+INSTALL = @INSTALL@
+LIBTOOL = ./libtool
+ALLOWRELEASE = @ALLOWRELEASE@
+
+# libtool compile/link/install
+LTCOMPILE = $(LIBTOOL) --mode=compile $(TCC)
+LTLINK = $(LIBTOOL) --mode=link $(TCC)
+LTINSTALL = $(LIBTOOL) --mode=install $(INSTALL)
+
+# nawk compatible awk.
+NAWK = @AWK@
+
+# You should not have to change anything below this line
+###############################################################################
+OPTS = 
+OPTS += -DSQLITE_OMIT_CURSOR          # Cursors do not work at this time
+TCC += -DSQLITE_OMIT_CURSOR
+
+# Object files for the SQLite library.
+#
+LIBOBJ = alter.lo analyze.lo attach.lo auth.lo btree.lo build.lo \
+         callback.lo complete.lo date.lo \
+         delete.lo expr.lo func.lo hash.lo insert.lo \
+         main.lo opcodes.lo os.lo os_unix.lo os_win.lo \
+         pager.lo parse.lo pragma.lo prepare.lo printf.lo random.lo \
+         select.lo table.lo tokenize.lo trigger.lo update.lo \
+         util.lo vacuum.lo \
+         vdbe.lo vdbeapi.lo vdbeaux.lo vdbefifo.lo vdbemem.lo \
+         where.lo utf.lo legacy.lo
+
+# All of the source code files.
+#
+SRC = \
+  $(TOP)/src/alter.c \
+  $(TOP)/src/analyze.c \
+  $(TOP)/src/attach.c \
+  $(TOP)/src/auth.c \
+  $(TOP)/src/btree.c \
+  $(TOP)/src/btree.h \
+  $(TOP)/src/build.c \
+  $(TOP)/src/callback.c \
+  $(TOP)/src/complete.c \
+  $(TOP)/src/date.c \
+  $(TOP)/src/delete.c \
+  $(TOP)/src/expr.c \
+  $(TOP)/src/func.c \
+  $(TOP)/src/hash.c \
+  $(TOP)/src/hash.h \
+  $(TOP)/src/insert.c \
+  $(TOP)/src/legacy.c \
+  $(TOP)/src/main.c \
+  $(TOP)/src/opcodes.h \
+  $(TOP)/src/os.c \
+  $(TOP)/src/os_unix.c \
+  $(TOP)/src/os_win.c \
+  $(TOP)/src/pager.c \
+  $(TOP)/src/pager.h \
+  $(TOP)/src/parse.h \
+  $(TOP)/src/parse.c \
+  $(TOP)/src/pragma.c \
+  $(TOP)/src/prepare.c \
+  $(TOP)/src/printf.c \
+  $(TOP)/src/random.c \
+  $(TOP)/src/select.c \
+  $(TOP)/src/shell.c \
+  $(TOP)/src/sqliteInt.h \
+  $(TOP)/src/table.c \
+  $(TOP)/src/tokenize.c \
+  $(TOP)/src/trigger.c \
+  $(TOP)/src/utf.c \
+  $(TOP)/src/update.c \
+  $(TOP)/src/util.c \
+  $(TOP)/src/vacuum.c \
+  $(TOP)/src/vdbe.c \
+  $(TOP)/src/vdbe.h \
+  $(TOP)/src/vdbeapi.c \
+  $(TOP)/src/vdbeaux.c \
+  $(TOP)/src/vdbefifo.c \
+  $(TOP)/src/vdbemem.c \
+  $(TOP)/src/vdbeInt.h \
+  $(TOP)/src/where.c
+
+# Header files used by all library source files.
+#
+HDR = \
+   $(TOP)/sqlite3.h  \
+   $(TOP)/src/btree.h \
+   $(TOP)/src/hash.h \
+   $(TOP)/src/opcodes.h \
+   $(TOP)/src/os.h \
+   $(TOP)/src/os_common.h \
+   $(TOP)/src/sqliteInt.h  \
+   $(TOP)/src/vdbe.h \
+   $(TOP)/src/parse.h
+
+# Header files used by the VDBE submodule
+#
+VDBEHDR = \
+   $(HDR) \
+   $(TOP)/src/vdbeInt.h
+
+# This is the default Makefile target.  The objects listed here
+# are what get build when you type just "make" with no arguments.
+#
+all:	libsqlite3.la sqlite3$(TEXE)
+
+Makefile: $(TOP)/Makefile.in
+	./config.status
+
+# Generate the file "last_change" which contains the date of change
+# of the most recently modified source code file
+#
+last_change:	$(SRC)
+	cat $(SRC) | grep '$$Id: ' | sort +4 | tail -1 \
+          | $(NAWK) '{print $$5,$$6}' >last_change
+
+libsqlite3.la:	$(LIBOBJ)
+	$(LTLINK) -o libsqlite3.la $(LIBOBJ) $(LIBPTHREAD) \
+		${ALLOWRELEASE} -rpath $(libdir) -version-info "8:6:8"
+
+sqlite3$(TEXE):	$(TOP)/src/shell.c libsqlite3.la
+	$(LTLINK) $(READLINE_FLAGS) $(LIBPTHREAD) \
+		-o sqlite3 $(TOP)/src/shell.c libsqlite3.la \
+		$(LIBREADLINE) $(TLIBS)
+
+# This target creates a directory named "tsrc" and fills it with
+# copies of all of the C source code and header files needed to
+# build on the target system.  Some of the C source code and header
+# files are automatically generated.  This target takes care of
+# all that automatic generation.
+#
+target_source:	$(SRC) $(VDBEHDR) 
+	rm -rf tsrc
+	mkdir -p tsrc
+	cp $(SRC) $(VDBEHDR) tsrc
+	cp $(TOP)/sqlite3.def tsrc
+
+# Rules to build the LEMON compiler generator
+#
+lemon$(BEXE):	$(TOP)/tool/lemon.c $(TOP)/tool/lempar.c
+	$(BCC) -o lemon $(TOP)/tool/lemon.c
+	cp $(TOP)/tool/lempar.c .
+
+
+# Rules to build individual files
+#
+alter.lo:	$(TOP)/src/alter.c $(HDR)
+	$(LTCOMPILE) -c $(TOP)/src/alter.c
+
+analyze.lo:	$(TOP)/src/analyze.c $(HDR)
+	$(LTCOMPILE) -c $(TOP)/src/analyze.c
+
+attach.lo:	$(TOP)/src/attach.c $(HDR)
+	$(LTCOMPILE) -c $(TOP)/src/attach.c
+
+auth.lo:	$(TOP)/src/auth.c $(HDR)
+	$(LTCOMPILE) -c $(TOP)/src/auth.c
+
+btree.lo:	$(TOP)/src/btree.c $(HDR) $(TOP)/src/pager.h
+	$(LTCOMPILE) -c $(TOP)/src/btree.c
+
+build.lo:	$(TOP)/src/build.c $(HDR)
+	$(LTCOMPILE) -c $(TOP)/src/build.c
+
+callback.lo:	$(TOP)/src/callback.c $(HDR)
+	$(LTCOMPILE) -c $(TOP)/src/callback.c
+
+complete.lo:	$(TOP)/src/complete.c $(HDR)
+	$(LTCOMPILE) -c $(TOP)/src/complete.c
+
+date.lo:	$(TOP)/src/date.c $(HDR)
+	$(LTCOMPILE) -c $(TOP)/src/date.c
+
+delete.lo:	$(TOP)/src/delete.c $(HDR)
+	$(LTCOMPILE) -c $(TOP)/src/delete.c
+
+expr.lo:	$(TOP)/src/expr.c $(HDR)
+	$(LTCOMPILE) -c $(TOP)/src/expr.c
+
+func.lo:	$(TOP)/src/func.c $(HDR)
+	$(LTCOMPILE) -c $(TOP)/src/func.c
+
+hash.lo:	$(TOP)/src/hash.c $(HDR)
+	$(LTCOMPILE) -c $(TOP)/src/hash.c
+
+insert.lo:	$(TOP)/src/insert.c $(HDR)
+	$(LTCOMPILE) -c $(TOP)/src/insert.c
+
+legacy.lo:	$(TOP)/src/legacy.c $(HDR)
+	$(LTCOMPILE) -c $(TOP)/src/legacy.c
+
+main.lo:	$(TOP)/src/main.c $(HDR)
+	$(LTCOMPILE) $(TEMP_STORE) -c $(TOP)/src/main.c
+
+pager.lo:	$(TOP)/src/pager.c $(HDR) $(TOP)/src/pager.h
+	$(LTCOMPILE) -c $(TOP)/src/pager.c
+
+opcodes.lo:	$(TOP)/src/opcodes.c $(HDR) $(TOP)/src/opcodes.h
+	$(LTCOMPILE) -c $(TOP)/src/opcodes.c
+
+os.lo:	$(TOP)/src/os.c $(HDR)
+	$(LTCOMPILE) -c $(TOP)/src/os.c
+
+os_unix.lo:	$(TOP)/src/os_unix.c $(HDR)
+	$(LTCOMPILE) -c $(TOP)/src/os_unix.c
+
+os_win.lo:	$(TOP)/src/os_win.c $(HDR)
+	$(LTCOMPILE) -c $(TOP)/src/os_win.c
+
+parse.lo:	$(TOP)/src/parse.c $(HDR)
+	$(LTCOMPILE) -c $(TOP)/src/parse.c
+
+pragma.lo:	$(TOP)/src/pragma.c $(HDR)
+	$(LTCOMPILE) -c $(TOP)/src/pragma.c
+
+prepare.lo:	$(TOP)/src/prepare.c $(HDR)
+	$(LTCOMPILE) $(TEMP_STORE) -c $(TOP)/src/prepare.c
+
+printf.lo:	$(TOP)/src/printf.c $(HDR)
+	$(LTCOMPILE) -c $(TOP)/src/printf.c
+
+random.lo:	$(TOP)/src/random.c $(HDR)
+	$(LTCOMPILE) -c $(TOP)/src/random.c
+
+select.lo:	$(TOP)/src/select.c $(HDR)
+	$(LTCOMPILE) -c $(TOP)/src/select.c
+
+table.lo:	$(TOP)/src/table.c $(HDR)
+	$(LTCOMPILE) -c $(TOP)/src/table.c
+
+tokenize.lo:	$(TOP)/src/tokenize.c $(TOP)/src/keywordhash.h $(HDR)
+	$(LTCOMPILE) -c $(TOP)/src/tokenize.c
+
+trigger.lo:	$(TOP)/src/trigger.c $(HDR)
+	$(LTCOMPILE) -c $(TOP)/src/trigger.c
+
+update.lo:	$(TOP)/src/update.c $(HDR)
+	$(LTCOMPILE) -c $(TOP)/src/update.c
+
+utf.lo:	$(TOP)/src/utf.c $(HDR)
+	$(LTCOMPILE) -c $(TOP)/src/utf.c
+
+util.lo:	$(TOP)/src/util.c $(HDR)
+	$(LTCOMPILE) -c $(TOP)/src/util.c
+
+vacuum.lo:	$(TOP)/src/vacuum.c $(HDR)
+	$(LTCOMPILE) -c $(TOP)/src/vacuum.c
+
+vdbe.lo:	$(TOP)/src/vdbe.c $(VDBEHDR)
+	$(LTCOMPILE) -c $(TOP)/src/vdbe.c
+
+vdbeapi.lo:	$(TOP)/src/vdbeapi.c $(VDBEHDR)
+	$(LTCOMPILE) -c $(TOP)/src/vdbeapi.c
+
+vdbeaux.lo:	$(TOP)/src/vdbeaux.c $(VDBEHDR)
+	$(LTCOMPILE) -c $(TOP)/src/vdbeaux.c
+
+vdbefifo.lo:	$(TOP)/src/vdbefifo.c $(VDBEHDR)
+	$(LTCOMPILE) -c $(TOP)/src/vdbefifo.c
+
+vdbemem.lo:	$(TOP)/src/vdbemem.c $(VDBEHDR)
+	$(LTCOMPILE) -c $(TOP)/src/vdbemem.c
+
+where.lo:	$(TOP)/src/where.c $(HDR)
+	$(LTCOMPILE) -c $(TOP)/src/where.c
+
+install:	sqlite3 libsqlite3.la 
+	$(INSTALL) -d $(DESTDIR)$(libdir)
+	$(LTINSTALL) libsqlite3.la $(DESTDIR)$(libdir)
+	$(INSTALL) -d $(DESTDIR)$(exec_prefix)/bin
+	$(LTINSTALL) sqlite3 $(DESTDIR)$(exec_prefix)/bin
+	$(INSTALL) -d $(DESTDIR)$(prefix)/include
+	$(INSTALL) -m 0644 $(TOP)/sqlite3.h $(DESTDIR)$(prefix)/include
+	$(INSTALL) -d $(DESTDIR)$(libdir)/pkgconfig; 
+	$(INSTALL) -m 0644 sqlite3.pc $(DESTDIR)$(libdir)/pkgconfig; 
+
+clean:	
+	rm -f *.lo *.la *.o sqlite3$(TEXE) libsqlite3.la
+	rm -rf .libs .deps 
+	rm -f lemon$(BEXE) lempar.c parse.* sqlite*.tar.gz
+	rm -f $(PUBLISH)
+	rm -f *.da *.bb *.bbg gmon.out
+	rm -f sqlite3.dll sqlite3.lib
+
+#
+# Windows section; all this funky .dll stuff ;-)
+#
+dll: sqlite3.dll
+
+REAL_LIBOBJ = $(LIBOBJ:%.lo=.libs/%.o)
+
+sqlite3.dll: $(LIBOBJ) $(TOP)/sqlite3.def
+	dllwrap --dllname sqlite3.dll --def $(TOP)/sqlite3.def $(REAL_LIBOBJ)
+	strip sqlite3.dll
+
+#target for dll import libraries
+implib: sqlite3.lib 
+
+#make Borland C++ and/or Microsoft VC import library for the dll
+#   ignore any errors (usually due to missing programs)
+sqlite3.lib: sqlite3.dll
+	-impdef -a sqlite3.def sqlite3.dll
+	-implib sqlite3.lib sqlite3.def
+	-lib /machine:i386 /def:$(TOP)/sqlite3.def 
+
+distclean:	clean
+	rm -f config.log config.status libtool Makefile config.h

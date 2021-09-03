@@ -1,0 +1,3 @@
+CHANDROP <channel>
+[ADMIN] Drops registration of the given channel
+  <channel>: Channel to drop

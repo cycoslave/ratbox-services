@@ -1,0 +1,3 @@
+UNJUPE <server>
+[ADMIN] Removes the jupe on the given server.
+  <server>: Server to unjupe

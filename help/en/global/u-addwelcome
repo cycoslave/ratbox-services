@@ -1,0 +1,4 @@
+addwelcome <id> <message>
+Adds a welcome message sent when users connect to IRC
+  <id>     : Position in list to set welcome message to.
+  <message> : The message to send

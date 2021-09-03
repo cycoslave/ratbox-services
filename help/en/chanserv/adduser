@@ -1,0 +1,6 @@
+ADDUSER <channel> <username> <level> [OP|VOICE|NONE]
+{150} Adds a user to a channel's access list
+  <channel> : Channel to add user to
+  <username>: Username to add to channel
+  <level>   : Level of access to give user (see MODUSER for more info)
+  [OP|VOICE|NONE]: Optional, mode to issue on join (see also MODAUTO)

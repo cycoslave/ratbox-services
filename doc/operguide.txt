@@ -1,0 +1,21 @@
+- ratbox-services operguide -
+-----------------------------
+
+Opers can interact with services over IRC, and those with the dcc flag in
+their operator {}; may also have a DCC session with services.
+
+Opers may login over IRC via the command "OLOGIN".  This command is accepted
+by every service, and takes the form:
+	/msg <service> ologin <username> <password>
+
+You may also log out of services via the command "OLOGOUT".
+
+Opers with the dcc flag may initiate a DCC to any service, or have services
+initiate a DCC to the client via:
+	/ctcp <service> chat
+
+When logged in over DCC, various flags can be set via the ".flags" command,
+and there is a 'partyline' to chat to other logged in opers.
+
+--
+$Id: operguide.txt 22599 2006-05-21 14:30:23Z leeh $

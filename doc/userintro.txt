@@ -1,0 +1,80 @@
+- Short introduction to ratbox-services for users -
+---------------------------------------------------
+
+IRC services are facilities to register channels (so it can be controlled
+easily who gets ops in the channel) and nicknames (so you can get back your
+nickname if someone else is using it) and to give the IRC operators more
+control over the network.
+
+Note: your network may have disabled nickname registration.
+
+To simplify things, ratbox-services requires a username registration to
+register nicknames or channels. Only username registration have passwords.
+Note that this "username" has no relation to what's displayed before the @
+in /whois or similar.
+
+The services appear as fake users, with names usually ending in *Serv.
+The most frequently used ones are called UserServ, ChanServ and NickServ,
+managing usernames, channels and nicknames respectively. General
+information can be obtained with /msg <service> help; for information on a
+specific command, use /msg <service> help <command>.
+
+Usernames, channels and nicknames can be registered with the REGISTER
+command of the respective service. For usernames this is:
+
+/msg userserv register <username> <password> <emailaddress>
+
+You can choose the password yourself; it should not be equal to any
+"important" password. It is probably a good idea to save the password
+in a safe place.
+
+To login later: (it can be useful to configure your client to do this
+automatically on connect)
+
+/msg userserv login <username> <password>
+
+To register a channel, you need to have ops (@) in it and you must be logged
+in with userserv; also it must not be registered yet. Then:
+
+/msg chanserv register <#channel>
+
+You can then add users with:
+
+/msg chanserv adduser <#channel> <username> <level>
+
+<level> is 1 for a voice, 50 for an op, 190 for a co-founder, see /msg
+chanserv help moduser for more information. <username> may be the registered
+username of the user or =<nickname> for the username that nickname is
+currently logged in as. You may add OP or VOICE at the end of the command to
+issue that mode automatically on join; OP only works if the level is 50 or
+more. To change existing users, use the moduser and modauto commands. Users
+can be listed with the listusers command. To remove a user, do /msg chanserv
+deluser <#channel> <username>. If you remove all users (yourself last) the
+channel registration is dropped.
+
+Several options can be set with
+
+/msg chanserv set <#channel> <option> <value>
+
+such as autojoin which makes chanserv join your channel so it will not
+disappear if the last user leaves (unless services crashes or reboots).
+
+More regularly used ChanServ commands are:
+
+/msg chanserv invite <#channel>
+/msg chanserv op <#channel>
+/msg chanserv voice <#channel>
+
+To register your current nick under your current username:
+
+/msg nickserv register
+
+NickServ will warn users using your nick without logging in and can remove
+clients using your nick from the network on request. This is done with /msg
+nickserv release <nickname> or /msg nickserv regain <nickname>; the latter
+also changes your nickname to the given one which is very useful if the
+user using your nickname reconnects.
+
+-- 
+Jilles Tjoelker jilles-AT-stack.nl
+rserv-userintro.txt 1.0, 20050605

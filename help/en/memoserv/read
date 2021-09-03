@@ -1,0 +1,3 @@
+READ <memoid>
+Reads a given memo.
+  <memoid>: ID of memo to read, or "ALL" to read all memos

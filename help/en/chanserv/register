@@ -1,0 +1,4 @@
+REGISTER <channel>
+{  -} Registers the given channel under your current username
+  <channel>: Channel to register
+You must be opped in the channel.

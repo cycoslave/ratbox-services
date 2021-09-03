@@ -1,0 +1,89 @@
+# $Id: Makefile.in 25079 2008-02-17 15:33:40Z leeh $
+
+RM=@RM@
+INSTALL=@INSTALL@
+BIN=ratbox-services@EXEEXT@
+LIBS=@LIBS@
+LDFLAGS=@LDFLAGS@
+
+SUBDIRS=@SQLITE_SUBDIR@ @PCRE_SUBDIR@ src help langs
+SUBDIRS_NOINSTALL=@SQLITE_SUBDIR@ src help langs
+
+prefix=@prefix@
+exec_prefix=@prefix@
+bindir=@bindir@
+sbindir=@sbindir@
+sysconfdir=@sysconfdir@
+datadir=@datadir@
+datarootdir=@datarootdir@
+localstatedir=@localstatedir@
+logdir=@logdir@
+rundir=@rundir@
+helpdir=@helpdir@
+includedir=@includedir@
+
+@SET_MAKE@
+
+all: build
+
+autoconf:
+	autoconf autoconf/configure.in >configure
+	autoheader -l autoconf autoconf/configure.in > include/setup.h.in
+
+build:
+	@for i in $(SUBDIRS); do \
+		echo "build -> $$i"; \
+		cd $$i; \
+		$(MAKE) all || exit; cd ..; \
+	done
+
+install: build
+	$(INSTALL) -m 750 -d $(DESTDIR)$(prefix)
+	$(INSTALL) -m 750 -d $(DESTDIR)$(bindir)
+	$(INSTALL) -m 750 -d $(DESTDIR)$(sbindir)
+	$(INSTALL) -m 750 -d $(DESTDIR)$(sysconfdir)
+	$(INSTALL) -m 750 -d $(DESTDIR)$(includedir)
+	$(INSTALL) -m 750 -d $(DESTDIR)$(logdir)
+	$(INSTALL) -m 750 -d $(DESTDIR)$(rundir)
+	$(INSTALL) -m 750 -d $(DESTDIR)$(helpdir)
+	$(INSTALL) -m 750 -d $(DESTDIR)$(includedir)
+	$(INSTALL) -m 750 tools/ircd-shortcut.pl $(DESTDIR)$(bindir)
+	$(INSTALL) -m 750 tools/dbupgrade.pl $(DESTDIR)$(bindir)
+	$(INSTALL) -m 640 tools/definetolength.pl $(DESTDIR)$(bindir)
+	$(INSTALL) -m 750 src/$(BIN) $(DESTDIR)$(sbindir)
+	$(INSTALL) -m 640 doc/example.conf $(DESTDIR)$(sysconfdir)
+	$(INSTALL) -m 640 include/setup.h $(DESTDIR)$(includedir)
+	$(INSTALL) -m 640 include/rserv.h $(DESTDIR)$(includedir)
+	$(INSTALL) -m 640 include/channel.h $(DESTDIR)$(includedir)
+	$(INSTALL) -m 640 include/client.h $(DESTDIR)$(includedir)
+
+	@for i in $(SUBDIRS_NOINSTALL); do \
+		echo "install -> $$i"; \
+		cd $$i; \
+		$(MAKE) install; cd ..; \
+	done
+
+
+clean:
+	@for i in $(SUBDIRS); do \
+		echo "clean -> $$i"; \
+		cd $$i; \
+		$(MAKE) clean; cd ..; \
+	done
+
+distclean:
+	$(RM) -f Makefile 
+	$(RM) config.status config.log include/setup.h
+	@for i in $(SUBDIRS); do \
+		echo "distclean -> $$i"; \
+		cd $$i; \
+		$(MAKE) distclean; cd ..; \
+	done
+
+depend:
+	@for i in $(SUBDIRS); do \
+		echo "depend -> $$i"; \
+		cd $$i; \
+		$(MAKE) depend; cd ..; \
+	done
+

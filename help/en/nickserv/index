@@ -1,0 +1,11 @@
+This service allows you to register your nick so you can
+use it when you want to. Note that it does not prevent
+other users from using your nick except by warning them.
+To use this service, you need a registered username.
+Available commands:
+ DROP        - Drops registration of nickname from your username.
+ INFO        - Gives information about the given nickname.
+ REGAIN      - Changes your nickname to the given nickname.
+ REGISTER    - Registers your current nickname to your username.
+ RELEASE     - Removes a client using your nickname from the network.
+ SET         - Sets various nickname options

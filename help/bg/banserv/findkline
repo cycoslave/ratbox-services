@@ -1,0 +1,3 @@
+FINDKLINE <маска>
+[ADMIN] Намира всички съвпадащи k-lines
+  <маска>: Търсене по user@host, wildcards са позволени

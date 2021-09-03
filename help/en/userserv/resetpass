@@ -1,0 +1,8 @@
+RESETPASS <username> [<token> <new_pass>]
+Resets a usernames password through email verification.
+  <username>: Username to reset password for
+Once you have been emailed a verification token, you should
+specify the following two parameters to actually reset the
+password.
+  <token>   : Verification token provided in email
+  <new_pass>: Your new password

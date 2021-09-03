@@ -1,0 +1,8 @@
+This service allows services opers to place klines, xlines 
+and resvs on all servers which accept bans from services.
+These bans can be temporary or permanent and can be synced
+to servers.
+
+Temporary bans accept the tokens w/d/h to mean weeks, days, 
+and hours.  These may not be combined, so "1w" is valid, but
+"1w1d" is not.

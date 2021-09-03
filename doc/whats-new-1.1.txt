@@ -1,0 +1,118 @@
+Database
+--------
+- Make the code database agnostic so that it does not care about which
+  database is used as the backend.
+- Add support for mysql: --enable-mysql[=PATH]
+- Add support for postgresql: --enable-pgsql[=PATH]
+- Add support for sqlite3 (default)
+- Remove support for sqlite2
+- Support for database hooks, so external processes can trigger updates done
+  on the information kept in RAM.  See doc/dbhook.txt
+
+General
+-------
+- TS6 support
+- Make stats o/O return a list of opers with access, can only be issued by
+  ircops and services opers
+- .flags command has gone, it has been replaced with .chat [on|off] and the
+  watchserv system
+- Log format altered so that we log nick!user@host mask for oper commands
+- Ability to send out emails for various things, with a table of banned
+  email domains
+
+Compilation
+-----------
+- New configure option, --with-userreglen=LENGTH, to configure the maximum
+  length of a registered username.
+
+Userserv
+--------
+- userserv::resetpass added, to email users a confirmation for a password
+  reset.
+- userserv::resetemail added, to email users a confirmation for an email
+  change and verify the new address.
+- userserv::register can now email users an activation token to confirm
+  registration before the username can be used
+- userserv::usersuspend now takes a required suspend reason
+- expiry bonuses, to grant usernames that have been registered for long
+  durations extra time before they expire
+
+Chanserv
+--------
+- chanserv::suspend now takes a required suspend reason
+- chanserv::dropowner now the required command for an owner to remove
+  themselves, with optional email verification.
+
+Operserv
+--------
+- operserv::rehash added, to rehash services
+- operserv::dbsync added, to force a database sync (primarily of the last
+  time a username/channel was used)
+- operserv::die added, to terminate services.
+- operserv::listopers added, to list connected services opers
+
+Banserv
+-------
+- banserv now accepts time modifiers w/d/h for weeks, days and hours.  These
+  may not be combined -- so "1w" is valid, "1w1d" is not.
+
+Global Service
+--------------
+- GLOBAL now supports welcome messages, sent when a user connects to
+  irc.
+
+Watchserv
+---------
+- A new service which allows services opers to watch through irc/dcc when
+  certain commands are issued to services.
+
+Config file
+-----------
+- serverinfo {}; 
+  - 'sid = <SID>;', required field for the TS6 SID of services.
+  - 'allow_stats_o = <yes|no>;', controls whether stats o/O is allowed
+- operator {};
+  - New flag to global, 'welcome', grants access to modify welcome
+    messages
+  - New flag to operserv, 'maintain', grants access to dbsync, rehash and die
+- service {}; 
+  - New flag, 'require_shortcut', which requires commands to this
+    service are done through command shortcuts rather than msg.
+- database {}; 
+  - New section, controlling options for databases.
+- email {}; 
+  - New section, controls options for sending emails.
+- service "userserv" {};
+  - 'register_verify = <yes|no>;', controls whether registered usernames must 
+     be verified through email before use
+  - 'expire_unverified_time = <duration>', controls how long unverified 
+     usernames are kept around before expiry
+  - 'expire_suspended_time = <duration>;', controls how long suspended 
+     usernames are kept around before expiry
+  - 'allow_resetpass = <yes|no>;', controls whether resetpass is allowed
+  - 'resetpass_duration = <time>;' controls how long userserv::resetpass 
+     requests are kept around.
+  - 'allow_resetemail = <yes|no>;', controls whether resetemail is allowed
+  - 'resetemail_duration = <time>;' controls how long resetemail requests
+    are kept around
+  - 'reset_regtime_duration = <time>;' controls duration a username must be
+    registered for before resetpass/resetemail can be used
+  - 'expire_bonus_regtime = <time>;' duration a username must be registered
+    for before they start getting expiry bonuses
+  - 'expire_bonus_= <time>;' the bonus added to a users expiry
+  - 'expire_bonus_per_time = <time>;' adds the expiry bonus for every time
+    of this length the username has been registered
+  - 'expire_bonus_max = <time>;' the maximum expiry bonus
+- service "chanserv" {};
+  - 'expire_suspended_time = <duration>;', controls how long suspended
+    channels are kept around before expiry
+  - 'email_delowner = <yes|no>;' controls whether delowner requires email
+    verification or not
+  - 'delowner_duration = <time>;' length of time delowner requests are kept
+    around
+  - 'autojoin_empty = <yes|no>;', controls whether chanserv autojoins empty
+    channels or not
+- service "operserv" {};
+  - 'allow_die = <yes|no>;', whether operserv::die is allowed or not
+- service "watchserv" {};
+  - New section

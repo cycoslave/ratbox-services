@@ -1,0 +1,7 @@
+This service allows you to register a username, which is
+a prerequisite for using channel or nick registration.
+
+Some sites may email you a verification token before your
+username can be used.
+
+Available commands:

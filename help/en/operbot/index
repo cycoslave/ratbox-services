@@ -1,0 +1,4 @@
+This service invites or ops ircops on request, in
+channels it is in. Available commands:
+ INVITE      - Invites you to a channel monitored by the operbot
+ OP          - Ops you in a channel monitored by the operbot

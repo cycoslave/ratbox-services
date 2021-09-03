@@ -1,0 +1,4 @@
+CALLJUPE <server> [reason]
+Call a vote for an oper jupe on the given server.
+  <server>: Server to jupe
+  [reason]: Must be specified by initial caller as reason for jupe.

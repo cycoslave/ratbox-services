@@ -1,0 +1,183 @@
+balloc.o: balloc.c ../include/stdinc.h ../include/setup.h \
+  ../include/config.h ../include/tools.h ../include/balloc.h \
+  ../include/rserv.h ../include/tools.h ../include/log.h \
+  ../include/event.h ../include/io.h
+c_error.o: c_error.c ../include/stdinc.h ../include/setup.h \
+  ../include/config.h ../include/tools.h ../include/c_init.h \
+  ../include/rserv.h ../include/io.h ../include/scommand.h \
+  ../include/client.h ../include/log.h
+c_message.o: c_message.c ../include/stdinc.h ../include/setup.h \
+  ../include/config.h ../include/tools.h ../include/rserv.h \
+  ../include/io.h ../include/service.h ../include/client.h \
+  ../include/conf.h ../include/scommand.h ../include/c_init.h \
+  ../include/log.h
+c_mode.o: c_mode.c ../include/stdinc.h ../include/setup.h \
+  ../include/config.h ../include/tools.h ../include/c_init.h \
+  ../include/client.h ../include/channel.h ../include/scommand.h \
+  ../include/log.h ../include/hook.h ../include/modebuild.h
+cache.o: cache.c ../include/stdinc.h ../include/setup.h \
+  ../include/config.h ../include/tools.h ../include/rserv.h \
+  ../include/tools.h ../include/balloc.h ../include/cache.h \
+  ../include/io.h
+channel.o: channel.c ../include/stdinc.h ../include/setup.h \
+  ../include/config.h ../include/tools.h ../include/rserv.h \
+  ../include/client.h ../include/conf.h ../include/tools.h \
+  ../include/channel.h ../include/scommand.h ../include/log.h \
+  ../include/balloc.h ../include/io.h ../include/hook.h
+client.o: client.c ../include/stdinc.h ../include/setup.h \
+  ../include/config.h ../include/tools.h ../include/rserv.h \
+  ../include/langs.h ../include/client.h ../include/channel.h \
+  ../include/scommand.h ../include/io.h ../include/log.h \
+  ../include/service.h ../include/balloc.h ../include/event.h \
+  ../include/hook.h ../include/s_userserv.h ../include/conf.h
+crypt.o: crypt.c ../include/stdinc.h ../include/setup.h \
+  ../include/config.h ../include/tools.h ../include/rserv.h
+conf.o: conf.c ../include/stdinc.h ../include/setup.h ../include/config.h \
+  ../include/tools.h ../include/rserv.h ../include/langs.h \
+  ../include/conf.h ../include/tools.h ../include/client.h \
+  ../include/service.h ../include/io.h ../include/log.h
+dbhook.o: dbhook.c ../include/stdinc.h ../include/setup.h \
+  ../include/config.h ../include/tools.h ../include/rserv.h \
+  ../include/tools.h ../include/rsdb.h ../include/dbhook.h \
+  ../include/log.h ../include/event.h
+email.o: email.c ../include/stdinc.h ../include/setup.h \
+  ../include/config.h ../include/tools.h ../include/rserv.h \
+  ../include/conf.h ../include/log.h ../include/email.h
+event.o: event.c ../include/stdinc.h ../include/setup.h \
+  ../include/config.h ../include/tools.h ../include/rserv.h \
+  ../include/event.h ../include/io.h
+hook.o: hook.c ../include/stdinc.h ../include/setup.h ../include/config.h \
+  ../include/tools.h ../include/rserv.h ../include/hook.h
+io.o: io.c ../include/stdinc.h ../include/setup.h ../include/config.h \
+  ../include/tools.h ../include/scommand.h ../include/ucommand.h \
+  ../include/tools.h ../include/rserv.h ../include/io.h \
+  ../include/event.h ../include/conf.h ../include/client.h \
+  ../include/log.h ../include/service.h ../include/hook.h \
+  ../include/serno.h ../include/watch.h
+langs.o: langs.c ../include/stdinc.h ../include/setup.h \
+  ../include/config.h ../include/tools.h ../include/rserv.h \
+  ../include/langs.h ../include/cache.h ../include/client.h \
+  ../include/io.h ../include/conf.h ../include/s_userserv.h
+log.o: log.c ../include/stdinc.h ../include/setup.h ../include/config.h \
+  ../include/tools.h ../include/rserv.h ../include/langs.h \
+  ../include/log.h ../include/io.h ../include/client.h \
+  ../include/service.h ../include/conf.h ../include/watch.h \
+  ../include/s_userserv.h
+match.o: match.c ../include/stdinc.h ../include/setup.h \
+  ../include/config.h ../include/tools.h ../include/tools.h
+messages.o: messages.c ../include/langs.h
+modebuild.o: modebuild.c ../include/stdinc.h ../include/setup.h \
+  ../include/config.h ../include/tools.h ../include/rserv.h \
+  ../include/client.h ../include/channel.h ../include/io.h \
+  ../include/modebuild.h
+newconf.o: newconf.c ../include/stdinc.h ../include/setup.h \
+  ../include/config.h ../include/tools.h ../include/tools.h \
+  ../include/newconf.h ../include/rserv.h ../include/langs.h \
+  ../include/client.h ../include/channel.h ../include/log.h \
+  ../include/conf.h ../include/service.h ../include/io.h \
+  ../include/event.h
+rserv.o: rserv.c ../include/stdinc.h ../include/setup.h \
+  ../include/config.h ../include/tools.h ../include/rserv.h \
+  ../include/langs.h ../include/rsdb.h ../include/conf.h ../include/io.h \
+  ../include/event.h ../include/scommand.h ../include/ucommand.h \
+  ../include/client.h ../include/channel.h ../include/log.h \
+  ../include/c_init.h ../include/service.h ../include/balloc.h \
+  ../include/cache.h ../include/newconf.h ../include/hook.h \
+  ../include/watch.h ../include/serno.h ../include/s_userserv.h \
+  ../include/s_chanserv.h
+scommand.o: scommand.c ../include/stdinc.h ../include/setup.h \
+  ../include/config.h ../include/tools.h ../include/scommand.h \
+  ../include/rserv.h ../include/langs.h ../include/tools.h \
+  ../include/io.h ../include/conf.h ../include/client.h \
+  ../include/serno.h ../include/service.h ../include/log.h \
+  ../include/hook.h ../include/s_userserv.h
+service.o: service.c ../include/stdinc.h ../include/setup.h \
+  ../include/config.h ../include/tools.h ../include/rserv.h \
+  ../include/langs.h ../include/service.h ../include/client.h \
+  ../include/scommand.h ../include/conf.h ../include/io.h \
+  ../include/log.h ../include/ucommand.h ../include/cache.h \
+  ../include/channel.h ../include/s_userserv.h ../include/watch.h
+snprintf.o: snprintf.c ../include/stdinc.h ../include/setup.h \
+  ../include/config.h ../include/tools.h ../include/rserv.h \
+  ../include/rsdb.h
+tools.o: tools.c ../include/stdinc.h ../include/setup.h \
+  ../include/config.h ../include/tools.h ../include/rserv.h \
+  ../include/rsdb.h ../include/balloc.h
+u_stats.o: u_stats.c ../include/stdinc.h ../include/setup.h \
+  ../include/config.h ../include/tools.h ../include/c_init.h \
+  ../include/rserv.h ../include/conf.h ../include/ucommand.h \
+  ../include/io.h
+ucommand.o: ucommand.c ../include/stdinc.h ../include/setup.h \
+  ../include/config.h ../include/tools.h ../include/ucommand.h \
+  ../include/rserv.h ../include/langs.h ../include/tools.h \
+  ../include/io.h ../include/log.h ../include/conf.h ../include/event.h \
+  ../include/service.h ../include/client.h ../include/channel.h \
+  ../include/serno.h ../include/cache.h ../include/hook.h \
+  ../include/watch.h ../include/c_init.h
+s_nickserv.o: s_nickserv.c ../include/stdinc.h ../include/setup.h \
+  ../include/config.h ../include/tools.h ../include/rsdb.h \
+  ../include/rserv.h ../include/langs.h ../include/io.h \
+  ../include/service.h ../include/client.h ../include/c_init.h \
+  ../include/conf.h ../include/ucommand.h ../include/log.h \
+  ../include/s_userserv.h ../include/s_nickserv.h ../include/balloc.h \
+  ../include/hook.h ../include/watch.h
+s_userserv.o: s_userserv.c ../include/stdinc.h ../include/setup.h \
+  ../include/config.h ../include/tools.h ../include/rsdb.h \
+  ../include/rserv.h ../include/langs.h ../include/service.h \
+  ../include/client.h ../include/channel.h ../include/c_init.h \
+  ../include/log.h ../include/s_chanserv.h ../include/s_userserv.h \
+  ../include/s_nickserv.h ../include/ucommand.h ../include/balloc.h \
+  ../include/conf.h ../include/io.h ../include/event.h ../include/hook.h \
+  ../include/email.h ../include/dbhook.h ../include/watch.h
+s_chanserv.o: s_chanserv.c ../include/stdinc.h ../include/setup.h \
+  ../include/config.h ../include/tools.h ../include/rsdb.h \
+  ../include/rserv.h ../include/langs.h ../include/service.h \
+  ../include/client.h ../include/channel.h ../include/ucommand.h \
+  ../include/log.h ../include/io.h ../include/s_userserv.h \
+  ../include/s_chanserv.h ../include/c_init.h ../include/balloc.h \
+  ../include/conf.h ../include/modebuild.h ../include/hook.h \
+  ../include/event.h ../include/watch.h ../include/email.h
+s_operserv.o: s_operserv.c ../include/stdinc.h ../include/setup.h \
+  ../include/config.h ../include/tools.h ../include/rsdb.h \
+  ../include/rserv.h ../include/io.h ../include/client.h \
+  ../include/service.h ../include/channel.h ../include/c_init.h \
+  ../include/conf.h ../include/hook.h ../include/ucommand.h \
+  ../include/modebuild.h ../include/log.h ../include/watch.h
+s_alis.o: s_alis.c ../include/stdinc.h ../include/setup.h \
+  ../include/config.h ../include/tools.h ../include/service.h \
+  ../include/rserv.h ../include/io.h ../include/client.h \
+  ../include/channel.h ../include/c_init.h ../include/log.h \
+  ../include/conf.h
+s_operbot.o: s_operbot.c ../include/stdinc.h ../include/setup.h \
+  ../include/config.h ../include/tools.h ../include/rsdb.h \
+  ../include/rserv.h ../include/io.h ../include/service.h \
+  ../include/client.h ../include/channel.h ../include/c_init.h \
+  ../include/log.h ../include/conf.h ../include/hook.h \
+  ../include/ucommand.h ../include/newconf.h ../include/watch.h
+s_jupeserv.o: s_jupeserv.c ../include/stdinc.h ../include/setup.h \
+  ../include/config.h ../include/tools.h ../include/rsdb.h \
+  ../include/service.h ../include/client.h ../include/channel.h \
+  ../include/rserv.h ../include/io.h ../include/c_init.h ../include/log.h \
+  ../include/conf.h ../include/ucommand.h ../include/newconf.h \
+  ../include/hook.h ../include/event.h ../include/watch.h
+s_global.o: s_global.c ../include/stdinc.h ../include/setup.h \
+  ../include/config.h ../include/tools.h ../include/rsdb.h \
+  ../include/rserv.h ../include/io.h ../include/service.h \
+  ../include/client.h ../include/c_init.h ../include/conf.h \
+  ../include/ucommand.h ../include/log.h ../include/hook.h \
+  ../include/watch.h
+s_banserv.o: s_banserv.c ../include/stdinc.h ../include/setup.h \
+  ../include/config.h ../include/tools.h ../include/rsdb.h \
+  ../include/rserv.h ../include/io.h ../include/service.h \
+  ../include/client.h ../include/channel.h ../include/c_init.h \
+  ../include/conf.h ../include/ucommand.h ../include/log.h \
+  ../include/event.h ../include/watch.h
+s_watchserv.o: s_watchserv.c ../include/stdinc.h ../include/setup.h \
+  ../include/config.h ../include/tools.h ../include/rserv.h \
+  ../include/langs.h ../include/conf.h ../include/io.h \
+  ../include/client.h ../include/service.h ../include/ucommand.h \
+  ../include/c_init.h ../include/watch.h ../include/hook.h \
+  ../include/s_userserv.h
+rsdb_pgsql.o: rsdb_pgsql.c ../include/stdinc.h ../include/setup.h \
+  ../include/config.h ../include/tools.h ../include/rsdb.h \
+  ../include/rserv.h ../include/conf.h ../include/log.h

@@ -1,0 +1,5 @@
+DELUSER <channel> <username>
+{150} Removes a user from a channel's access list
+  <channel>: Channel to remove user from
+  <username>: Username to remove access for
+Removing the last user drops the channel registration.
