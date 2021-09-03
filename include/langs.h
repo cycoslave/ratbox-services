@@ -40,7 +40,7 @@ int lang_fmt_check(const char *filename, const char *original, const char *trans
 /* when changing this, you MUST reflect the change in svc_notice_string in
  * langs.c and add a default into messages.c
  */
-enum svc_notice_enum
+extern enum svc_notice_enum
 {
 	/* general service */
 	SVC_UNKNOWNCOMMAND,

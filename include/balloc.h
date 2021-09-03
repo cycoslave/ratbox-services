@@ -64,7 +64,7 @@ struct BlockHeap
 };
 typedef struct BlockHeap BlockHeap;
 
-struct _dlink_list heap_lists;
+extern struct _dlink_list heap_lists;
 
 extern void init_balloc(void);
 

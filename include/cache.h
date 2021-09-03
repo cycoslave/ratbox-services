@@ -7,7 +7,7 @@
 
 struct lconn;
 
-struct BlockHeap *cacheline_heap;
+extern struct BlockHeap *cacheline_heap;
 
 struct cachefile
 {

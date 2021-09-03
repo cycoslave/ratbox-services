@@ -14,8 +14,8 @@
 
 #define SUSPENDREASONLEN	200
 
-int current_mark;
-int testing_conf;
+extern int current_mark;
+extern int testing_conf;
 
 extern struct timeval system_time;
 #define CURRENT_TIME system_time.tv_sec
