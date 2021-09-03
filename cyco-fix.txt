@@ -1,0 +1,5 @@
+1- Add -fgnu89-inline to INCLUDES= in  src/Makefile 
+
+2- Fix the headers that errors by adding extern in front of the objects that doesn't link.
+
+3- make clean; make
