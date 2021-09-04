@@ -1,3 +1,19 @@
+cyco        2021/09/04 12:55:31 UTC     (20210904_1-27023)
+  Log:
+  - update RELEASE_NOTES
+  - revved patchlevel to 1.2.4-cyco
+  
+
+  Modified:
+	rserv/branches/1_2/RELEASE_NOTES (File Modified) 
+	rserv/branches/1_2/include/config.h (File Modified) 
+	rserv/branches/1_2/include/balloc.h (File Modified) 
+	rserv/branches/1_2/include/cache.h (File Modified) 
+	rserv/branches/1_2/include/langs.h (File Modified) 
+	rserv/branches/1_2/include/rserv.h (File Modified) 
+	rserv/branches/1_2/src/Makefile.in (File Modified) 
+
+
 leeh        2010/04/22 18:27:28 UTC	(20100422_1-27023)
   Log:
   - update RELEASE_NOTES
